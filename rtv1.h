@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 18:43:12 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/08 18:36:28 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/06/10 19:19:25 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,53 @@
 # define WIN_X 800
 # define WIN_Y 800
 
+/*view coordinates*/
+
 typedef struct		s_view
 {
-	int				x;
-	int				y;
-	int				z;
-	unsigned int	dist;
+	double				x;
+	double				y;
+	double				z;
+	unsigned int		dist;
 }					t_view;
+
+/*pixel coordinates*/
 
 typedef struct		s_pix
 {
-	int				x;
-	int				y;
-	int				z;
-	unsigned int	col;
+	int					x;
+	int					y;
+	int					z;
+	unsigned int		col;
 }					t_pix;
+
+/*sphere coordinates*/
 
 typedef struct		s_sphere
 {
-	int				r;
-	int				x;
-	int				y;
-	int				z;
-	unsigned int	col;
+	double				r;
+	double				x;
+	double				y;
+	double				z;
+	double				k;
+	double				a;
+	double				b;
+	double				c;
+	unsigned int		col;
 }					t_sphere;
+
+/*plan coordinates*/
+
+typedef struct		s_plan
+{
+	double				x;
+	double				y;
+	double				z;
+	double				k;
+	unsigned int		col;
+}					t_plan;
+
+/*primary ray coordinates*/
 
 typedef struct		s_prim
 {
@@ -51,7 +74,18 @@ typedef struct		s_prim
 	double			y;
 	double			z;
 	double			dist_min;
+	unsigned int	col;
 }					t_prim;
+
+/*shadow ray coordinates*/
+
+typedef struct		s_shad
+{
+	double			x;
+	double			y;
+	double			z;
+	unsigned int	col;
+}					t_shad;
 
 typedef struct		s_img
 {
@@ -59,24 +93,27 @@ typedef struct		s_img
 	int				*img;
 	int				bpp;
 	int				size_line;
-	int				endian;
+	int			endian;
 }					t_img;
 
 typedef struct		s_env
 {
-	unsigned int	scene;
 	void			*mlx;
 	void			*win;
 	void			*key;
 	void			*mouse;
 	t_img			img;
 	t_pix			pix;
-	t_sphere		sphere;
 	t_view			view;
 	t_prim			prim;
+	t_sphere		sphere;
+	t_plan			plan;
+	t_shad			shad;
+	int				scene;
 }					t_env;
 
 int		error_msg(int error);
-void	check_sphere(t_env *e);
+void	is_sphere(t_env *e);
+void	check_collision(t_env *e);
 void	print_rt(t_env *e);
 #endif

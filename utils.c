@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 10:31:49 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/08 09:31:55 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/06/10 14:37:46 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	print_rt(t_env *e)
 		e->pix.y = 0;
 		while (e->pix.y < WIN_Y)
 		{
-			if (e->scene == 1)
-				check_sphere(e);
+			check_collision(e);
 			e->pix.y++;
 		}
 		e->pix.x++;
