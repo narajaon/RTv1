@@ -1,1 +1,1 @@
-IWindow closed, cya
+Window closed, cya

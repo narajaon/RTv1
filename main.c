@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 18:08:43 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/10 19:23:08 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/06/13 15:14:47 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,48 @@ void	init_prim(t_env *e)
 	e->prim.x = e->view.dist;
 	e->prim.y = WIN_X / 2 - e->pix.x;
 	e->prim.z = WIN_Y / 2 - e->pix.y;
+}
+
+void	rot_x(double *x, double *y, double *z, double angle)
+{
+	double		tmpx;
+	double		tmpy;
+	double		tmpz;
+
+	tmpx = *x;
+	tmpy = cos(angle) * *y - sin(angle) * *z;
+	tmpy = sin(angle) * *y + cos(angle) * *z;
+	*x = tmpx;
+	*y = tmpy;
+	*z = tmpz;
+}
+
+void	rot_y(double *x, double *y, double *z, double angle)
+{
+	double		tmpx;
+	double		tmpy;
+	double		tmpz;
+
+	tmpx = cos(angle) * *x + sin(angle) * *z;
+	tmpy = *y;
+	tmpz = -sin(angle) * *x + cos(angle) * *z;
+	*x = tmpx;
+	*y = tmpy;
+	*z = tmpz;
+}
+
+void	rot_z(double *x, double *y, double *z, double angle)
+{
+	double		tmpx;
+	double		tmpy;
+	double		tmpz;
+
+	tmpx = cos(angle) * *x - sin(angle) * *y;
+	tmpy = sin(angle) * *x + cos(angle) * *y;
+	tmpz = *z;
+	*x = tmpx;
+	*y = tmpy;
+	*z = tmpz;
 }
 
 void	is_plan(t_env *e)
@@ -110,16 +152,14 @@ int		key_hook(int keycode, t_env *e)
 		mlx_destroy_window(e->mlx, e->win);
 		exit(error_msg(0));
 	}
-	/*
 	if (keycode == 126)
 	{
 		init_sphere(e);
 		//init_view1(e);
-		e->view.z += 10;
+		//e->view.z += 10;
 		print_rt(e);
 		mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	}
-	*/
 	return (keycode);
 }
 
