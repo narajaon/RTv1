@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 18:43:12 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/10 19:19:25 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/06/14 13:41:07 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@
 
 # define WIN_X 800
 # define WIN_Y 800
+#define EX_KEY 53
+#define UP_KEY 126
+#define DOWN_KEY 125
+#define LEFT_KEY 123
+#define RIGHT_KEY 124
+#define A_KEY 0
+#define S_KEY 1
+#define D_KEY 2
+#define W_KEY 13
+#define R_KEY 15
+#define Q_KEY 12
+#define E_KEY 14
 
 /*view coordinates*/
 
@@ -110,10 +122,20 @@ typedef struct		s_env
 	t_plan			plan;
 	t_shad			shad;
 	int				scene;
+	double			pad[4];
+	void			(*rot)();
 }					t_env;
 
 int		error_msg(int error);
 void	is_sphere(t_env *e);
 void	check_collision(t_env *e);
 void	print_rt(t_env *e);
+void	rot_x(double *x, double *y, double *z, double angle);
+void	rot_y(double *x, double *y, double *z, double angle);
+void	rot_z(double *x, double *y, double *z, double angle);
+void	init_sphere(t_env *e);
+void	init_plan(t_env *e);
+void	init_view1(t_env *e);
+void	init_shad(t_env *e, unsigned int col);
+void	init_prim(t_env *e);
 #endif

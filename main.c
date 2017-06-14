@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 18:08:43 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/13 15:14:47 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/06/14 18:31:42 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,95 +18,17 @@ int		mouse_move(int x, int y, t_env *e)
 	return (0);
 }
 
-void	init_sphere(t_env *e)
-{
-	e->sphere.col = 0x00FF0000;
-	e->sphere.r = 200;
-	e->sphere.x = 0;
-	e->sphere.y = 0;
-	e->sphere.z = 0;
-}
-
-void	init_plan(t_env *e)
-{
-	e->plan.col = 0x000000FF;
-	e->plan.x = 0;
-	e->plan.y = 0;
-	e->plan.z = 0;
-	e->plan.k = 0;
-}
-
-void	init_view1(t_env *e)
-{
-	e->view.x = -300;
-	e->view.y = 0;
-	e->view.z = 0;
-	e->view.dist = 100;
-}
-
-void	init_prim(t_env *e)
-{
-	e->prim.x = e->view.dist;
-	e->prim.y = WIN_X / 2 - e->pix.x;
-	e->prim.z = WIN_Y / 2 - e->pix.y;
-}
-
-void	rot_x(double *x, double *y, double *z, double angle)
-{
-	double		tmpx;
-	double		tmpy;
-	double		tmpz;
-
-	tmpx = *x;
-	tmpy = cos(angle) * *y - sin(angle) * *z;
-	tmpy = sin(angle) * *y + cos(angle) * *z;
-	*x = tmpx;
-	*y = tmpy;
-	*z = tmpz;
-}
-
-void	rot_y(double *x, double *y, double *z, double angle)
-{
-	double		tmpx;
-	double		tmpy;
-	double		tmpz;
-
-	tmpx = cos(angle) * *x + sin(angle) * *z;
-	tmpy = *y;
-	tmpz = -sin(angle) * *x + cos(angle) * *z;
-	*x = tmpx;
-	*y = tmpy;
-	*z = tmpz;
-}
-
-void	rot_z(double *x, double *y, double *z, double angle)
-{
-	double		tmpx;
-	double		tmpy;
-	double		tmpz;
-
-	tmpx = cos(angle) * *x - sin(angle) * *y;
-	tmpy = sin(angle) * *x + cos(angle) * *y;
-	tmpz = *z;
-	*x = tmpx;
-	*y = tmpy;
-	*z = tmpz;
-}
-
 void	is_plan(t_env *e)
 {
-	init_plan(e);
-	if (fabs(e->prim.z) >= 0.00001)
-		e->plan.k = -(e->view.z / e->prim.z);
-//	printf("view %d prim %f\n", e->view.z, e->prim.z);
-}
+	double		a;
 
-void	init_shad(t_env *e, unsigned int col)
-{
-	e->shad.x = e->prim.x;
-	e->shad.y = e->prim.y;
-	e->shad.z = e->prim.z;
-	e->shad.col = col;
+	init_plan(e);
+	/*
+	if (fabs(e->prim.z) >= 200)
+		e->plan.k = -(e->view.z / e->prim.z);
+	*/
+	e->plan.k = -(
+//	printf("view %d prim %f\n", e->view.z, e->prim.z);
 }
 
 void	is_sphere(t_env *e)
@@ -130,46 +52,90 @@ void	is_sphere(t_env *e)
 		e->sphere.k = 0;
 }
 
-void	check_collision(t_env *e)
+void	init_pad(t_env *e)
 {
-	init_prim(e);
-	is_sphere(e);
-	is_plan(e);
-//	printf("plan %f sphere %f\n", e->plan.k, e->sphere.k);
-	if (e->plan.k >= 0.00001 && (fabs(e->sphere.k) <= 0.00001))
-		e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->plan.col;
-	else if (e->sphere.k >= 0.00001)
-		e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->sphere.col;
-	else
-		e->img.img[e->pix.y * WIN_Y + e->pix.x] = 0x00000000;
+	e->pad[0] = 0;
+	e->pad[1] = 0;
+	e->pad[2] = 0;
 }
 
-int		key_hook(int keycode, t_env *e)
+int		prim_hook(int keycode, t_env *e)
 {
-	if (keycode == 53)
+	printf("%d\n", keycode);
+	if (keycode == EX_KEY)
 	{
 		mlx_destroy_image(e->mlx, e->img.img_ptr);
 		mlx_destroy_window(e->mlx, e->win);
 		exit(error_msg(0));
 	}
-	if (keycode == 126)
-	{
-		init_sphere(e);
-		//init_view1(e);
-		//e->view.z += 10;
-		print_rt(e);
-		mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
-	}
+	if (keycode == Q_KEY)
+		e->pad[0] += 10;
+	else if (keycode == E_KEY)
+		e->pad[0] -= 10;
+	else if (keycode == D_KEY)
+		e->pad[1] += 10;
+	else if (keycode == A_KEY)
+		e->pad[1] -= 10;
+	else if (keycode == W_KEY)
+		e->pad[2] += 10;
+	else if (keycode == S_KEY)
+		e->pad[2] -= 10;
+	else if (keycode == R_KEY)
+		init_pad(e);
+	print_rt(e);
+	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	return (keycode);
+}
+
+int		rot_view(int keycode, t_env *e)
+{
+	printf("%d\n", keycode);
+	if (keycode == EX_KEY)
+	{
+		mlx_destroy_image(e->mlx, e->img.img_ptr);
+		mlx_destroy_window(e->mlx, e->win);
+		exit(error_msg(0));
+	}
+	else if (keycode == UP_KEY)
+		rot_y(&e->view.x, &e->view.y, &e->view.z, 0.125);
+	else if (keycode == DOWN_KEY)
+		rot_y(&e->view.x, &e->view.y, &e->view.z, -0.125);
+	else if (keycode == LEFT_KEY)
+		rot_z(&e->view.x, &e->view.y, &e->view.z, 0.125);
+	else if (keycode == RIGHT_KEY)
+		rot_z(&e->view.x, &e->view.y, &e->view.z, -0.125);
+	else if (keycode == R_KEY)
+		init_view1(e);
+	print_rt(e);
+	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
+	return (keycode);
+}
+
+void	check_collision(t_env *e)
+{
+	init_prim(e);
+	//is_sphere(e);
+	is_plan(e);
+	if (e->pix.x == WIN_X / 2 && e->pix.y == WIN_Y / 2)
+		printf("plan %f sphere %f\n", e->plan.k, e->sphere.k);
+	if (e->plan.k >= 0.00001)
+		e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->plan.col;
+	//if (e->sphere.k >= 0.00001)
+	//	e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->sphere.col;
+	else
+		e->img.img[e->pix.y * WIN_Y + e->pix.x] = 0x00000000;
 }
 
 void	do_rt(t_env *e)
 {
 	init_sphere(e);
 	init_view1(e);
+	init_pad(e);
+	//e->rot = &init_prim;
 	print_rt(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
-	mlx_key_hook(e->win, &key_hook, e);
+	//mlx_key_hook(e->win, &prim_hook, e);
+	mlx_key_hook(e->win, &rot_view, e);
 	mlx_loop(e->mlx);
 }
 

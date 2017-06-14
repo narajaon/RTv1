@@ -1,1 +1,3 @@
-Window closed, cya
+IWindow closed, cya
+plan 0.000000 sphere 100000000.000000
+53
