@@ -17,8 +17,8 @@
 # include "minilibx_macos/mlx.h"
 # include <stdio.h>
 
-# define WIN_X 800
-# define WIN_Y 800
+# define WIN_X 500
+# define WIN_Y 500
 #define EX_KEY 53
 #define UP_KEY 126
 #define DOWN_KEY 125
@@ -31,6 +31,16 @@
 #define R_KEY 15
 #define Q_KEY 12
 #define E_KEY 14
+
+/*shadow ray coordinates*/
+
+typedef struct		s_shad
+{
+	double			x;
+	double			y;
+	double			z;
+	unsigned int	col;
+}					t_shad;
 
 /*view coordinates*/
 
@@ -65,6 +75,7 @@ typedef struct		s_sphere
 	double				b;
 	double				c;
 	unsigned int		col;
+	t_shad				shadow;
 }					t_sphere;
 
 /*plan coordinates*/
@@ -76,6 +87,7 @@ typedef struct		s_plan
 	double				z;
 	double				k;
 	unsigned int		col;
+	t_shad				shadow;
 }					t_plan;
 
 /*primary ray coordinates*/
@@ -89,15 +101,14 @@ typedef struct		s_prim
 	unsigned int	col;
 }					t_prim;
 
-/*shadow ray coordinates*/
+/*light source coordinates*/
 
-typedef struct		s_shad
+typedef struct		s_light
 {
 	double			x;
 	double			y;
 	double			z;
-	unsigned int	col;
-}					t_shad;
+}					t_light;
 
 typedef struct		s_img
 {
@@ -121,21 +132,28 @@ typedef struct		s_env
 	t_sphere		sphere;
 	t_plan			plan;
 	t_shad			shad;
+	t_light			light1;
+	double			rot_z;
+	double			rot_y;
 	int				scene;
-	double			pad[4];
-	void			(*rot)();
 }					t_env;
 
 int		error_msg(int error);
 void	is_sphere(t_env *e);
 void	check_collision(t_env *e);
 void	print_rt(t_env *e);
+int		rot_view(int keycode, t_env *e);
 void	rot_x(double *x, double *y, double *z, double angle);
 void	rot_y(double *x, double *y, double *z, double angle);
 void	rot_z(double *x, double *y, double *z, double angle);
+int		rot_view(int keycode, t_env *e);
 void	init_sphere(t_env *e);
 void	init_plan(t_env *e);
 void	init_view1(t_env *e);
 void	init_shad(t_env *e, unsigned int col);
 void	init_prim(t_env *e);
+void	init_light1(t_env *e);
+void	is_sphere(t_env *e);
+void	is_plan(t_env *e);
+void	do_rt(t_env *e);
 #endif
