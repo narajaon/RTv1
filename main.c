@@ -20,15 +20,16 @@ int		mouse_move(int x, int y, t_env *e)
 
 void	is_plan(t_env *e)
 {
-	double		a;
+	double		prim;
+	double		view;
 
 	init_plan(e);
-	/*
-	if (fabs(e->prim.z) >= 200)
-		e->plan.k = -(e->view.z / e->prim.z);
-	*/
-	e->plan.k = -(
-//	printf("view %d prim %f\n", e->view.z, e->prim.z);
+	prim = e->prim.x + e->prim.y + e->prim.z;
+	view = e->view.x + e->view.y + e->view.z;
+	e->plan.k = -(view) / (prim);
+//	printf("plan %f\n", view);
+//	if (fabs(e->prim.z) >= 200)
+//		e->plan.k = -(e->view.z / e->prim.z);
 }
 
 void	is_sphere(t_env *e)
@@ -114,14 +115,14 @@ int		rot_view(int keycode, t_env *e)
 void	check_collision(t_env *e)
 {
 	init_prim(e);
-	//is_sphere(e);
+	is_sphere(e);
 	is_plan(e);
 	if (e->pix.x == WIN_X / 2 && e->pix.y == WIN_Y / 2)
 		printf("plan %f sphere %f\n", e->plan.k, e->sphere.k);
-	if (e->plan.k >= 0.00001)
-		e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->plan.col;
-	//if (e->sphere.k >= 0.00001)
-	//	e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->sphere.col;
+	//if (e->plan.k)
+	//	e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->plan.col;
+	if (e->sphere.k)
+		e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->sphere.col;
 	else
 		e->img.img[e->pix.y * WIN_Y + e->pix.x] = 0x00000000;
 }

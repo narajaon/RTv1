@@ -32,7 +32,7 @@ void	init_plan(t_env *e)
 
 void	init_view1(t_env *e)
 {
-	e->view.x = -300;
+	e->view.x = 0;
 	e->view.y = 0;
 	e->view.z = 0;
 	e->view.dist = 100;
@@ -48,9 +48,10 @@ void	init_shad(t_env *e, unsigned int col)
 
 void	init_prim(t_env *e)
 {
-	e->prim.x = e->view.dist;
-	e->prim.y = WIN_X / 2 - e->pix.x;
-	e->prim.z = WIN_Y / 2 - e->pix.y;
+	e->prim.z = e->view.dist;
+	e->prim.x = WIN_X / 2 - e->pix.x;
+	//e->prim.z = WIN_Y / 2 - e->pix.y;
+	e->prim.y = WIN_Y / 2 - e->pix.y;
 	e->prim.x += e->pad[0];
 	e->prim.y += e->pad[1];
 	e->prim.z += e->pad[2];
