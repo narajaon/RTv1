@@ -32,13 +32,18 @@
 #define Q_KEY 12
 #define E_KEY 14
 
-/*shadow ray coordinates*/
-
-typedef struct		s_shad
+typedef struct		s_coor
 {
 	double			x;
 	double			y;
 	double			z;
+}					t_coor;
+
+/*shadow ray coordinates*/
+
+typedef struct		s_shad
+{
+	t_coor			coord;
 	unsigned int	col;
 }					t_shad;
 
@@ -46,9 +51,7 @@ typedef struct		s_shad
 
 typedef struct		s_view
 {
-	double				x;
-	double				y;
-	double				z;
+	t_coor			coord;
 	unsigned int		dist;
 }					t_view;
 
@@ -56,9 +59,7 @@ typedef struct		s_view
 
 typedef struct		s_pix
 {
-	int					x;
-	int					y;
-	int					z;
+	t_coor			coord;
 	unsigned int		col;
 }					t_pix;
 
@@ -66,10 +67,8 @@ typedef struct		s_pix
 
 typedef struct		s_sphere
 {
+	t_coor			coord;
 	double				r;
-	double				x;
-	double				y;
-	double				z;
 	double				k;
 	double				a;
 	double				b;
@@ -82,9 +81,7 @@ typedef struct		s_sphere
 
 typedef struct		s_plan
 {
-	double				x;
-	double				y;
-	double				z;
+	t_coor			coord;
 	double				k;
 	unsigned int		col;
 	t_shad				shadow;
@@ -94,9 +91,7 @@ typedef struct		s_plan
 
 typedef struct		s_prim
 {
-	double			x;
-	double			y;
-	double			z;
+	t_coor			coord;
 	double			dist_min;
 	unsigned int	col;
 }					t_prim;
@@ -105,9 +100,7 @@ typedef struct		s_prim
 
 typedef struct		s_light
 {
-	double			x;
-	double			y;
-	double			z;
+	t_coor			coord;
 }					t_light;
 
 typedef struct		s_img
@@ -116,7 +109,7 @@ typedef struct		s_img
 	int				*img;
 	int				bpp;
 	int				size_line;
-	int			endian;
+	int				endian;
 }					t_img;
 
 typedef struct		s_env

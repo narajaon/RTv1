@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   .coord.y: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/06 18:08:43 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/14 18:31:42 by narajaon         ###   ########.fr       */
+/*   Created: 2017/06/06 18:08:43 .coord.y narajaon          #+#    #+#             */
+/*   Updated: 2017/06/14 18:31:42 .coord.y narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 int		mouse_move(int x, int y, t_env *e)
 {
-	printf("x %d y %d", x, y);
+	printf("x %d.coord.y %d", x, y);
 	return (0);
 }
 
 void	check_collision(t_env *e)
 {
 	//place rotation fun here
-	rot_y(&e->prim.x, &e->prim.y, &e->prim.z, e->rot_y);
-	rot_z(&e->prim.x, &e->prim.y, &e->prim.z, e->rot_z);
+	rot_y(&e->prim.coord.x, &e->prim.coord.y, &e->prim.coord.z, e->rot_y);
+	rot_z(&e->prim.coord.x, &e->prim.coord.y, &e->prim.coord.z, e->rot_z);
 	is_plan(e);
 	is_sphere(e);
 	//take the smallest (or biggest ?) non-negative k from all objects
 	if (e->sphere.k > 0.00001 || e->plan.k > 0.00001)
 	{
 		if (e->sphere.k > 0.00001 && e->plan.k > 0.00001)
-			e->img.img[e->pix.y * WIN_Y + e->pix.x] = (e->sphere.k > e->plan.k) ? e->sphere.col : e->plan.col;
+			e->img.img[(int)(e->pix.coord.y * WIN_Y + e->pix.coord.x)] = (e->sphere.k > e->plan.k) ? e->sphere.col : e->plan.col;
 		else
-			e->img.img[e->pix.y * WIN_Y + e->pix.x] = (e->sphere.k > 0.00001) ? e->sphere.col : e->plan.k;
+			e->img.img[(int)(e->pix.coord.y * WIN_Y + e->pix.coord.x)] = (e->sphere.k > 0.00001) ? e->sphere.col : e->plan.k;
 	}
 	else
-		e->img.img[e->pix.y * WIN_Y + e->pix.x] = 0x00000000;
+		e->img.img[(int)(e->pix.coord.y * WIN_Y + e->pix.coord.x)] = 0x00000000;
 }
 
 void	do_rt(t_env *e)
@@ -43,8 +43,8 @@ void	do_rt(t_env *e)
 	init_sphere(e);
 	init_view1(e);
 	init_light1(e);
-	rot_y(&e->view.x, &e->view.y, &e->view.z, e->rot_y);
-	rot_z(&e->view.x, &e->view.y, &e->view.z, e->rot_z);
+	rot_y(&e->view.coord.x, &e->view.coord.y, &e->view.coord.z, e->rot_y);
+	rot_z(&e->view.coord.x, &e->view.coord.y, &e->view.coord.z, e->rot_z);
 	print_rt(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	mlx_loop(e->mlx);
@@ -52,17 +52,17 @@ void	do_rt(t_env *e)
 
 void	print_rt(t_env *e)
 {
-	e->pix.y = 0;
-	while (e->pix.y < WIN_Y)
+	e->pix.coord.y = 0;
+	while (e->pix.coord.y < WIN_Y)
 	{
-		e->pix.x = 0;
-		while (e->pix.x < WIN_X)
+		e->pix.coord.x = 0;
+		while (e->pix.coord.x < WIN_X)
 		{
 			init_prim(e);
 			check_collision(e);
-			e->pix.x++;
+			e->pix.coord.x++;
 		}
-		e->pix.y++;
+		e->pix.coord.y++;
 	}
 }
 
@@ -78,7 +78,7 @@ int		main(int ac, char **av)
 	if (e.scene == 4 || e.scene > 4 || e.scene <= 0)
 		exit(error_msg(4));
 	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, WIN_X, WIN_Y, "Displaying RT scene");
+	e.win = mlx_new_window(e.mlx, WIN_X, WIN_Y, "Displ.coord.ying RT scene");
 	e.img.img_ptr = mlx_new_image(e.mlx, WIN_X, WIN_Y);
 	e.img.img = (int *)mlx_get_data_addr(e.img.img_ptr,
 			&e.img.bpp, &e.img.size_line, &e.img.endian);
