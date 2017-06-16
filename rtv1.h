@@ -43,7 +43,7 @@ typedef struct		s_coor
 
 typedef struct		s_shad
 {
-	t_coor			coord;
+	t_coor				coord;
 	unsigned int	col;
 }					t_shad;
 
@@ -52,7 +52,7 @@ typedef struct		s_shad
 typedef struct		s_view
 {
 	t_coor			coord;
-	unsigned int		dist;
+	unsigned int	dist;
 }					t_view;
 
 /*pixel coordinates*/
@@ -60,7 +60,7 @@ typedef struct		s_view
 typedef struct		s_pix
 {
 	t_coor			coord;
-	unsigned int		col;
+	unsigned int	col;
 }					t_pix;
 
 /*sphere coordinates*/
@@ -68,23 +68,23 @@ typedef struct		s_pix
 typedef struct		s_sphere
 {
 	t_coor			coord;
-	double				r;
-	double				k;
-	double				a;
-	double				b;
-	double				c;
-	unsigned int		col;
-	t_shad				shadow;
+	double			r;
+	double			k;
+	double			k1;
+	double			k2;
+	double			delt;
+	unsigned int	col;
+	t_shad			shadow;
 }					t_sphere;
 
 /*plan coordinates*/
 
 typedef struct		s_plan
 {
+	double			k;
+	unsigned int	col;
 	t_coor			coord;
-	double				k;
-	unsigned int		col;
-	t_shad				shadow;
+	t_shad			shadow;
 }					t_plan;
 
 /*primary ray coordinates*/
@@ -126,8 +126,8 @@ typedef struct		s_env
 	t_plan			plan;
 	t_shad			shad;
 	t_light			light1;
-	double			rot_z;
 	double			rot_y;
+	double			rot_z;
 	int				scene;
 }					t_env;
 
@@ -149,4 +149,11 @@ void	init_light1(t_env *e);
 void	is_sphere(t_env *e);
 void	is_plan(t_env *e);
 void	do_rt(t_env *e);
+double	dot_prod(t_coor *a, t_coor *b);
+double	vect_len(t_coor *a);
+void	cross_prod(t_coor *a, t_coor *b, t_coor *tmp);
+void	dot_sub(t_coor *a, t_coor *b, t_coor *tmp);
+void	dot_sum(t_coor *a, t_coor *b, t_coor *tmp);
+void	dot_mult(t_coor *a, t_coor *tmp, double nb);
+void		vect_norm(t_coor *a, t_coor *tmp, double len_a);
 #endif

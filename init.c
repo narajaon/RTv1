@@ -19,15 +19,16 @@ void	init_sphere(t_env *e)
 	e->sphere.coord.x = 0;
 	e->sphere.coord.y = 0;
 	e->sphere.coord.z = 0;
+	e->sphere.k = INFINITY;
 }
 
 void	init_plan(t_env *e)
 {
-	e->plan.col = 0x00FFFFFF;
+	e->plan.col = 0x000000FF;
 	e->plan.coord.x = 0;
 	e->plan.coord.y = 0;
-	e->plan.coord.z = 0;
-	e->plan.k = 0;
+	e->plan.coord.z = 10;
+	e->plan.k = INFINITY;
 }
 
 void	init_view1(t_env *e)

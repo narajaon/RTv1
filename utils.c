@@ -71,7 +71,7 @@ int		error_msg(int error)
 
 int		rot_view(int keycode, t_env *e)
 {
-	//printf("%d\n", keycode);
+	printf("key %d\n", keycode);
 	if (keycode == EX_KEY)
 	{
 		mlx_destroy_image(e->mlx, e->img.img_ptr);

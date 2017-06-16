@@ -21,30 +21,25 @@ int		mouse_move(int x, int y, t_env *e)
 void	check_collision(t_env *e)
 {
 	//place rotation fun here
-	rot_y(&e->prim.coord.x, &e->prim.coord.y, &e->prim.coord.z, e->rot_y);
-	rot_z(&e->prim.coord.x, &e->prim.coord.y, &e->prim.coord.z, e->rot_z);
+//	rot_y(&e->prim.coord.x, &e->prim.coord.y, &e->prim.coord.z, e->rot_y);
+//	rot_z(&e->prim.coord.x, &e->prim.coord.y, &e->prim.coord.z, e->rot_z);
 	is_plan(e);
 	is_sphere(e);
 	//take the smallest (or biggest ?) non-negative k from all objects
-	if (e->sphere.k > 0.00001 || e->plan.k > 0.00001)
-	{
-		if (e->sphere.k > 0.00001 && e->plan.k > 0.00001)
-			e->img.img[(int)(e->pix.coord.y * WIN_Y + e->pix.coord.x)] = (e->sphere.k > e->plan.k) ? e->sphere.col : e->plan.col;
-		else
-			e->img.img[(int)(e->pix.coord.y * WIN_Y + e->pix.coord.x)] = (e->sphere.k > 0.00001) ? e->sphere.col : e->plan.k;
-	}
-	else
-		e->img.img[(int)(e->pix.coord.y * WIN_Y + e->pix.coord.x)] = 0x00000000;
+	if (e->plan.k > 0.00001 && e->plan.k < e->sphere.k)
+		e->img.img[(int)(e->pix.coord.y * WIN_Y + e->pix.coord.x)] = e->plan.col;
+	printf("plan %f\n", e->sphere.k);
 }
 
 void	do_rt(t_env *e)
 {
-	mlx_key_hook(e->win, &rot_view, e);
 	init_sphere(e);
+	init_plan(e);
 	init_view1(e);
 	init_light1(e);
-	rot_y(&e->view.coord.x, &e->view.coord.y, &e->view.coord.z, e->rot_y);
-	rot_z(&e->view.coord.x, &e->view.coord.y, &e->view.coord.z, e->rot_z);
+	mlx_key_hook(e->win, &rot_view, e);
+	//rot_y(&e->view.coord.x, &e->view.coord.y, &e->view.coord.z, e->rot_y);
+	//rot_y(&e->plan.coord.x, &e->plan.coord.y, &e->plan.coord.z, e->rot_z);
 	print_rt(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	mlx_loop(e->mlx);
@@ -52,17 +47,17 @@ void	do_rt(t_env *e)
 
 void	print_rt(t_env *e)
 {
-	e->pix.coord.y = 0;
-	while (e->pix.coord.y < WIN_Y)
+	e->pix.coord.x = 0;
+	while (e->pix.coord.x < WIN_X)
 	{
-		e->pix.coord.x = 0;
-		while (e->pix.coord.x < WIN_X)
+		e->pix.coord.y = 0;
+		while (e->pix.coord.y < WIN_Y)
 		{
 			init_prim(e);
 			check_collision(e);
-			e->pix.coord.x++;
+			e->pix.coord.y++;
 		}
-		e->pix.coord.y++;
+		e->pix.coord.x++;
 	}
 }
 

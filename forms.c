@@ -2,28 +2,37 @@
 
 void	is_plan(t_env *e)
 {
-	e->plan.k = -(e->view.coord.z) / (e->prim.coord.z);
+	t_coor		x;
+	t_coor		v;
+	double		xv;
+	double		dv;
+
+	dot_sub(&e->view.coord, &e->plan.coord, &x);
+	vect_norm(&e->plan.coord, &v, vect_len(&e->plan.coord));
+	//dot_mult(&x, &x, -1);
+	xv = dot_prod(&x, &v);
+	dv = dot_prod(&e->prim.coord, &v);
+	if (fabs(dv) > 0.00001)
+		e->plan.k = xv / dv;
 }
 
 void	is_sphere(t_env *e)
 {
-	double		delt;
-	double		k1;
-	double		k2;
+	double		a;
+	double		b;
+	double		c;
 
-	e->sphere.a = pow(e->prim.coord.x, 2) + pow(e->prim.coord.y, 2) + pow(e->prim.coord.z, 2);
-	e->sphere.b = 2 * (e->view.coord.x * e->prim.coord.x + e->view.coord.y * e->prim.coord.y + e->view.coord.z * e->prim.coord.z);
-	e->sphere.c = pow(e->view.coord.x, 2) + pow(e->view.coord.y, 2) + pow(e->view.coord.z, 2) - pow(e->sphere.r, 2);
-	delt = pow(e->sphere.b, 2) - 4 * e->sphere.a * e->sphere.c;
-	if (delt >= 0.00001)
+	a = pow(e->prim.coord.x, 2) + pow(e->prim.coord.y, 2) + pow(e->prim.coord.z, 2);
+	b = 2 * (e->view.coord.x * e->prim.coord.x + e->view.coord.y * e->prim.coord.y + e->view.coord.z * e->prim.coord.z);
+	c = pow(e->view.coord.x, 2) + pow(e->view.coord.y, 2) + pow(e->view.coord.z, 2) - pow(e->sphere.r, 2);
+	e->sphere.delt = pow(b, 2) - 4 * a * c;
+	if (e->sphere.delt >= 0.00001)
 	{
-		k1 = (-e->sphere.b + sqrt(delt)) / 2 * e->sphere.a;
-		k2 = (-e->sphere.b - sqrt(delt)) / 2 * e->sphere.a;
-		e->sphere.k = (k1 < k2) ? k1 : k2;
+		e->sphere.k1 = (-b + sqrt(e->sphere.delt)) / 2 * a;
+		e->sphere.k2 = (-b - sqrt(e->sphere.delt)) / 2 * a;
+		e->sphere.k = (e->sphere.k1 < e->sphere.k2) ? e->sphere.k1 : e->sphere.k2;
 		if (e->pix.coord.x == WIN_X / 2 && e->pix.coord.y == WIN_Y / 2)
-			printf("k1 %f k2 %f\nsphere %f plan %f\n", k1, k2, e->sphere.k, e->plan.k);
+			printf("k1 %f k2 %f\nsphere %f plan %f\n", e->sphere.k1, e->sphere.k2, e->sphere.k, e->plan.k);
 		/*init shadow r.coord.y here*/
 	}
-	else
-		e->sphere.k = 0;
 }
