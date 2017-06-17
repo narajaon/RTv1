@@ -39,6 +39,13 @@ void		dot_sub(t_coor *a, t_coor *b, t_coor *tmp)
 	tmp->z = a->z - b->z;
 }
 
+void		dot_add(t_coor *a, t_coor *tmp, int nb)
+{
+	tmp->x = a->x + nb;
+	tmp->y = a->y + nb;
+	tmp->z = a->z + nb;
+}
+
 void		dot_sum(t_coor *a, t_coor *b, t_coor *tmp)
 {
 	tmp->x = a->x + b->x;

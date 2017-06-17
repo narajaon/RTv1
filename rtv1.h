@@ -34,6 +34,10 @@
 # define RAY_MIN 0.0001f
 # define RAY_MAX INFINITY
 
+# define PLANE 0
+# define SPHERE 1
+# define CONE 0
+
 typedef struct		s_coor
 {
 	double			x;
@@ -41,23 +45,24 @@ typedef struct		s_coor
 	double			z;
 }					t_coor;
 
+/*intersection point infos*/
+
+typedef struct		s_inter
+{
+	t_coor			inter;
+	float			dist;
+	int				shape;
+}					t_inter;
+
 /*ray origin, direction coordinates && length*/
 
 typedef struct		s_ray
 {
 	t_coor			origin;
 	t_coor			direction;
+	t_inter			inter;
 	double			len;
 }					t_ray;
-
-/*intersection point infos*/
-
-typedef struct		s_inter
-{
-	t_ray			ray;
-	double			len;
-	int				obj;
-}					t_inter;
 
 /*view coordinates*/
 
@@ -65,6 +70,7 @@ typedef struct		s_view
 {
 	t_coor			coord;
 	t_ray			ray;
+	t_inter			inter;
 	unsigned int	dist;
 }					t_view;
 
@@ -122,34 +128,36 @@ typedef struct		s_env
 	t_pix			pix;
 	t_plane			plane;
 	t_view			view;
+	t_sphere		sphere;
 	double			rot_y;
 	double			rot_z;
 }					t_env;
 
 int					error_msg(int error);
-void				is_sphere(t_env *e);
-void				check_collision(t_env *e);
-void				print_rt(t_env *e);
+void				print_coord(t_coor *coord); //attention printf
+
+int					rot_view(int keycode, t_env *e);
 int					rot_view(int keycode, t_env *e);
 void				rot_x(double *x, double *y, double *z, double angle);
 void				rot_y(double *x, double *y, double *z, double angle);
 void				rot_z(double *x, double *y, double *z, double angle);
-int					rot_view(int keycode, t_env *e);
-void				init_sphere(t_env *e);
-void				init_plane(t_plane *plane);
-void				init_view(t_view *view);
-void				init_light1(t_env *e);
-void				is_sphere(t_env *e);
-void				is_plan(t_env *e);
-void				do_rt(t_env *e);
+
 void				cross_prod(t_coor *a, t_coor *b, t_coor *tmp);
 void				dot_sub(t_coor *a, t_coor *b, t_coor *tmp);
 void				dot_sum(t_coor *a, t_coor *b, t_coor *tmp);
 void				dot_mult(t_coor *a, t_coor *tmp, double nb);
 void				dot_cpy(t_coor *src, t_coor *dst);
 void				normalize(t_coor *a, t_coor *tmp);
-double				dot_prod(t_coor *a, t_coor *b);
-double				vect_len(t_coor *a);
 void				point_on_ray(t_coor *ori, t_coor *dir, t_coor *res, float len);
 void				fill_coord(t_coor *coord, float x, float y, float z);
+double				dot_prod(t_coor *a, t_coor *b);
+double				vect_len(t_coor *a);
+
+void				init_sphere(t_sphere *sphere);
+void				init_view(t_view *view);
+void				init_plane(t_plane *plane);
+void				init_ray(t_view *view, t_pix *pix);
+
+void				check_collision(t_env *e);
+void				print_rt(t_env *e);
 #endif

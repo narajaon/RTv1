@@ -24,6 +24,7 @@ int		key_hook(int key, t_env *e)
 
 void	do_rt(t_env *e)
 {
+	init_sphere(&e->sphere);
 	init_plane(&e->plane);
 	init_view(&e->view);
 	print_rt(e);
