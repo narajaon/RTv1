@@ -12,23 +12,22 @@
 
 #include "rtv1.h"
 
-int		mouse_move(int x, int y, t_env *e)
-{
-	printf("x %d.coord.y %d", x, y);
-	return (0);
-}
-
 void	check_collision(t_env *e)
 {
+	int			xy;
+	double		dist_sphere;
+	double		dist_plan;
 	//place rotation fun here
-//	rot_y(&e->prim.coord.x, &e->prim.coord.y, &e->prim.coord.z, e->rot_y);
-//	rot_z(&e->prim.coord.x, &e->prim.coord.y, &e->prim.coord.z, e->rot_z);
 	is_plan(e);
 	is_sphere(e);
+	dist_sphere = vect_len(&e->sphere.hit);
+	dist_plan = vect_len(&e->plan.hit);
+	xy = (WIN_Y - e->pix.coord.y) * WIN_Y + e->pix.coord.x;
 	//take the smallest (or biggest ?) non-negative k from all objects
-	if (e->plan.k > 0.00001 && e->plan.k < e->sphere.k)
-		e->img.img[(int)(e->pix.coord.y * WIN_Y + e->pix.coord.x)] = e->plan.col;
-	printf("plan %f\n", e->sphere.k);
+	if (e->sphere.k)
+		e->img.img[xy] = (e->sphere.k < e->plan.k) ? e->sphere.col : e->plan.col;
+//	printf("sphere %f plan %f\n", dist_sphere, dist_plan);
+	printf("sphere %f plan %f\n", e->sphere.k, e->plan.k);
 }
 
 void	do_rt(t_env *e)
@@ -47,17 +46,17 @@ void	do_rt(t_env *e)
 
 void	print_rt(t_env *e)
 {
-	e->pix.coord.x = 0;
-	while (e->pix.coord.x < WIN_X)
+	e->pix.coord.y = 0;
+	while (e->pix.coord.y < WIN_Y)
 	{
-		e->pix.coord.y = 0;
-		while (e->pix.coord.y < WIN_Y)
+		e->pix.coord.x = 0;
+		while (e->pix.coord.x < WIN_X)
 		{
 			init_prim(e);
 			check_collision(e);
-			e->pix.coord.y++;
+			e->pix.coord.x++;
 		}
-		e->pix.coord.x++;
+		e->pix.coord.y++;
 	}
 }
 

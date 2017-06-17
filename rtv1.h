@@ -68,13 +68,13 @@ typedef struct		s_pix
 typedef struct		s_sphere
 {
 	t_coor			coord;
+	t_coor			hit;
 	double			r;
 	double			k;
 	double			k1;
 	double			k2;
 	double			delt;
 	unsigned int	col;
-	t_shad			shadow;
 }					t_sphere;
 
 /*plan coordinates*/
@@ -84,7 +84,7 @@ typedef struct		s_plan
 	double			k;
 	unsigned int	col;
 	t_coor			coord;
-	t_shad			shadow;
+	t_coor			hit;
 }					t_plan;
 
 /*primary ray coordinates*/
@@ -155,5 +155,6 @@ void	cross_prod(t_coor *a, t_coor *b, t_coor *tmp);
 void	dot_sub(t_coor *a, t_coor *b, t_coor *tmp);
 void	dot_sum(t_coor *a, t_coor *b, t_coor *tmp);
 void	dot_mult(t_coor *a, t_coor *tmp, double nb);
-void		vect_norm(t_coor *a, t_coor *tmp, double len_a);
+void	dot_cpy(t_coor *src, t_coor *dst);
+void	vect_norm(t_coor *a, t_coor *tmp, double len_a);
 #endif

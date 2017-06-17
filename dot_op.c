@@ -42,3 +42,10 @@ void		dot_sum(t_coor *a, t_coor *b, t_coor *tmp)
 	tmp->y = a->y + b->y;
 	tmp->z = a->z + b->z;
 }
+
+void		dot_cpy(t_coor *src, t_coor *dst)
+{
+	dst->x = src->x;
+	dst->y = src->y;
+	dst->z = src->z;
+}
