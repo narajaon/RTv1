@@ -1,47 +1,62 @@
 #include "rtv1.h"
 
-void	is_plan(t_env *e)
+void	init_view(t_view *view)
 {
-	t_coor		x;
-	t_coor		v;
-	double		xv;
-	double		dv;
-
-	dot_sub(&e->plan.coord, &e->view.coord, &x);
-	vect_norm(&e->plan.coord, &v, vect_len(&e->plan.coord));
-//	dot_mult(&x, &x, -1);
-	xv = dot_prod(&x, &v);
-	dv = dot_prod(&e->prim.coord, &v);
-	if ((dv > 0.00001 && xv > 0.00001) || (dv < -0.00001 && xv < -0.00001))
-	{
-		dot_cpy(&e->plan.coord, &e->plan.hit);
-		e->plan.k = -xv / dv;
-	}
-//		printf("sphere %f plan %f\n", e->sphere.k, e->plan.k);
+	fill_coord(&view->coord, 0, 250, 10);
 }
 
-void	is_sphere(t_env *e)
+void	init_plane(t_plane *plane)
 {
-	t_coor		xv;
-	double		a;
-	double		b;
-	double		c;
+	fill_coord(&plane->center, 0, WIN_X / 2, WIN_Y / 2);
+	normalize(&plane->center, &plane->norm);
+	plane->col = 0x00FFFFFF;
+}
 
-	dot_sub(&e->sphere.coord, &e->view.coord, &xv);
-	a = dot_prod(&e->prim.coord, &e->prim.coord);
-	b = 2 * (dot_prod(&e->prim.coord, &xv));
-	c = dot_prod(&xv, &xv) - pow(e->sphere.r, 2);
-	e->sphere.delt = pow(b, 2) - 4 * a * c;
-//	printf("x %fy %f z %f\n", xv.x, xv.y, xv.z);
-	if (e->sphere.delt >= 0.00001)
-	{
-		e->sphere.k1 = (-b + sqrt(e->sphere.delt)) / 2 * a;
-		e->sphere.k2 = (-b - sqrt(e->sphere.delt)) / 2 * a;
-		e->sphere.k = (e->sphere.k1 < e->sphere.k2) ? e->sphere.k1 : e->sphere.k2;
-		if (e->pix.coord.x == WIN_X / 2 && e->pix.coord.y == WIN_Y / 2)
-			printf("k1 %f k2 %f\nsphere %f plan %f\n", e->sphere.k1, e->sphere.k2, e->sphere.k, e->plan.k);
-	}
-	else
-		e->sphere.k = 0;
-	dot_cpy(&e->sphere.coord, &e->sphere.hit);
+void	init_ray(t_view *view, t_pix *pix)
+{
+	t_coor		tmp;
+
+	tmp.x = pix->x;
+	tmp.y = pix->y;
+	tmp.z = 0;
+	dot_cpy(&view->coord, &view->ray.origin);
+	dot_cpy(&tmp, &view->ray.direction);
+}
+
+void	print_coord(t_coor *coord)
+{
+	printf("x %f y %f z %f\n", coord->x, coord->y, coord->z);
+}
+
+int		is_plane(t_view *view, t_plane *plane, t_pix *pix)
+{
+	float		dn;
+	float		t;
+	t_coor		tmp;
+	t_coor		hit;
+
+	dn = dot_prod(&view->ray.direction, &plane->norm);
+	if (fabs(dn) < 0.00001)
+		return (0);
+	fill_coord(&hit, pix->x, pix->y, 0);
+	dot_sub(&hit, &view->ray.origin, &tmp);
+	t = dot_prod(&tmp, &plane->norm);
+	t /= dn;
+	if (t <= RAY_MIN || t >= RAY_MAX)
+		return (0);
+//	printf("t %f\n", t);
+//	print_coord(&view->ray.direction);
+//	print_coord(&view->ray.origin);
+//	printf("%f\n", dn);
+	return (1);
+}
+
+void	check_collision(t_env *e)
+{
+	int		xy;
+
+	init_ray(&e->view, &e->pix);
+	xy = e->pix.y * WIN_Y + e->pix.x;
+	if (is_plane(&e->view, &e->plane, &e->pix))
+		e->img.img[xy] = e->plane.col;
 }

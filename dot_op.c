@@ -17,9 +17,12 @@ void		dot_mult(t_coor *a, t_coor *tmp, double nb)
 	tmp->z = a->z * nb;
 }
 
-void		vect_norm(t_coor *a, t_coor *tmp, double len_a)
+void		normalize(t_coor *a, t_coor *tmp)
 {
-	dot_mult(a, tmp, 1 / len_a);
+	float		len;
+
+	len = vect_len(a);
+	dot_mult(a, tmp, 1 / len);
 }
 
 void		cross_prod(t_coor *a, t_coor *b, t_coor *tmp)
@@ -48,4 +51,17 @@ void		dot_cpy(t_coor *src, t_coor *dst)
 	dst->x = src->x;
 	dst->y = src->y;
 	dst->z = src->z;
+}
+
+void		point_on_ray(t_coor *origin, t_coor *direction, t_coor * res, float len)
+{
+	dot_mult(direction, res, len);
+	dot_sum(res, origin, res);
+}
+
+void		fill_coord(t_coor *coord, float x, float y, float z)
+{
+	coord->x = x;
+	coord->y = y;
+	coord->z = z;
 }

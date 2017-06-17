@@ -12,48 +12,6 @@
 
 #include "rtv1.h"
 
-void	rot_x(double *x, double *y, double *z, double angle)
-{
-	double		tmpx;
-	double		tmpy;
-	double		tmpz;
-
-	tmpx = *x;
-	tmpy = cos(angle) * *y - sin(angle) * *z;
-	tmpy = sin(angle) * *y + cos(angle) * *z;
-	*x = tmpx;
-	*y = tmpy;
-	*z = tmpz;
-}
-
-void	rot_y(double *x, double *y, double *z, double angle)
-{
-	double		tmpx;
-	double		tmpy;
-	double		tmpz;
-
-	tmpx = cos(angle) * *x + sin(angle) * *z;
-	tmpy = *y;
-	tmpz = -sin(angle) * *x + cos(angle) * *z;
-	*x = tmpx;
-	*y = tmpy;
-	*z = tmpz;
-}
-
-void	rot_z(double *x, double *y, double *z, double angle)
-{
-	double		tmpx;
-	double		tmpy;
-	double		tmpz;
-
-	tmpx = cos(angle) * *x - sin(angle) * *y;
-	tmpy = sin(angle) * *x + cos(angle) * *y;
-	tmpz = *z;
-	*x = tmpx;
-	*y = tmpy;
-	*z = tmpz;
-}
-
 int		error_msg(int error)
 {
 	if (error == 1)
@@ -69,26 +27,17 @@ int		error_msg(int error)
 	return (error);
 }
 
-int		rot_view(int keycode, t_env *e)
+void	print_rt(t_env *e)
 {
-	printf("key %d\n", keycode);
-	if (keycode == EX_KEY)
+	e->pix.y = 0;
+	while (e->pix.y < WIN_Y)
 	{
-		mlx_destroy_image(e->mlx, e->img.img_ptr);
-		mlx_destroy_window(e->mlx, e->win);
-		exit(error_msg(0));
+		e->pix.x = 0;
+		while (e->pix.x < WIN_X)
+		{
+			check_collision(e);
+			e->pix.x++;
+		}
+		e->pix.y++;
 	}
-	else if (keycode == UP_KEY)
-		e->rot_y += 0.1;
-	else if (keycode == DOWN_KEY)
-		e->rot_y -= 0.1;
-	else if (keycode == LEFT_KEY)
-		e->rot_z += 0.1;
-	else if (keycode == RIGHT_KEY)
-		e->rot_z -= 0.1;
-	else if (keycode == R_KEY)
-		e->rot_y = 0;
-	do_rt(e);
-	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
-	return (keycode);
 }

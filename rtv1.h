@@ -19,18 +19,20 @@
 
 # define WIN_X 500
 # define WIN_Y 500
-#define EX_KEY 53
-#define UP_KEY 126
-#define DOWN_KEY 125
-#define LEFT_KEY 123
-#define RIGHT_KEY 124
-#define A_KEY 0
-#define S_KEY 1
-#define D_KEY 2
-#define W_KEY 13
-#define R_KEY 15
-#define Q_KEY 12
-#define E_KEY 14
+# define EX_KEY 53
+# define UP_KEY 126
+# define DOWN_KEY 125
+# define LEFT_KEY 123
+# define RIGHT_KEY 124
+# define A_KEY 0
+# define S_KEY 1
+# define D_KEY 2
+# define W_KEY 13
+# define R_KEY 15
+# define Q_KEY 12
+# define E_KEY 14
+# define RAY_MIN 0.0001f
+# define RAY_MAX INFINITY
 
 typedef struct		s_coor
 {
@@ -39,69 +41,58 @@ typedef struct		s_coor
 	double			z;
 }					t_coor;
 
-/*shadow ray coordinates*/
+/*ray origin, direction coordinates && length*/
 
-typedef struct		s_shad
+typedef struct		s_ray
 {
-	t_coor				coord;
-	unsigned int	col;
-}					t_shad;
+	t_coor			origin;
+	t_coor			direction;
+	double			len;
+}					t_ray;
+
+/*intersection point infos*/
+
+typedef struct		s_inter
+{
+	t_ray			ray;
+	double			len;
+	int				obj;
+}					t_inter;
 
 /*view coordinates*/
 
 typedef struct		s_view
 {
 	t_coor			coord;
+	t_ray			ray;
 	unsigned int	dist;
 }					t_view;
-
-/*pixel coordinates*/
-
-typedef struct		s_pix
-{
-	t_coor			coord;
-	unsigned int	col;
-}					t_pix;
 
 /*sphere coordinates*/
 
 typedef struct		s_sphere
 {
 	t_coor			coord;
-	t_coor			hit;
 	double			r;
-	double			k;
-	double			k1;
-	double			k2;
-	double			delt;
+	double			hit_1;
+	double			hit_2;
 	unsigned int	col;
 }					t_sphere;
 
-/*plan coordinates*/
-
-typedef struct		s_plan
+typedef struct		s_plane
 {
-	double			k;
+	t_coor			center;
+	t_coor			norm;
+	t_coor			hit_p;
 	unsigned int	col;
-	t_coor			coord;
-	t_coor			hit;
-}					t_plan;
+}					t_plane;
 
-/*primary ray coordinates*/
-
-typedef struct		s_prim
+typedef struct		s_shapes
 {
-	t_coor			coord;
-	double			dist_min;
-	unsigned int	col;
-}					t_prim;
-
-/*light source coordinates*/
-
-typedef struct		s_light
-{
-	t_coor			coord;
-}					t_light;
+	void			*shap_tab[4]; //shape pointers
+	void			*does_inter[4]; //fun pointers
+	int				nb_shapes;
+}					t_shapes;
 
 typedef struct		s_img
 {
@@ -112,6 +103,15 @@ typedef struct		s_img
 	int				endian;
 }					t_img;
 
+/*pixel coordinates*/
+
+typedef struct		s_pix
+{
+	unsigned int	x;
+	unsigned int	y;
+	unsigned int	col;
+}					t_pix;
+
 typedef struct		s_env
 {
 	void			*mlx;
@@ -120,41 +120,36 @@ typedef struct		s_env
 	void			*mouse;
 	t_img			img;
 	t_pix			pix;
+	t_plane			plane;
 	t_view			view;
-	t_prim			prim;
-	t_sphere		sphere;
-	t_plan			plan;
-	t_shad			shad;
-	t_light			light1;
 	double			rot_y;
 	double			rot_z;
-	int				scene;
 }					t_env;
 
-int		error_msg(int error);
-void	is_sphere(t_env *e);
-void	check_collision(t_env *e);
-void	print_rt(t_env *e);
-int		rot_view(int keycode, t_env *e);
-void	rot_x(double *x, double *y, double *z, double angle);
-void	rot_y(double *x, double *y, double *z, double angle);
-void	rot_z(double *x, double *y, double *z, double angle);
-int		rot_view(int keycode, t_env *e);
-void	init_sphere(t_env *e);
-void	init_plan(t_env *e);
-void	init_view1(t_env *e);
-void	init_shad(t_env *e, unsigned int col);
-void	init_prim(t_env *e);
-void	init_light1(t_env *e);
-void	is_sphere(t_env *e);
-void	is_plan(t_env *e);
-void	do_rt(t_env *e);
-double	dot_prod(t_coor *a, t_coor *b);
-double	vect_len(t_coor *a);
-void	cross_prod(t_coor *a, t_coor *b, t_coor *tmp);
-void	dot_sub(t_coor *a, t_coor *b, t_coor *tmp);
-void	dot_sum(t_coor *a, t_coor *b, t_coor *tmp);
-void	dot_mult(t_coor *a, t_coor *tmp, double nb);
-void	dot_cpy(t_coor *src, t_coor *dst);
-void	vect_norm(t_coor *a, t_coor *tmp, double len_a);
+int					error_msg(int error);
+void				is_sphere(t_env *e);
+void				check_collision(t_env *e);
+void				print_rt(t_env *e);
+int					rot_view(int keycode, t_env *e);
+void				rot_x(double *x, double *y, double *z, double angle);
+void				rot_y(double *x, double *y, double *z, double angle);
+void				rot_z(double *x, double *y, double *z, double angle);
+int					rot_view(int keycode, t_env *e);
+void				init_sphere(t_env *e);
+void				init_plane(t_plane *plane);
+void				init_view(t_view *view);
+void				init_light1(t_env *e);
+void				is_sphere(t_env *e);
+void				is_plan(t_env *e);
+void				do_rt(t_env *e);
+void				cross_prod(t_coor *a, t_coor *b, t_coor *tmp);
+void				dot_sub(t_coor *a, t_coor *b, t_coor *tmp);
+void				dot_sum(t_coor *a, t_coor *b, t_coor *tmp);
+void				dot_mult(t_coor *a, t_coor *tmp, double nb);
+void				dot_cpy(t_coor *src, t_coor *dst);
+void				normalize(t_coor *a, t_coor *tmp);
+double				dot_prod(t_coor *a, t_coor *b);
+double				vect_len(t_coor *a);
+void				point_on_ray(t_coor *ori, t_coor *dir, t_coor *res, float len);
+void				fill_coord(t_coor *coord, float x, float y, float z);
 #endif

@@ -12,52 +12,24 @@
 
 #include "rtv1.h"
 
-void	check_collision(t_env *e)
+int		key_hook(int key, t_env *e)
 {
-	int			xy;
-	double		dist_sphere;
-	double		dist_plan;
-	//place rotation fun here
-	is_plan(e);
-	is_sphere(e);
-	dist_sphere = vect_len(&e->sphere.hit);
-	dist_plan = vect_len(&e->plan.hit);
-	xy = (WIN_Y - e->pix.coord.y) * WIN_Y + e->pix.coord.x;
-	//take the smallest (or biggest ?) non-negative k from all objects
-	if (e->sphere.k)
-		e->img.img[xy] = (e->sphere.k < e->plan.k) ? e->sphere.col : e->plan.col;
-//	printf("sphere %f plan %f\n", dist_sphere, dist_plan);
-	printf("sphere %f plan %f\n", e->sphere.k, e->plan.k);
+	if (key == EX_KEY)
+	{
+		mlx_destroy_window(e->mlx, e->win);
+		exit(error_msg(0));
+	}
+	return (key);
 }
 
 void	do_rt(t_env *e)
 {
-	init_sphere(e);
-	init_plan(e);
-	init_view1(e);
-	init_light1(e);
-	mlx_key_hook(e->win, &rot_view, e);
-	//rot_y(&e->view.coord.x, &e->view.coord.y, &e->view.coord.z, e->rot_y);
-	//rot_y(&e->plan.coord.x, &e->plan.coord.y, &e->plan.coord.z, e->rot_z);
+	init_plane(&e->plane);
+	init_view(&e->view);
 	print_rt(e);
+	mlx_key_hook(e->win, &key_hook, e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	mlx_loop(e->mlx);
-}
-
-void	print_rt(t_env *e)
-{
-	e->pix.coord.y = 0;
-	while (e->pix.coord.y < WIN_Y)
-	{
-		e->pix.coord.x = 0;
-		while (e->pix.coord.x < WIN_X)
-		{
-			init_prim(e);
-			check_collision(e);
-			e->pix.coord.x++;
-		}
-		e->pix.coord.y++;
-	}
 }
 
 int		main(int ac, char **av)
@@ -66,11 +38,6 @@ int		main(int ac, char **av)
 
 	if (ac != 2)
 		exit(error_msg(1));
-	e.scene = ft_atoi(av[1]);
-	e.rot_y = 0;
-	e.rot_z = 0;
-	if (e.scene == 4 || e.scene > 4 || e.scene <= 0)
-		exit(error_msg(4));
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, WIN_X, WIN_Y, "Displ.coord.ying RT scene");
 	e.img.img_ptr = mlx_new_image(e.mlx, WIN_X, WIN_Y);
