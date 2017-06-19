@@ -82,6 +82,7 @@ typedef struct		s_sphere
 	double			r;
 	double			hit_1;
 	double			hit_2;
+	float			hit;
 	unsigned int	col;
 }					t_sphere;
 
