@@ -5,9 +5,14 @@ double		dot_prod(t_coor *a, t_coor *b)
 	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }
 
+double		vect_pow(t_coor *a)
+{
+	return (pow(a->x, 2) + pow(a->y, 2) + pow(a->z, 2));
+}
+
 double		vect_len(t_coor *a)
 {
-	return (sqrt(pow(a->x, 2) + pow(a->y, 2) + pow(a->z, 2)));
+	return (sqrt(vect_pow(a)));
 }
 
 void		dot_mult(t_coor *a, t_coor *tmp, double nb)

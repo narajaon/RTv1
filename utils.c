@@ -27,6 +27,30 @@ int		error_msg(int error)
 	return (error);
 }
 
+int		rot_view(int keycode, t_env *e)
+{
+	printf("key %d\n", keycode);
+	if (keycode == EX_KEY)
+	{
+		mlx_destroy_image(e->mlx, e->img.img_ptr);
+		mlx_destroy_window(e->mlx, e->win);
+		exit(error_msg(0));
+	}
+	else if (keycode == UP_KEY)
+		e->rot_y += 0.1;
+	else if (keycode == DOWN_KEY)
+		e->rot_y -= 0.1;
+	else if (keycode == LEFT_KEY)
+		e->rot_z += 0.1;
+	else if (keycode == RIGHT_KEY)
+		e->rot_z -= 0.1;
+	else if (keycode == R_KEY)
+		e->rot_y = 0;
+	do_rt(e);
+//	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
+	return (keycode);
+}
+
 void	print_rt(t_env *e)
 {
 	e->pix.y = 0;

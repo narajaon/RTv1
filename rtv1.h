@@ -72,6 +72,7 @@ typedef struct		s_view
 	t_ray			ray;
 	t_inter			inter;
 	unsigned int	dist;
+	float			rot_y;
 }					t_view;
 
 /*sphere coordinates*/
@@ -82,7 +83,7 @@ typedef struct		s_sphere
 	double			r;
 	double			hit_1;
 	double			hit_2;
-	float			hit;
+	float			dist;
 	unsigned int	col;
 }					t_sphere;
 
@@ -90,7 +91,7 @@ typedef struct		s_plane
 {
 	t_coor			center;
 	t_coor			norm;
-	t_coor			hit_p;
+	float			dist;
 	unsigned int	col;
 }					t_plane;
 
@@ -138,7 +139,6 @@ int					error_msg(int error);
 void				print_coord(t_coor *coord); //attention printf
 
 int					rot_view(int keycode, t_env *e);
-int					rot_view(int keycode, t_env *e);
 void				rot_x(double *x, double *y, double *z, double angle);
 void				rot_y(double *x, double *y, double *z, double angle);
 void				rot_z(double *x, double *y, double *z, double angle);
@@ -153,6 +153,7 @@ void				point_on_ray(t_coor *ori, t_coor *dir, t_coor *res, float len);
 void				fill_coord(t_coor *coord, float x, float y, float z);
 double				dot_prod(t_coor *a, t_coor *b);
 double				vect_len(t_coor *a);
+double				vect_pow(t_coor *a);
 
 void				init_sphere(t_sphere *sphere);
 void				init_view(t_view *view);
@@ -161,4 +162,5 @@ void				init_ray(t_view *view, t_pix *pix);
 
 void				check_collision(t_env *e);
 void				print_rt(t_env *e);
+void				do_rt(t_env *e);
 #endif
