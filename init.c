@@ -3,7 +3,7 @@
 void	init_view(t_view *view)
 {
 	fill_coord(&view->coord, WIN_X / 2, WIN_Y / 2, -100);
-	rot_y(&view->coord.x, &view->coord.x, &view->coord.x, view->rot_y);
+	rot_y(&view->coord.x, &view->coord.x, &view->coord.x, 0);
 }
 
 

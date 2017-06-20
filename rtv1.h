@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 18:43:12 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/14 13:41:07 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/06/20 09:37:58 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ typedef struct		s_plane
 	unsigned int	col;
 }					t_plane;
 
+typedef struct		s_cyli
+{
+	t_coor			vertex;
+}					t_cyli;
+
 typedef struct		s_shapes
 {
 	void			*shap_tab[4]; //shape pointers
@@ -159,6 +164,10 @@ void				init_sphere(t_sphere *sphere);
 void				init_view(t_view *view);
 void				init_plane(t_plane *plane);
 void				init_ray(t_view *view, t_pix *pix);
+
+int					is_sphere(t_view *view, t_sphere *sphere, t_pix *pix);
+int					is_plane(t_view *view, t_plane *plane, t_pix *pix);
+int					is_cyli(t_view *view, t_cyli *cyli, t_pix *pix);
 
 void				check_collision(t_env *e);
 void				print_rt(t_env *e);
