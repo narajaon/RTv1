@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 10:31:49 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/20 09:37:16 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/06/21 14:07:14 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ void	print_coord(t_coor *coord)
 	printf("x %f y %f z %f\n", coord->x, coord->y, coord->z);
 }
 
+float	smallest_non_negativ(float a, float b)
+{
+	if (a > RAY_MIN && a < RAY_MAX)
+		return (a);
+	if (b > RAY_MIN && b < RAY_MAX)
+		return (b);
+	return (0);
+}
+
 int		rot_view(int keycode, t_env *e)
 {
 	printf("key %d\n", keycode);
@@ -53,8 +62,6 @@ int		rot_view(int keycode, t_env *e)
 		e->rot_y = 0;
 	print_rt(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
-//	mlx_loop(e->mlx);
-	//mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	return (keycode);
 }
 
