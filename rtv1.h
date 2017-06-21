@@ -167,6 +167,7 @@ void				init_view(t_view *view);
 void				init_plane(t_plane *plane);
 void				init_ray(t_view *view, t_pix *pix);
 void				init_cyli(t_cyli *cyli);
+void				init_light(t_light *light);
 
 int					is_sphere(t_view *view, t_sphere *sphere, t_light *light, t_inter *inter);
 int					is_plane(t_view *view, t_plane *plane, t_pix *pix);

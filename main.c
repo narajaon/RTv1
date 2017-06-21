@@ -16,6 +16,7 @@ void	do_rt(t_env *e)
 	init_sphere(&e->sphere);
 	init_plane(&e->plane);
 	init_cyli(&e->cyli);
+	init_light(&e->light);
 	print_rt(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	mlx_loop(e->mlx);

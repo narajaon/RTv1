@@ -2,15 +2,15 @@
 
 void	init_view(t_view *view)
 {
-	fill_coord(&view->coord, WIN_X / 2 + 1, WIN_Y / 2 + 1, -300);
+	fill_coord(&view->coord, WIN_X / 2, WIN_Y / 2, -300);
 	//rot_z(&view->coord.x, &view->coord.x, &view->coord.x, 0.5);
 }
 
 void	init_sphere(t_sphere *sphere)
 {
-	fill_coord(&sphere->coord, WIN_X / 2, WIN_Y / 2, 1);
+	fill_coord(&sphere->coord, WIN_X / 2, WIN_Y / 2 + 100, 0);
 	//rot_y(&sphere->coord.x, &sphere->coord.x, &sphere->coord.x, 0.7);
-	sphere->r = 100;
+	sphere->r = 70;
 	sphere->dist = 0;
 	sphere->col = 0x00FF0000;
 }
@@ -41,5 +41,7 @@ void	init_cyli(t_cyli *cyli)
 
 void	init_light(t_light *light)
 {
-	//light->col = 0x00FFFFFF;
+	light->col = 0x00FFFFFF;
+	fill_coord(&light->coord, 0, WIN_Y, WIN_Y / 2);
+	light->intens = 1;
 }

@@ -1,10 +1,27 @@
 #include "rtv1.h"
 
-void	fill_inter_sphere(t_light *light, t_sphere *sphere, t_inter *inter)
+int				check_shadow(t_inter *inter, t_light *light, int (*f)())
 {
+	return (1);
 }
 
-int		is_sphere(t_view *view, t_sphere *sphere, t_light *light, t_inter *inter)
+unsigned int	put_col(t_light *light, t_inter *inter, unsigned int col)
+{
+	return (col);
+}
+
+void			fill_inter_sphere(t_light *light, t_sphere *sphere,
+		t_inter *inter, t_view *view)
+{
+	dot_sub(&view->ray.direction, &sphere->coord, &inter->norm);
+	normalize(&inter->norm, &inter->norm);
+	inter->col = put_col(light, inter, sphere->col);
+	//print_coord(&inter->norm);
+	inter->shape = SPHERE;
+}
+
+int				is_sphere(t_view *view, t_sphere *sphere,
+		t_light *light, t_inter *inter)
 {
 	double		a;
 	double		b;
@@ -39,7 +56,6 @@ int		is_sphere(t_view *view, t_sphere *sphere, t_light *light, t_inter *inter)
 //	printf("dist %f\n", sphere->dist);
 	if (sphere->dist < 0)
 		return (sphere->dist = 0);
-	//sphere->dist -= 1;
-	fill_inter_sphere(light, sphere, inter);
+	fill_inter_sphere(light, sphere, inter, view);
 	return (1);
 }
