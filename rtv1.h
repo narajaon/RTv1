@@ -22,10 +22,11 @@
 # define RAY_MIN 0.0001f
 # define RAY_MAX INFINITY
 
-# define PLANE 0
-# define SPHERE 1
-# define CONE 2
-# define CYLI 3
+# define NONE 0
+# define PLANE 1
+# define SPHERE 2
+# define CONE 3
+# define CYLI 4
 
 typedef struct		s_coor
 {
@@ -34,16 +35,11 @@ typedef struct		s_coor
 	double			z;
 }					t_coor;
 
-/*intersection point infos*/
-
-typedef struct		s_inter
+typedef union		u_col
 {
-	t_coor			coord;
-	t_coor			norm;
-	unsigned int	col;
-	unsigned int	shape;
-	float			cos_alph;
-}					t_inter;
+	unsigned int	i;
+	char			tab[4];
+}					t_col;
 
 /*ray origin, direction coordinates && length*/
 
@@ -51,9 +47,19 @@ typedef struct		s_ray
 {
 	t_coor			origin;
 	t_coor			direction;
-	t_inter			inter;
 	double			len;
 }					t_ray;
+
+/*intersection point infos*/
+
+typedef struct		s_inter
+{
+	t_ray			ray;
+	t_coor			norm;
+	t_col			col;
+	unsigned int	shape;
+	float			cos_alph;
+}					t_inter;
 
 /*view coordinates*/
 
@@ -71,7 +77,7 @@ typedef struct		s_light
 {
 	t_coor			coord;
 	unsigned int	intens;
-	unsigned int	col;
+	t_col			col;
 }					t_light;
 
 /*sphere coordinates*/
@@ -83,7 +89,7 @@ typedef struct		s_sphere
 	double			hit_1;
 	double			hit_2;
 	float			dist;
-	unsigned int	col;
+	t_col			col;
 }					t_sphere;
 
 typedef struct		s_plane
@@ -91,7 +97,7 @@ typedef struct		s_plane
 	t_coor			center;
 	t_coor			norm;
 	float			dist;
-	unsigned int	col;
+	t_col			col;
 }					t_plane;
 
 typedef struct		s_cyli
@@ -102,7 +108,7 @@ typedef struct		s_cyli
 	float			hit_1;
 	float			hit_2;
 	float			dist;
-	unsigned int	col;
+	t_col			col;
 }					t_cyli;
 
 typedef struct		s_img
@@ -168,6 +174,8 @@ void				init_plane(t_plane *plane);
 void				init_ray(t_view *view, t_pix *pix);
 void				init_cyli(t_cyli *cyli);
 void				init_light(t_light *light);
+void				init_inter(t_inter *inter);
+void				init_col(t_col *col, char r, char g, char b);
 
 int					is_sphere(t_view *view, t_sphere *sphere, t_light *light, t_inter *inter);
 int					is_plane(t_view *view, t_plane *plane, t_pix *pix);

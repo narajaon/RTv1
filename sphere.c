@@ -5,18 +5,35 @@ int				check_shadow(t_inter *inter, t_light *light, int (*f)())
 	return (1);
 }
 
-unsigned int	put_col(t_light *light, t_inter *inter, unsigned int col)
+unsigned int	put_col(t_light *light, t_inter *inter, t_col col)
 {
-	return (col);
+	//col.tab[0] *= inter->cos_alph;
+	//col.tab[1] *= inter->cos_alph;
+//	col.tab[2] = inter->cos_alph;
+	//col.tab[3] *= inter->cos_alph;
+//	col.i = col.i * inter->cos_alph / 255;
+	return (col.i);
 }
 
 void			fill_inter_sphere(t_light *light, t_sphere *sphere,
 		t_inter *inter, t_view *view)
 {
-	dot_sub(&view->ray.direction, &sphere->coord, &inter->norm);
-	normalize(&inter->norm, &inter->norm);
-	inter->col = put_col(light, inter, sphere->col);
-	//print_coord(&inter->norm);
+	t_coor		norm;
+	t_coor		tmp;
+
+	normalize(&view->ray.direction, &norm);
+	dot_mult(&norm, &tmp, sphere->dist); //dt
+	dot_sum(&view->ray.origin, &tmp, &inter->ray.origin); //o + dt
+	dot_sub(&light->coord, &inter->ray.origin, &inter->ray.direction);
+	//normalize(&inter->ray.origin, &inter->norm);
+	inter->cos_alph = dot_prod(&inter->ray.origin, &inter->ray.direction) /
+		vect_len(&inter->ray.origin) * vect_len(&inter->ray.direction);
+//	printf("norm ");
+//	print_coord(&inter->norm);
+//	printf("ori ");
+//	print_coord(&inter->ray.origin);
+	printf("cos_alph %f\n", inter->cos_alph);
+	inter->col.i = put_col(light, inter, sphere->col);
 	inter->shape = SPHERE;
 }
 
@@ -40,7 +57,7 @@ int				is_sphere(t_view *view, t_sphere *sphere,
 	c = vect_pow(&tmp.direction) - pow(sphere->r, 2);
 	//print_coord(&tmp.origin);
 	//print_coord(&tmp.direction);
-	//printf("a %f b %f c %f\n", a, b, c);
+	//printf("a %f b %f c %f\n", a, b, c)
 	//c = dot_prod(&tmp, &tmp) - pow(sphere->r, 2);
 	//c = dot_prod(&tmp.direction, &tmp.direction) - pow(sphere->r, 2);
 	if ((delt = pow(b, 2) - 4 * a * c) < 0)
