@@ -16,7 +16,10 @@ void	check_collision(t_env *e)
 	plane = e->plane.dist;
 	sphere = e->sphere.dist;
 //	cyli = e->cyli.dist;
-	if ((sphere > plane && sphere > 0) || (sphere > 0 && plane < RAY_MIN))
+//	if ((sphere > plane && sphere > 0) || (sphere > 0 && plane < RAY_MIN))
+//	printf("dist %f\n", sphere->dist);
+	//	e->img.img[xy] = e->inter.col.i;
+	if (sphere > 0)
 		e->img.img[xy] = e->inter.col.i;
 	else if ((plane > RAY_MIN && sphere < plane) || (plane > RAY_MIN && sphere < 0))
 		e->img.img[xy] = e->plane.col.i;

@@ -7,3 +7,60 @@ void	init_col(t_col *col, char r, char g, char b)
 	col->tab[2] = r;
 	col->tab[3] = 0x00;
 }
+
+int		mult_col(t_col *col1, t_col *col2) //absorbtion
+{
+	t_col		new_col;
+
+	new_col.tab[0] = col1->tab[0] * col2->tab[0] * 255;
+	new_col.tab[1] = col1->tab[1] * col2->tab[1] * 255;
+	new_col.tab[2] = col1->tab[2] * col2->tab[2] * 255;
+	new_col.tab[3] = 0x00;
+	return (new_col.i);
+}
+
+int		div_col_int(t_col *col1, float cap)
+{
+	t_col		new_col;
+
+
+//	printf("col.i %x\n ", col1->i);
+	new_col.tab[0] = (int)((col1->tab[1] * cap) * 255);
+	new_col.tab[1] = (int)((col1->tab[1] * cap) * 255);
+	new_col.tab[2] = (int)((col1->tab[2] * cap) * 255);
+	new_col.tab[3] = 0x00;
+	/*
+	printf("col1\ntab[0] %d\n", col1->tab[0]);
+	printf("tab[1] %d\n", col1->tab[1]);
+	printf("tab[2] %d\n", col1->tab[2]);
+	printf("tab[3] %d\n\n", col1->tab[3]);
+	printf("new_col\ntab[0] %d\n", new_col.tab[0]);
+	printf("tab[1] %d\n", new_col.tab[1]);
+	printf("tab[2] %d\n", new_col.tab[2]);
+	printf("tab[3] %d\n", new_col.tab[3]);
+	printf("-------------------------------\n");
+	*/
+	return (new_col.i);
+}
+
+int		add_col(t_col *col1, t_col *col2) //mixing 2 colours
+{
+	t_col		new_col;
+
+	new_col.tab[0] = col1->tab[0] + col2->tab[0];
+	new_col.tab[1] = col1->tab[1] + col2->tab[1];
+	new_col.tab[2] = col1->tab[2] + col2->tab[2];
+	new_col.tab[3] = 0x00;
+	return (new_col.i);
+}
+
+int		gamma_cor(t_col *col, float expos, float gamma)
+{
+	t_col		new_col;
+
+	new_col.tab[0] = pow(col->tab[0] * expos, gamma);
+	new_col.tab[1] = pow(col->tab[1] * expos, gamma);
+	new_col.tab[2] = pow(col->tab[2] * expos, gamma);
+	new_col.tab[3] = 0x00;
+	return (new_col.i);
+}

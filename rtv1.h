@@ -181,6 +181,12 @@ int					is_sphere(t_view *view, t_sphere *sphere, t_light *light, t_inter *inter
 int					is_plane(t_view *view, t_plane *plane, t_pix *pix);
 int					is_cyli(t_view *view, t_cyli *cyli, t_pix *pix);
 
+void				init_col(t_col *col, char r, char g, char b);
+int					mult_col(t_col *col1, t_col *col2); //absorbtion
+int					add_col(t_col *col1, t_col *col2); //mixing 2 colours
+int					gamma_cor(t_col *col, float expos, float gamma);
+int					div_col_int(t_col *col1, float cap);
+
 void				check_collision(t_env *e);
 void				print_rt(t_env *e);
 void				do_rt(t_env *e);

@@ -6,7 +6,7 @@
 #    By: narajaon <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 13:20:13 by narajaon          #+#    #+#              #
-#    Updated: 2017/06/22 17:14:50 by narajaon         ###   ########.fr        #
+#    Updated: 2017/06/23 10:33:05 by narajaon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ HEAD = rtv1.h
 LIB = libft.a
 LIBDIR = libft
 SRC = *.c
-FLAG = -O2 -g -framework OpenGL -framework AppKit
+FLAG = -O2 -framework OpenGL -framework AppKit
 OBJ = $(SRC:.c=.o)
 MLX = minilibx_macos/libmlx.a
 
