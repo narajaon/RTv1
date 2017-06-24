@@ -58,26 +58,26 @@ typedef struct		s_inter
 	t_coor			norm;
 	t_col			col;
 	unsigned int	shape;
-	float			cos_alph;
+	double			cos_alph;
 }					t_inter;
 
 /*view coordinates*/
 
 typedef struct		s_view
 {
-	t_coor			coord;
-	t_ray			ray;
 	t_inter			inter;
+	t_ray			ray;
+	t_coor			coord;
 	unsigned int	dist;
-	float			rot_y;
-	float			rot_z;
+	double			rot_y;
+	double			rot_z;
 }					t_view;
 
 typedef struct		s_light
 {
 	t_coor			coord;
-	unsigned int	intens;
 	t_col			col;
+	double			intens;
 }					t_light;
 
 /*sphere coordinates*/
@@ -85,30 +85,31 @@ typedef struct		s_light
 typedef struct		s_sphere
 {
 	t_coor			coord;
+	t_coor			norm;
+	t_col			col;
 	double			r;
 	double			hit_1;
 	double			hit_2;
-	float			dist;
-	t_col			col;
+	double			dist;
 }					t_sphere;
 
 typedef struct		s_plane
 {
 	t_coor			center;
 	t_coor			norm;
-	float			dist;
 	t_col			col;
+	double			dist;
 }					t_plane;
 
 typedef struct		s_cyli
 {
 	t_coor			cap;
-	float			r;
-	float			l;
-	float			hit_1;
-	float			hit_2;
-	float			dist;
 	t_col			col;
+	double			r;
+	double			l;
+	double			hit_1;
+	double			hit_2;
+	double			dist;
 }					t_cyli;
 
 typedef struct		s_img
@@ -149,7 +150,7 @@ typedef struct		s_env
 
 int					error_msg(int error);
 void				print_coord(t_coor *coord); //attention printf
-float				smallest_non_negativ(float a, float b);
+double				smallest_non_negativ(double a, double b);
 
 int					rot_view(int keycode, t_env *e);
 void				rot_x(double *x, double *y, double *z, double angle);
@@ -162,8 +163,8 @@ void				dot_sum(t_coor *a, t_coor *b, t_coor *tmp);
 void				dot_mult(t_coor *a, t_coor *tmp, double nb);
 void				dot_cpy(t_coor *src, t_coor *dst);
 void				normalize(t_coor *a, t_coor *tmp);
-void				point_on_ray(t_coor *ori, t_coor *dir, t_coor *res, float len);
-void				fill_coord(t_coor *coord, float x, float y, float z);
+void				point_on_ray(t_coor *ori, t_coor *dir, t_coor *res, double len);
+void				fill_coord(t_coor *coord, double x, double y, double z);
 double				dot_prod(t_coor *a, t_coor *b);
 double				vect_len(t_coor *a);
 double				vect_pow(t_coor *a);
@@ -184,8 +185,7 @@ int					is_cyli(t_view *view, t_cyli *cyli, t_pix *pix);
 void				init_col(t_col *col, char r, char g, char b);
 int					mult_col(t_col *col1, t_col *col2); //absorbtion
 int					add_col(t_col *col1, t_col *col2); //mixing 2 colours
-int					gamma_cor(t_col *col, float expos, float gamma);
-int					div_col_int(t_col *col1, float cap);
+int					div_col_int(t_col *col1, double cap);
 
 void				check_collision(t_env *e);
 void				print_rt(t_env *e);

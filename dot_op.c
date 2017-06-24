@@ -24,7 +24,7 @@ void		dot_mult(t_coor *a, t_coor *tmp, double nb)
 
 void		normalize(t_coor *a, t_coor *tmp)
 {
-	float		len;
+	double		len;
 
 	len = vect_len(a);
 	dot_mult(a, tmp, 1 / len);
@@ -65,13 +65,14 @@ void		dot_cpy(t_coor *src, t_coor *dst)
 	dst->z = src->z;
 }
 
-void		point_on_ray(t_coor *origin, t_coor *direction, t_coor * res, float len)
+void		point_on_ray(t_coor *origin, t_coor *direction,
+		t_coor * res, double len)
 {
 	dot_mult(direction, res, len);
 	dot_sum(res, origin, res);
 }
 
-void		fill_coord(t_coor *coord, float x, float y, float z)
+void		fill_coord(t_coor *coord, double x, double y, double z)
 {
 	coord->x = x;
 	coord->y = y;

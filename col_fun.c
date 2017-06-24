@@ -12,14 +12,14 @@ int		mult_col(t_col *col1, t_col *col2) //absorbtion
 {
 	t_col		new_col;
 
-	new_col.tab[0] = col1->tab[0] * col2->tab[0] * 255;
-	new_col.tab[1] = col1->tab[1] * col2->tab[1] * 255;
-	new_col.tab[2] = col1->tab[2] * col2->tab[2] * 255;
+	new_col.tab[0] = col1->tab[0] * col2->tab[0];
+	new_col.tab[1] = col1->tab[1] * col2->tab[1];
+	new_col.tab[2] = col1->tab[2] * col2->tab[2];
 	new_col.tab[3] = 0x00;
 	return (new_col.i);
 }
 
-int		div_col_int(t_col *col1, float cap)
+int		div_col_int(t_col *col1, double cap)
 {
 	t_col		new_col;
 
@@ -54,7 +54,7 @@ int		add_col(t_col *col1, t_col *col2) //mixing 2 colours
 	return (new_col.i);
 }
 
-int		gamma_cor(t_col *col, float expos, float gamma)
+int		gamma_cor(t_col *col, double expos, double gamma)
 {
 	t_col		new_col;
 

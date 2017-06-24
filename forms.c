@@ -3,9 +3,9 @@
 void	check_collision(t_env *e)
 {
 	int		xy;
-	float	plane;
-	float	sphere;
-//	float	cyli;
+	double	plane;
+	double	sphere;
+//	double	cyli;
 
 	init_inter(&e->inter);
 	init_ray(&e->view, &e->pix);
@@ -21,7 +21,8 @@ void	check_collision(t_env *e)
 	//	e->img.img[xy] = e->inter.col.i;
 	if (sphere > 0)
 		e->img.img[xy] = e->inter.col.i;
-	else if ((plane > RAY_MIN && sphere < plane) || (plane > RAY_MIN && sphere < 0))
+	else if ((plane > RAY_MIN && sphere < plane) ||
+			(plane > RAY_MIN && sphere < 0))
 		e->img.img[xy] = e->plane.col.i;
 	else
 		e->img.img[xy] = 0x00000000;

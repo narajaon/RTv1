@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/06 10:31:49 by narajaon          #+#    #+#             */
-/*   Updated: 2017/06/22 18:11:46 by narajaon         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "rtv1.h"
 
 int		error_msg(int error)
@@ -32,7 +20,7 @@ void	print_coord(t_coor *coord)
 	printf("x %f y %f z %f\n", coord->x, coord->y, coord->z);
 }
 
-float	smallest_non_negativ(float a, float b)
+double	smallest_non_negativ(double a, double b)
 {
 	if (a > RAY_MIN && a < RAY_MAX)
 		return (a);
