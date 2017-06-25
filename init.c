@@ -12,7 +12,7 @@ void	init_sphere(t_sphere *sphere)
 	//rot_z(&sphere->coord.x, &sphere->coord.y, &sphere->coord.z, 0.1);
 	sphere->r = 100;
 	sphere->dist = 0;
-	init_col(&sphere->col, 0, 255, 0);
+	init_col(&sphere->col, 255, 255, 255);
 }
 
 void	init_inter(t_inter *inter)
@@ -53,7 +53,7 @@ void	init_light(t_light *light)
 {
 	light->col.i = 0x00FFFFFF;
 	init_col(&light->col, 0xFF, 0xFF, 0xFF);
-	fill_coord(&light->coord, WIN_X / 2 - 200, 0, -100);
+	fill_coord(&light->coord, WIN_X / 2, 0, -300);
 //	rot_z(&light->coord.x, &light->coord.y, &light->coord.z, -0.7);
 	light->intens = 1;
 }
