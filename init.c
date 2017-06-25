@@ -12,13 +12,14 @@ void	init_sphere(t_sphere *sphere)
 	//rot_z(&sphere->coord.x, &sphere->coord.y, &sphere->coord.z, 0.1);
 	sphere->r = 100;
 	sphere->dist = 0;
-	init_col(&sphere->col, 255, 255, 255);
+	init_col(&sphere->col, 0, 255, 0);
 }
 
 void	init_inter(t_inter *inter)
 {
 	init_col(&inter->col, 0x00, 0x00, 0x00);
 	inter->shape = NONE;
+	inter->dist_min = 0;
 }
 
 void	init_plane(t_plane *plane)
@@ -37,6 +38,7 @@ void	init_ray(t_view *view, t_pix *pix)
 //	rot_y(&view->ray.direction.x, &view->ray.direction.y,
 //	&view->ray.direction.z, -0.2);
 	dot_sub(&view->ray.direction, &view->ray.origin, &view->ray.direction);
+	view->ray.len = 0;
 //	normalize(&view->ray.direction, &view->ray.direction);
 }
 

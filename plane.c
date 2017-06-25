@@ -1,10 +1,18 @@
 #include "rtv1.h"
 
-int		is_plane(t_view *view, t_plane *plane, t_pix *pix)
+unsigned int	put_col_sphere(t_light *light, t_inter *inter, t_plane *plane)
+{
+	return (1);
+}
+
+void	fill_inter_plane(t_light *light, t_plane *plane,
+		t_inter *inter, t_view *view)
+{
+}
+
+int		is_plane(t_view *view, t_plane *plane, t_light *light, t_inter *inter)
 {
 	float		dn;
-	float		ppn;
-	float		prn;
 	float		t;
 	t_coor		tmp;
 	t_coor		hit;
@@ -13,10 +21,9 @@ int		is_plane(t_view *view, t_plane *plane, t_pix *pix)
 	if (dn < 0.00001)
 		return (0);
 	t = dot_prod(&plane->center, &plane->norm);
-	t -= dot_prod(&view->ray.direction, &plane->norm);
-	t /= dn;
+	t = (t - dot_prod(&view->ray.direction, &plane->norm)) / dn;
 	if (t <= RAY_MIN || t >= RAY_MAX)
-		return (0);
-	plane->dist = t;
-	return (1);
+		return (plane->dist = 0);
+	fill_inter_plane(light, plane, inter, view);
+	return (plane->dist = t);
 }

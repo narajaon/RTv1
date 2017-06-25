@@ -59,6 +59,7 @@ typedef struct		s_inter
 	t_col			col;
 	unsigned int	shape;
 	double			cos_alph;
+	double			dist_min;
 }					t_inter;
 
 /*view coordinates*/
@@ -179,7 +180,7 @@ void				init_inter(t_inter *inter);
 void				init_col(t_col *col, char r, char g, char b);
 
 int					is_sphere(t_view *view, t_sphere *sphere, t_light *light, t_inter *inter);
-int					is_plane(t_view *view, t_plane *plane, t_pix *pix);
+int					is_plane(t_view *view, t_plane *plane, t_light *light, t_inter *inter);
 int					is_cyli(t_view *view, t_cyli *cyli, t_pix *pix);
 
 void				init_col(t_col *col, char r, char g, char b);
