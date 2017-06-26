@@ -164,7 +164,8 @@ void				dot_sum(t_coor *a, t_coor *b, t_coor *tmp);
 void				dot_mult(t_coor *a, t_coor *tmp, double nb);
 void				dot_cpy(t_coor *src, t_coor *dst);
 void				normalize(t_coor *a, t_coor *tmp);
-void				point_on_ray(t_coor *ori, t_coor *dir, t_coor *res, double len);
+void				point_on_ray(t_coor *ori, t_coor *dir,
+		t_coor *res, double len);
 void				fill_coord(t_coor *coord, double x, double y, double z);
 double				dot_prod(t_coor *a, t_coor *b);
 double				vect_len(t_coor *a);
@@ -179,14 +180,17 @@ void				init_light(t_light *light);
 void				init_inter(t_inter *inter);
 void				init_col(t_col *col, char r, char g, char b);
 
-int					is_sphere(t_view *view, t_sphere *sphere, t_light *light, t_inter *inter);
-int					is_plane(t_view *view, t_plane *plane, t_light *light, t_inter *inter);
+int					is_sphere(t_view *view, t_sphere *sphere,
+		t_light *light, t_inter *inter);
+int					is_plane(t_view *view, t_plane *plane,
+		t_light *light, t_inter *inter);
 int					is_cyli(t_view *view, t_cyli *cyli, t_pix *pix);
 
 void				init_col(t_col *col, char r, char g, char b);
 int					mult_col(t_col *col1, t_col *col2); //absorbtion
 int					add_col(t_col *col1, t_col *col2); //mixing 2 colours
 int					div_col_int(t_col *col1, double cap);
+double				clamp_col(double col, double cos, char light);
 
 void				check_collision(t_env *e);
 void				print_rt(t_env *e);

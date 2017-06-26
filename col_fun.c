@@ -40,3 +40,12 @@ int		gamma_cor(t_col *col, double expos, double gamma)
 	new_col.tab[3] = 0x00;
 	return (new_col.i);
 }
+
+double			clamp_col(double col, double cos, char light)
+{
+	if (cos < 0)
+		return (0x00);
+	if (col * cos * 255 > 255)
+		return (col * cos / 255);
+	return (col * cos);
+}

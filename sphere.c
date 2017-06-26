@@ -5,13 +5,6 @@ int				check_shadow(t_inter *inter, t_light *light, int (*f)())
 	return (1);
 }
 
-double			clamp_col(double col, double cos, char light)
-{
-	if (cos < 0)
-		return (0);
-	return (col * cos);
-}
-
 unsigned int	put_col_sphere(t_light *light, t_inter *inter, t_sphere *sphere)
 {
 	t_col		col;
