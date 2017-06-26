@@ -104,10 +104,12 @@ typedef struct		s_plane
 
 typedef struct		s_cyli
 {
-	t_coor			cap;
+	t_coor			center;
+	t_coor			cap_u;
+	t_coor			norm;
 	t_col			col;
 	double			r;
-	double			l;
+	double			hei;
 	double			hit_1;
 	double			hit_2;
 	double			dist;
@@ -184,7 +186,8 @@ int					is_sphere(t_view *view, t_sphere *sphere,
 		t_light *light, t_inter *inter);
 int					is_plane(t_view *view, t_plane *plane,
 		t_light *light, t_inter *inter);
-int					is_cyli(t_view *view, t_cyli *cyli, t_pix *pix);
+int					is_cyli(t_view *view, t_cyli *cyli,
+		t_light *light, t_inter *inter);
 
 void				init_col(t_col *col, char r, char g, char b);
 int					mult_col(t_col *col1, t_col *col2); //absorbtion

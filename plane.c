@@ -15,7 +15,6 @@ unsigned int	put_col_plane(t_light *light, t_inter *inter, t_plane *plane)
 	//printf("plane col %x\n", plane->col.i);
 	//printf("inter col %x\n", inter->col.i);
 	//printf("cos alph %f\n", inter->cos_alph);
-	//printf("b %f g %f r %f\n", b, g, r);
 	return (inter->col.i);
 }
 
@@ -40,22 +39,21 @@ void			fill_inter_plane(t_light *light, t_plane *plane,
 int				is_plane(t_view *view, t_plane *plane,
 		t_light *light, t_inter *inter)
 {
-	double		dn;
-	double		ppn;
-	double		prn;
+	double		dv;
+	double		xv;
 	double		t;
-	t_coor		tmp;
-	t_coor		hit;
+	t_coor		x_point;
 
-	dn = dot_prod(&view->ray.direction, &plane->norm);
+	dot_sub(&plane->center, &view->ray.origin, &x_point);
+	dv = dot_prod(&view->ray.direction, &plane->norm);
 //	print_coord(&plane->norm);
 //	print_coord(&view->ray.direction);
-	if (dn < 0.00001)
+	if (dv < 0.00001)
 		return (plane->dist = 0);
+	xv = dot_prod(&x_point, &plane->norm);
+	//dv = dot_prod(&view->ray.direction, &plane->norm);
+	t = -xv / dv;
 //	printf("dn %f\n", dn);
-	ppn = dot_prod(&plane->center, &plane->norm);
-	prn = dot_prod(&view->ray.origin, &plane->norm);
-	t = (ppn - prn) / dn;
 	//printf("t %f\n", t);
 	if (t <= RAY_MIN || t >= RAY_MAX)
 		return (plane->dist = 0);

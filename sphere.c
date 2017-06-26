@@ -7,7 +7,6 @@ int				check_shadow(t_inter *inter, t_light *light, int (*f)())
 
 unsigned int	put_col_sphere(t_light *light, t_inter *inter, t_sphere *sphere)
 {
-	t_col		col;
 	double		b;
 	double		g;
 	double		r;
@@ -17,7 +16,7 @@ unsigned int	put_col_sphere(t_light *light, t_inter *inter, t_sphere *sphere)
 	r = clamp_col(sphere->col.tab[2], inter->cos_alph, light->col.tab[2]) * 255;
 	init_col(&inter->col, r, g, b);
 	inter->col.i = mult_col(&inter->col, &light->col);
-	return (col.i);
+	return (inter->col.i);
 }
 
 void			fill_inter_sphere(t_light *light, t_sphere *sphere,
