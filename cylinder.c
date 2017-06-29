@@ -67,7 +67,7 @@ int		is_cyli(t_view *view, t_cyli *cyli, t_light *light, t_inter *inter)
 	cyli->hit_1 = (-b - sqrt(delt)) / (2 * a);
 	cyli->hit_2 = (-b + sqrt(delt)) / (2 * a);
 	cyli->dist = smallest_non_negativ(cyli->hit_1, cyli->hit_2);
-	printf("dist %f\n", cyli->dist);
+//	printf("dist %f\n", cyli->dist);
 	if (cyli->dist < 0)
 		return (cyli->dist = 0);
 	fill_inter_cyli(light, cyli, inter, view);

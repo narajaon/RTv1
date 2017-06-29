@@ -115,6 +115,19 @@ typedef struct		s_cyli
 	double			dist;
 }					t_cyli;
 
+typedef struct		s_cone
+{
+	t_coor			center;
+	t_coor			vertex;
+	t_coor			norm;
+	t_coor			hei;
+	t_col			col;
+	double			r;
+	double			hit_1;
+	double			hit_2;
+	double			dist;
+}					t_cone;
+
 typedef struct		s_img
 {
 	void			*img_ptr;
@@ -145,6 +158,7 @@ typedef struct		s_env
 	t_view			view;
 	t_sphere		sphere;
 	t_cyli			cyli;
+	t_cone			cone;
 	t_light			light;
 	t_inter			inter;
 	double			rot_y;
@@ -173,6 +187,7 @@ double				dot_prod(t_coor *a, t_coor *b);
 double				vect_len(t_coor *a);
 double				vect_pow(t_coor *a);
 
+void				init_cone(t_cone *cone);
 void				init_sphere(t_sphere *sphere);
 void				init_view(t_view *view);
 void				init_plane(t_plane *plane);
@@ -187,6 +202,8 @@ int					is_sphere(t_view *view, t_sphere *sphere,
 int					is_plane(t_view *view, t_plane *plane,
 		t_light *light, t_inter *inter);
 int					is_cyli(t_view *view, t_cyli *cyli,
+		t_light *light, t_inter *inter);
+int					is_cone(t_view *view, t_cone *cone,
 		t_light *light, t_inter *inter);
 
 void				init_col(t_col *col, char r, char g, char b);
