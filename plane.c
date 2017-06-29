@@ -46,12 +46,12 @@ int				is_plane(t_view *view, t_plane *plane,
 
 	dot_sub(&plane->center, &view->ray.origin, &x_point);
 	dv = dot_prod(&view->ray.direction, &plane->norm);
-//	print_coord(&plane->norm);
-//	print_coord(&view->ray.direction);
-	if (dv < 0.00001)
+	if (fabs(dv) < 0.00001)
 		return (plane->dist = 0);
 	xv = dot_prod(&x_point, &plane->norm);
-	//dv = dot_prod(&view->ray.direction, &plane->norm);
+	//printf("xv %f\n", xv);
+	//print_coord(&plane->norm);
+	printf("dv %f\n", dv);
 	t = -xv / dv;
 //	printf("dn %f\n", dn);
 	//printf("t %f\n", t);
