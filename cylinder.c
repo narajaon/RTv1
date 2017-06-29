@@ -24,13 +24,15 @@ void			fill_inter_cyli(t_light *light, t_cyli *cyli,
 {
 	t_coor		norm_cyli;
 	t_coor		norm_dir;
-	t_coor		view_norm;
+	t_coor		actual_center;
 
 	point_on_ray(&view->ray.origin, &view->ray.direction,
 			&inter->ray.origin, cyli->dist);
+	fill_coord(&actual_center, cyli->center.x, inter->ray.origin.y,
+			cyli->center.z);
 	dot_sub(&light->coord, &inter->ray.origin, &inter->ray.direction);
 	//cyli->center.y = inter->ray.direction.y;
-	dot_sub(&inter->ray.origin, &cyli->center, &norm_cyli);
+	dot_sub(&inter->ray.origin, &actual_center, &norm_cyli);
 	normalize(&norm_cyli, &norm_cyli);
 	normalize(&inter->ray.direction, &norm_dir);
 	inter->cos_alph = dot_prod(&norm_cyli, &norm_dir);

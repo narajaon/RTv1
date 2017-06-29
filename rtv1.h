@@ -5,8 +5,8 @@
 # include "minilibx_macos/mlx.h"
 # include <stdio.h>
 
-# define WIN_X 500
-# define WIN_Y 500
+# define WIN_X 700
+# define WIN_Y 700
 # define EX_KEY 53
 # define UP_KEY 126
 # define DOWN_KEY 125
