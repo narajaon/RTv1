@@ -12,9 +12,6 @@ unsigned int	put_col_plane(t_light *light, t_inter *inter, t_plane *plane)
 	r = clamp_col(plane->col.tab[2], inter->cos_alph, light->col.tab[2]) * 255;
 	init_col(&inter->col, r, g, b);
 	inter->col.i = mult_col(&inter->col, &light->col);
-	//printf("plane col %x\n", plane->col.i);
-	//printf("inter col %x\n", inter->col.i);
-	//printf("cos alph %f\n", inter->cos_alph);
 	return (inter->col.i);
 }
 
@@ -51,7 +48,7 @@ int				is_plane(t_view *view, t_plane *plane,
 	xv = dot_prod(&x_point, &plane->norm);
 	//printf("xv %f\n", xv);
 	//print_coord(&plane->norm);
-	printf("dv %f\n", dv);
+//	printf("dv %f\n", dv);
 	t = -xv / dv;
 //	printf("dn %f\n", dn);
 	//printf("t %f\n", t);

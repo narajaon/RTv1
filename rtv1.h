@@ -107,9 +107,9 @@ typedef struct		s_cyli
 	t_coor			center;
 	t_coor			cap_u;
 	t_coor			norm;
+	t_coor			hei;
 	t_col			col;
 	double			r;
-	double			hei;
 	double			hit_1;
 	double			hit_2;
 	double			dist;
