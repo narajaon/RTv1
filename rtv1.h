@@ -21,6 +21,7 @@
 # define E_KEY 14
 # define RAY_MIN 0.0001f
 # define RAY_MAX INFINITY
+# define PI 3.141592
 
 # define NONE 0
 # define PLANE 1
@@ -126,6 +127,7 @@ typedef struct		s_cone
 	double			hit_1;
 	double			hit_2;
 	double			dist;
+	double			angle;
 }					t_cone;
 
 typedef struct		s_img

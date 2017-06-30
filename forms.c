@@ -18,7 +18,7 @@ void	check_collision(t_env *e)
 	plane = e->plane.dist;
 	//sphere = e->sphere.dist;
 	cone = e->cone.dist;
-	cyli = e->cyli.dist;
+	//cyli = e->cyli.dist;
 //	if ((sphere > plane && sphere > 0) || (sphere > 0 && plane < RAY_MIN))
 //	printf("cyli %f\n", cyli);
 	//	e->img.img[xy] = e->inter.col.i;
@@ -26,7 +26,7 @@ void	check_collision(t_env *e)
 	//	e->img.img[xy] = e->inter.col.i;
 	//if ((plane > RAY_MIN && sphere < plane) ||
 	//		(plane > RAY_MIN && sphere < 0))
-	if (cyli > 0)
+	if (cone > 0)
 		e->img.img[xy] = e->inter.col.i;
 	else if (plane > RAY_MIN)
 		e->img.img[xy] = e->inter.col.i;

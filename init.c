@@ -50,6 +50,8 @@ void	init_cone(t_cone *cone)
 	fill_coord(&cone->vertex, cone->center.x,
 			cone->center.y + 100, cone->center.z);
 	cone->r = 60;
+	cone->angle = tan(30 * PI / 180);
+	printf("angle %f\n", cone->angle);
 	dot_sub(&cone->center, &cone->vertex, &cone->hei);
 	normalize(&cone->hei, &cone->hei);
 	fill_coord(&cone->norm, cone->hei.x + 10, cone->hei.y + 10, cone->hei.z);
@@ -71,7 +73,7 @@ void	init_cyli(t_cyli *cyli)
 void	init_light(t_light *light)
 {
 	init_col(&light->col, 0xFF, 0xFF, 0xFF);
-	fill_coord(&light->coord, WIN_X / 2, WIN_Y / 2, -300);
+	fill_coord(&light->coord, WIN_X / 2, 0, -300);
 //	rot_z(&light->coord.x, &light->coord.y, &light->coord.z, -0.7);
 	light->intens = 1;
 }
