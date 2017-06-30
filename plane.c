@@ -52,10 +52,10 @@ int				is_plane(t_view *view, t_plane *plane,
 	t = -xv / dv;
 //	printf("dn %f\n", dn);
 	//printf("t %f\n", t);
+	plane->dist = t;
 	if (t <= RAY_MIN || t >= RAY_MAX)
 		return (plane->dist = 0);
-	plane->dist = t;
 //	printf("plane->dist %f\n", plane->dist);
-	fill_inter_plane(light, plane, inter, view);
-	return (1);
+	//fill_inter_plane(light, plane, inter, view);
+	return (plane->dist);
 }

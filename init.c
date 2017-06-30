@@ -2,7 +2,7 @@
 
 void	init_view(t_view *view)
 {
-	fill_coord(&view->coord, WIN_X / 2, WIN_Y / 2 + 20, -500);
+	fill_coord(&view->coord, WIN_X / 2, WIN_Y / 2 + 100, -500);
 	//rot_y(&view->coord.x, &view->coord.y, &view->coord.z, -0.2);
 }
 
@@ -26,7 +26,7 @@ void	init_plane(t_plane *plane)
 {
 	fill_coord(&plane->center, WIN_X / 2, WIN_Y / 2, 0);
 	//rot_y(&plane->center.x, &plane->center.y, &plane->center.z, 0.5);
-	fill_coord(&plane->norm, 0, -100, 0);
+	fill_coord(&plane->norm, 0, -1, 0);
 	//dot_sub(&norm, &plane->center, &plane->norm);
 	normalize(&plane->norm, &plane->norm);
 //	print_coord(&plane->norm);
@@ -46,7 +46,7 @@ void	init_ray(t_view *view, t_pix *pix)
 
 void	init_cone(t_cone *cone)
 {
-	fill_coord(&cone->center, WIN_X / 2, WIN_Y / 2, 0);
+	fill_coord(&cone->center, WIN_X / 2 - 200, WIN_Y / 2, 0);
 	fill_coord(&cone->vertex, cone->center.x,
 			cone->center.y + 100, cone->center.z);
 	cone->r = 60;
@@ -73,7 +73,7 @@ void	init_cyli(t_cyli *cyli)
 void	init_light(t_light *light)
 {
 	init_col(&light->col, 0xFF, 0xFF, 0xFF);
-	fill_coord(&light->coord, WIN_X / 2, 0, -600);
+	fill_coord(&light->coord, WIN_X / 2 + 300, 0, -600);
 //	rot_z(&light->coord.x, &light->coord.y, &light->coord.z, -0.7);
 	light->intens = 1;
 }

@@ -58,9 +58,5 @@ int				is_sphere(t_view *view, t_sphere *sphere,
 	sphere->dist = smallest_non_negativ(sphere->hit_1, sphere->hit_2);
 	if (sphere->dist < 0)
 		return (sphere->dist = 0);
-	if (!view->ray.len || (sphere->dist < view->ray.len && view->ray.len > 0))
-		fill_inter_sphere(light, sphere, inter, view);
-	else
-		return (sphere->dist = 0);
 	return (sphere->dist);
 }

@@ -68,13 +68,13 @@ int		is_cone(t_view *view, t_cone *cone, t_light *light, t_inter *inter)
 //	printf("a %f b %f c %f\n", a, b, c);
 	if ((delt = pow(b, 2) - 4 * a * c) < 0)
 		return (cone->dist = 0);
-	printf("delt %f\n", delt);
+	//printf("delt %f\n", delt);
 	cone->hit_1 = (-b - sqrt(delt)) / (2 * a);
 	cone->hit_2 = (-b + sqrt(delt)) / (2 * a);
 	cone->dist = smallest_non_negativ(cone->hit_1, cone->hit_2);
 	//printf("dist %f\n", cone->dist);
 	if (cone->dist < 0)
 		return (cone->dist = 0);
-	fill_inter_cone(light, cone, inter, view);
+	//fill_inter_cone(light, cone, inter, view);
 	return (cone->dist);
 }
