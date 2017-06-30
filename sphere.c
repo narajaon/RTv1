@@ -62,5 +62,5 @@ int				is_sphere(t_view *view, t_sphere *sphere,
 		fill_inter_sphere(light, sphere, inter, view);
 	else
 		return (sphere->dist = 0);
-	return (1);
+	return (sphere->dist);
 }

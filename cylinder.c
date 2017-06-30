@@ -71,5 +71,5 @@ int		is_cyli(t_view *view, t_cyli *cyli, t_light *light, t_inter *inter)
 	if (cyli->dist < 0)
 		return (cyli->dist = 0);
 	fill_inter_cyli(light, cyli, inter, view);
-	return (1);
+	return (cyli->dist);
 }

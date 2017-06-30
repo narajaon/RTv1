@@ -73,7 +73,7 @@ void	init_cyli(t_cyli *cyli)
 void	init_light(t_light *light)
 {
 	init_col(&light->col, 0xFF, 0xFF, 0xFF);
-	fill_coord(&light->coord, WIN_X / 2, 0, -300);
+	fill_coord(&light->coord, WIN_X / 2, 0, -600);
 //	rot_z(&light->coord.x, &light->coord.y, &light->coord.z, -0.7);
 	light->intens = 1;
 }
