@@ -49,3 +49,18 @@ double			clamp_col(double col, double cos, char light)
 		return (col * cos / 255);
 	return (col * cos);
 }
+
+unsigned int	put_col(t_light *light, t_inter *inter, t_col *shape)
+{
+	t_col		col;
+	double		b;
+	double		g;
+	double		r;
+
+	b = clamp_col(shape->tab[0], inter->cos_alph, light->col.tab[0]) * 255;
+	g = clamp_col(shape->tab[1], inter->cos_alph, light->col.tab[1]) * 255;
+	r = clamp_col(shape->tab[2], inter->cos_alph, light->col.tab[2]) * 255;
+	init_col(&inter->col, r, g, b);
+	inter->col.i = mult_col(&inter->col, &light->col);
+	return (inter->col.i);
+}

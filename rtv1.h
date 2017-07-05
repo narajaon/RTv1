@@ -199,32 +199,26 @@ void				init_light(t_light *light);
 void				init_inter(t_inter *inter);
 void				init_col(t_col *col, char r, char g, char b);
 
-int					is_sphere(t_view *view, t_sphere *sphere,
+int					is_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light, t_inter *inter);
-int					is_plane(t_view *view, t_plane *plane,
+int					is_plane(t_ray *view, t_plane *plane,
 		t_light *light, t_inter *inter);
-int					is_cyli(t_view *view, t_cyli *cyli,
+int					is_cyli(t_ray *view, t_cyli *cyli,
 		t_light *light, t_inter *inter);
-int					is_cone(t_view *view, t_cone *cone,
+int					is_cone(t_ray *view, t_cone *cone,
 		t_light *light, t_inter *inter);
 
-unsigned int		put_col_sphere(t_light *light, t_inter *inter,
-		t_sphere *sphere);
-unsigned int		put_col_cone(t_light *light, t_inter *inter,
-		t_cone *cone);
-unsigned int		put_col_cyli(t_light *light, t_inter *inter,
-		t_cyli *cyli);
-unsigned int		put_col_plane(t_light *light, t_inter *inter,
-		t_plane *plane);
+unsigned int		put_col(t_light *light, t_inter *inter,
+		t_col *plane);
 
 void				fill_inter_sphere(t_light *light, t_sphere *sphere,
-		t_inter *inter, t_view *view);
+		t_inter *inter, t_ray *view);
 void				fill_inter_cone(t_light *light, t_cone *cone,
-		t_inter *inter, t_view *view);
+		t_inter *inter, t_ray *view);
 void				fill_inter_cyli(t_light *light, t_cyli *cyli,
-		t_inter *inter, t_view *view);
+		t_inter *inter, t_ray *view);
 void				fill_inter_plane(t_light *light, t_plane *plane,
-		t_inter *inter, t_view *view);
+		t_inter *inter, t_ray *view);
 
 void				init_col(t_col *col, char r, char g, char b);
 int					mult_col(t_col *col1, t_col *col2); //absorbtion

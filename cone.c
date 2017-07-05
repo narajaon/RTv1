@@ -1,22 +1,7 @@
 #include "rtv1.h"
 
-unsigned int	put_col_cone(t_light *light, t_inter *inter, t_cone *cone)
-{
-	t_col		col;
-	double		b;
-	double		g;
-	double		r;
-
-	b = clamp_col(cone->col.tab[0], inter->cos_alph, light->col.tab[0]) * 255;
-	g = clamp_col(cone->col.tab[1], inter->cos_alph, light->col.tab[1]) * 255;
-	r = clamp_col(cone->col.tab[2], inter->cos_alph, light->col.tab[2]) * 255;
-	init_col(&inter->col, r, g, b);
-	inter->col.i = mult_col(&inter->col, &light->col);
-	return (inter->col.i);
-}
-
 void			fill_inter_cone(t_light *light, t_cone *cone,
-		t_inter *inter, t_view *view)
+		t_inter *inter, t_ray *view)
 {
 	t_coor		norm_cone;
 	t_coor		norm_dir;
@@ -26,7 +11,7 @@ void			fill_inter_cone(t_light *light, t_cone *cone,
 	double		m;
 
 	m = cone->angle * cone->r;
-	point_on_ray(&view->ray.origin, &view->ray.direction,
+	point_on_ray(&view->origin, &view->direction,
 			&inter->ray.origin, cone->dist);
 	fill_coord(&actual_center, cone->center.x, inter->ray.origin.y,
 			cone->center.z);
@@ -40,12 +25,12 @@ void			fill_inter_cone(t_light *light, t_cone *cone,
 	normalize(&norm_cone, &norm_cone);
 	normalize(&inter->ray.direction, &norm_dir);
 	inter->cos_alph = dot_prod(&norm_cone, &norm_dir);
-	inter->col.i = put_col_cone(light, inter, cone);
+	inter->col.i = put_col(light, inter, &cone->col);
 	inter->shape = CONE;
 	inter->dist_min = cone->dist;
 }
 
-int		is_cone(t_view *view, t_cone *cone, t_light *light, t_inter *inter)
+int		is_cone(t_ray *view, t_cone *cone, t_light *light, t_inter *inter)
 {
 	float		a;
 	float		b;
@@ -55,14 +40,14 @@ int		is_cone(t_view *view, t_cone *cone, t_light *light, t_inter *inter)
 	t_coor		x_ray;
 	t_coor		k_ray;
 
-	dot_sub(&view->ray.origin, &cone->center, &local.origin);
-	dot_sub(&view->ray.origin, &cone->vertex, &x_ray);
-	a = dot_prod(&view->ray.direction, &view->ray.direction) -
+	dot_sub(&view->origin, &cone->center, &local.origin);
+	dot_sub(&view->origin, &cone->vertex, &x_ray);
+	a = dot_prod(&view->direction, &view->direction) -
 		(1 + pow(cone->angle, 2)) *
-		pow(dot_prod(&view->ray.direction, &cone->hei), 2);
-	b = 2 * (dot_prod(&view->ray.direction, &x_ray) -
+		pow(dot_prod(&view->direction, &cone->hei), 2);
+	b = 2 * (dot_prod(&view->direction, &x_ray) -
 		(1 + pow(cone->angle, 2)) *
-		dot_prod(&view->ray.direction, &cone->hei) *
+		dot_prod(&view->direction, &cone->hei) *
 		dot_prod(&x_ray, &cone->hei));
 	c = dot_prod(&x_ray, &x_ray) - (1 + pow(cone->angle, 2)) *
 		pow(dot_prod(&x_ray, &cone->hei), 2);
