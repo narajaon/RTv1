@@ -40,6 +40,7 @@ void			fill_inter_cyli(t_light *light, t_cyli *cyli,
 	//printf("cos %f\n", inter->cos_alph);
 	inter->col.i = put_col_cyli(light, inter, cyli);
 	inter->shape = CYLI;
+	inter->dist_min = cyli->dist;
 }
 
 int		is_cyli(t_view *view, t_cyli *cyli, t_light *light, t_inter *inter)
@@ -70,6 +71,7 @@ int		is_cyli(t_view *view, t_cyli *cyli, t_light *light, t_inter *inter)
 //	printf("dist %f\n", cyli->dist);
 	if (cyli->dist < 0)
 		return (cyli->dist = 0);
-	//fill_inter_cyli(light, cyli, inter, view);
+	if (cyli->dist < inter->dist_min)
+		fill_inter_cyli(light, cyli, inter, view);
 	return (cyli->dist);
 }

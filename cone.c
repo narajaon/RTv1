@@ -42,6 +42,7 @@ void			fill_inter_cone(t_light *light, t_cone *cone,
 	inter->cos_alph = dot_prod(&norm_cone, &norm_dir);
 	inter->col.i = put_col_cone(light, inter, cone);
 	inter->shape = CONE;
+	inter->dist_min = cone->dist;
 }
 
 int		is_cone(t_view *view, t_cone *cone, t_light *light, t_inter *inter)
@@ -75,6 +76,7 @@ int		is_cone(t_view *view, t_cone *cone, t_light *light, t_inter *inter)
 	//printf("dist %f\n", cone->dist);
 	if (cone->dist < 0)
 		return (cone->dist = 0);
-	//fill_inter_cone(light, cone, inter, view);
+	if (cone->dist < inter->dist_min)
+		fill_inter_cone(light, cone, inter, view);
 	return (cone->dist);
 }

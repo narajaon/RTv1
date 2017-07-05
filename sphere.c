@@ -1,10 +1,5 @@
 #include "rtv1.h"
 
-int				check_shadow(t_inter *inter, t_light *light, int (*f)())
-{
-	return (1);
-}
-
 unsigned int	put_col_sphere(t_light *light, t_inter *inter, t_sphere *sphere)
 {
 	double		b;
@@ -35,6 +30,7 @@ void			fill_inter_sphere(t_light *light, t_sphere *sphere,
 	inter->cos_alph = dot_prod(&norm_sphere, &norm_dir);
 	inter->col.i = put_col_sphere(light, inter, sphere);
 	inter->shape = SPHERE;
+	inter->dist_min = sphere->dist;
 }
 
 int				is_sphere(t_view *view, t_sphere *sphere,
@@ -58,5 +54,7 @@ int				is_sphere(t_view *view, t_sphere *sphere,
 	sphere->dist = smallest_non_negativ(sphere->hit_1, sphere->hit_2);
 	if (sphere->dist < 0)
 		return (sphere->dist = 0);
+	if (sphere->dist < inter->dist_min)
+		fill_inter_sphere(light, sphere, inter, view);
 	return (sphere->dist);
 }

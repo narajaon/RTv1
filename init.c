@@ -19,14 +19,14 @@ void	init_inter(t_inter *inter)
 {
 	init_col(&inter->col, 0x00, 0x00, 0x00);
 	inter->shape = NONE;
-	inter->dist_min = 0;
+	inter->dist_min = INFINITY;
 }
 
 void	init_plane(t_plane *plane)
 {
 	fill_coord(&plane->center, WIN_X / 2, WIN_Y / 2, 0);
 	//rot_y(&plane->center.x, &plane->center.y, &plane->center.z, 0.5);
-	fill_coord(&plane->norm, 0, -1, 0);
+	fill_coord(&plane->norm, 0, -WIN_Y / 2, 0);
 	//dot_sub(&norm, &plane->center, &plane->norm);
 	normalize(&plane->norm, &plane->norm);
 //	print_coord(&plane->norm);
@@ -46,7 +46,7 @@ void	init_ray(t_view *view, t_pix *pix)
 
 void	init_cone(t_cone *cone)
 {
-	fill_coord(&cone->center, WIN_X / 2 - 200, WIN_Y / 2, 0);
+	fill_coord(&cone->center, WIN_X / 2 - 100, WIN_Y / 2, -50);
 	fill_coord(&cone->vertex, cone->center.x,
 			cone->center.y + 100, cone->center.z);
 	cone->r = 60;
@@ -60,7 +60,7 @@ void	init_cone(t_cone *cone)
 
 void	init_cyli(t_cyli *cyli)
 {
-	fill_coord(&cyli->center, WIN_X / 2 + 200, WIN_Y / 2, 0);
+	fill_coord(&cyli->center, WIN_X / 2 + 50, WIN_Y / 2, 0);
 	fill_coord(&cyli->cap_u, cyli->center.x,
 			cyli->center.y + 100, cyli->center.z);
 	cyli->r = 60;
