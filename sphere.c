@@ -44,3 +44,27 @@ int				is_sphere(t_ray *view, t_sphere *sphere,
 		fill_inter_sphere(light, sphere, inter, view);
 	return (sphere->dist);
 }
+
+int				shad_sphere(t_ray *view, t_sphere *sphere,
+		t_light *light)
+{
+	double		a;
+	double		b;
+	double		c;
+	double		delt;
+	t_ray		local;
+	t_coor		norm_dir;
+
+	dot_sub(&view->origin, &sphere->coord, &local.origin);
+	a = vect_pow(&view->direction);
+	b = 2 * (dot_prod(&view->direction, &local.origin));
+	c = vect_pow(&local.origin) - pow(sphere->r, 2);
+	if ((delt = pow(b, 2) - 4 * a * c) < 0)
+		return (sphere->dist = 0);
+	sphere->hit_1 = (-b - sqrt(delt)) / (2 * a);
+	sphere->hit_2 = (-b + sqrt(delt)) / (2 * a);
+	sphere->dist = smallest_non_negativ(sphere->hit_1, sphere->hit_2);
+	if (sphere->dist < 0)
+		return (sphere->dist = 0);
+	return (sphere->dist);
+}

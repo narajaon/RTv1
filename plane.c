@@ -46,3 +46,29 @@ int				is_plane(t_ray *view, t_plane *plane,
 		fill_inter_plane(light, plane, inter, view);
 	return (plane->dist);
 }
+
+int				shad_plane(t_ray *view, t_plane *plane,
+		t_light *light)
+{
+	double		dv;
+	double		xv;
+	double		t;
+	t_coor		x_point;
+
+	dot_sub(&plane->center, &view->origin, &x_point);
+	dv = dot_prod(&view->direction, &plane->norm);
+	if (fabs(dv) < 0.00001)
+		return (plane->dist = 0);
+	xv = dot_prod(&x_point, &plane->norm);
+//	printf("xv %f\n", xv);
+//	print_coord(&plane->norm);
+//	printf("dv %f\n", dv);
+	t = -xv / dv;
+//	printf("dn %f\n", dn);
+	//printf("t %f\n", t);
+	plane->dist = t;
+	if (t <= RAY_MIN || t >= 1)
+		return (plane->dist = 0);
+//	printf("plane->dist %f dist_min %f\n", plane->dist, inter->dist_min);
+	return (plane->dist);
+}
