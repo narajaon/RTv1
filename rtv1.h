@@ -79,7 +79,7 @@ typedef struct		s_light
 {
 	t_coor			coord;
 	t_col			col;
-	double			intens;
+	double			ambient;
 }					t_light;
 
 /*sphere coordinates*/
@@ -208,13 +208,13 @@ int					is_cyli(t_ray *view, t_cyli *cyli,
 int					is_cone(t_ray *view, t_cone *cone,
 		t_light *light, t_inter *inter);
 
-int					shad_sphere(t_ray *view, t_sphere *sphere,
+double				shad_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light);
-int					shad_cone(t_ray *view, t_cone *sphere,
+double				shad_cone(t_ray *view, t_cone *sphere,
 		t_light *light);
-int					shad_cyli(t_ray *view, t_cyli *sphere,
+double				shad_cyli(t_ray *view, t_cyli *sphere,
 		t_light *light);
-int					shad_plane(t_ray *view, t_plane *sphere,
+double				shad_plane(t_ray *view, t_plane *sphere,
 		t_light *light);
 
 void				fill_inter_sphere(t_light *light, t_sphere *sphere,
@@ -230,9 +230,10 @@ void				init_col(t_col *col, char r, char g, char b);
 int					mult_col(t_col *col1, t_col *col2); //absorbtion
 int					add_col(t_col *col1, t_col *col2); //mixing 2 colours
 int					div_col_int(t_col *col1, double cap);
-double				clamp_col(double col, double cos, char light);
+double				clamp_col(double col, double cos);
 unsigned int		put_col(t_light *light, t_inter *inter,
 		t_col *plane);
+unsigned int		shad_col(t_inter *inter, int shape, t_light *light);
 
 int					check_collision(t_env *e);
 void				print_rt(t_env *e);

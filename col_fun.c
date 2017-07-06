@@ -41,7 +41,7 @@ int		gamma_cor(t_col *col, double expos, double gamma)
 	return (new_col.i);
 }
 
-double			clamp_col(double col, double cos, char light)
+double			clamp_col(double col, double cos)
 {
 	if (cos < 0)
 		return (0x00);
@@ -52,15 +52,43 @@ double			clamp_col(double col, double cos, char light)
 
 unsigned int	put_col(t_light *light, t_inter *inter, t_col *shape)
 {
-	t_col		col;
 	double		b;
 	double		g;
 	double		r;
 
-	b = clamp_col(shape->tab[0], inter->cos_alph, light->col.tab[0]) * 255;
-	g = clamp_col(shape->tab[1], inter->cos_alph, light->col.tab[1]) * 255;
-	r = clamp_col(shape->tab[2], inter->cos_alph, light->col.tab[2]) * 255;
+	b = clamp_col(shape->tab[0], inter->cos_alph) * 255;
+	g = clamp_col(shape->tab[1], inter->cos_alph) * 255;
+	r = clamp_col(shape->tab[2], inter->cos_alph) * 255;
 	init_col(&inter->col, r, g, b);
+	inter->col.i = mult_col(&inter->col, &light->col);
+	return (inter->col.i);
+}
+
+double			cap_shadow(double col, double ambient, double cos)
+{
+	double		new_col;
+
+	new_col = col * (ambient + (1 - ambient) * cos);
+//	return ((new_col > 0) ? new_col : 0);
+	return (0);
+}
+
+unsigned int	shad_col(t_inter *inter, int shape, t_light *light)
+{
+	double		b;
+	double		g;
+	double		r;
+	t_col		u_shape;
+
+	u_shape.i = shape;
+//	printf("shape col %x\n", shape);
+	inter->cos_alph = (inter->cos_alph > 0) ? inter->cos_alph : 0;
+	b = (u_shape.tab[0] - u_shape.tab[0] * 0.8) * 255 * inter->cos_alph;
+	g = (u_shape.tab[1] - u_shape.tab[1] * 0.8) * 255 * inter->cos_alph;
+	r = (u_shape.tab[2] - u_shape.tab[2] * 0.8) * 255 * inter->cos_alph;
+	init_col(&inter->col, r, g, b);
+//	printf("b %f g %f r %f\n", b, g, r);
+//	printf("shape col 2 %x\n\n", inter->col.i);
 	inter->col.i = mult_col(&inter->col, &light->col);
 	return (inter->col.i);
 }

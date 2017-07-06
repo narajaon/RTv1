@@ -45,13 +45,14 @@ int				is_sphere(t_ray *view, t_sphere *sphere,
 	return (sphere->dist);
 }
 
-int				shad_sphere(t_ray *view, t_sphere *sphere,
+double			shad_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light)
 {
 	double		a;
 	double		b;
 	double		c;
 	double		delt;
+	double		local_dist;
 	t_ray		local;
 	t_coor		norm_dir;
 
@@ -63,8 +64,10 @@ int				shad_sphere(t_ray *view, t_sphere *sphere,
 		return (sphere->dist = 0);
 	sphere->hit_1 = (-b - sqrt(delt)) / (2 * a);
 	sphere->hit_2 = (-b + sqrt(delt)) / (2 * a);
-	sphere->dist = smallest_non_negativ(sphere->hit_1, sphere->hit_2);
-	if (sphere->dist < 0)
-		return (sphere->dist = 0);
-	return (sphere->dist);
+	local_dist = smallest_non_negativ(sphere->hit_1, sphere->hit_2);
+	//printf("shad dist %f\n", sphere->dist);
+	if (local_dist < 0)
+		return (local_dist = 0);
+	//printf("sphere->dist %f\n", sphere->dist);
+	return (local_dist);
 }

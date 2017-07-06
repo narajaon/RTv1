@@ -24,10 +24,10 @@ void			fill_inter_cone(t_light *light, t_cone *cone,
 int				is_cone(t_ray *view, t_cone *cone,
 		t_light *light, t_inter *inter)
 {
-	float		a;
-	float		b;
-	float		c;
-	float		delt;
+	double		a;
+	double		b;
+	double		c;
+	double		delt;
 	t_ray		local;
 	t_coor		x_ray;
 
@@ -57,15 +57,16 @@ int				is_cone(t_ray *view, t_cone *cone,
 	return (cone->dist);
 }
 
-int				shad_cone(t_ray *view, t_cone *cone,
+double				shad_cone(t_ray *view, t_cone *cone,
 		t_light *light)
 {
-	float		a;
-	float		b;
-	float		c;
-	float		delt;
+	double		a;
+	double		b;
+	double		c;
+	double		delt;
 	t_ray		local;
 	t_coor		x_ray;
+	double		local_dist;
 
 	dot_sub(&view->origin, &cone->center, &local.origin);
 	dot_sub(&view->origin, &cone->vertex, &x_ray);
@@ -84,9 +85,9 @@ int				shad_cone(t_ray *view, t_cone *cone,
 	//printf("delt %f\n", delt);
 	cone->hit_1 = (-b - sqrt(delt)) / (2 * a);
 	cone->hit_2 = (-b + sqrt(delt)) / (2 * a);
-	cone->dist = smallest_non_negativ(cone->hit_1, cone->hit_2);
+	local_dist = smallest_non_negativ(cone->hit_1, cone->hit_2);
 	//printf("dist %f\n", cone->dist);
-	if (cone->dist < 0 || cone->dist > 1)
+	if (local_dist < 0 || local_dist > 1)
 		return (cone->dist = 0);
-	return (cone->dist);
+	return (local_dist);
 }

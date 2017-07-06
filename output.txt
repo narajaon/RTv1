@@ -1,3 +1,2 @@
 Window closed, cya
-angle 0.577350
 key 53

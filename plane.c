@@ -47,7 +47,7 @@ int				is_plane(t_ray *view, t_plane *plane,
 	return (plane->dist);
 }
 
-int				shad_plane(t_ray *view, t_plane *plane,
+double			shad_plane(t_ray *view, t_plane *plane,
 		t_light *light)
 {
 	double		dv;
