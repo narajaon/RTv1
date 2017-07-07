@@ -13,14 +13,11 @@ void			fill_inter_cone(t_light *light, t_cone *cone,
 	dot_sub(&view->origin, &cone->vertex, &x_ray);
 	m_dist = dot_prod(&view->direction, &cone->hei) * cone->dist +
 		dot_prod(&x_ray, &cone->hei);
-
 	point_on_ray(&view->origin, &view->direction,
 			&inter->ray.origin, cone->dist);
-
 	dot_sub(&inter->ray.origin, &cone->vertex, &local_dir);
 	dot_mult(&cone->hei, &local_hei, (1 + pow(cone->angle, 2)) * m_dist);
 	dot_sub(&local_dir, &local_hei, &norm_cone);
-
 	dot_sub(&light->coord, &inter->ray.origin, &inter->ray.direction);
 	normalize(&norm_cone, &norm_cone);
 	normalize(&inter->ray.direction, &norm_dir);

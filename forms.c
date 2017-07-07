@@ -19,7 +19,6 @@ int		check_collision(t_env *e)
 	is_sphere(&e->view.ray, &e->sphere, &e->light, &e->inter);
 	is_cyli(&e->view.ray, &e->cyli, &e->light, &e->inter);
 	is_cone(&e->view.ray, &e->cone, &e->light, &e->inter);
-	//printf("shape %d\n", e->inter.shape);
 	if (e->inter.shape == SPHERE)
 		e->inter.shape = e->sphere.col.i;
 	else if (e->inter.shape == CONE)
@@ -28,7 +27,6 @@ int		check_collision(t_env *e)
 		e->inter.shape = e->cyli.col.i;
 	else if (e->inter.shape == PLANE)
 		e->inter.shape = e->plane.col.i;
-	//printf("col %d\n", e->inter.shape);
 	if (check_shadow(e))
 		return (e->img.img[e->pix.y * WIN_Y + e->pix.x] =
 				shad_col(&e->inter, e->inter.shape, &e->light));

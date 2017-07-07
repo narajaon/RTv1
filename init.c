@@ -27,9 +27,7 @@ void	init_plane(t_plane *plane)
 	fill_coord(&plane->center, WIN_X / 2, WIN_Y / 2, 0);
 	//rot_y(&plane->center.x, &plane->center.y, &plane->center.z, 0.5);
 	fill_coord(&plane->norm, 0, -WIN_Y / 2, 0);
-	//dot_sub(&norm, &plane->center, &plane->norm);
 	normalize(&plane->norm, &plane->norm);
-//	print_coord(&plane->norm);
 	plane->dist = 0;
 	init_col(&plane->col, 0xFF, 0xFF, 0xFF);
 }
@@ -38,7 +36,6 @@ void	init_ray(t_view *view, t_pix *pix)
 {
 	dot_cpy(&view->coord, &view->ray.origin);
 	fill_coord(&view->ray.direction, pix->x, pix->y, 0);
-//	rot_y(&view->ray.direction.x, &view->ray.direction.y,
 	dot_sub(&view->ray.direction, &view->ray.origin, &view->ray.direction);
 	normalize(&view->ray.direction, &view->ray.direction);
 	view->ray.len = 0;
@@ -51,10 +48,8 @@ void	init_cone(t_cone *cone)
 			cone->center.y + 100, cone->center.z);
 	cone->r = 60;
 	cone->angle = tan(30 * PI / 180);
-//	printf("angle %f\n", cone->angle);
 	dot_sub(&cone->center, &cone->vertex, &cone->hei);
 	normalize(&cone->hei, &cone->hei);
-	//fill_coord(&cone->norm, cone->hei.x + 10, cone->hei.y + 10, cone->hei.z);
 	init_col(&cone->col, 0xFF, 0xFF, 0x00);
 }
 
@@ -73,7 +68,7 @@ void	init_cyli(t_cyli *cyli)
 void	init_light(t_light *light)
 {
 	init_col(&light->col, 0xFF, 0xFF, 0xFF);
-	fill_coord(&light->coord, WIN_X / 2, 100, -500);
+	fill_coord(&light->coord, WIN_X / 2 + 200, 100, -500);
 //	rot_z(&light->coord.x, &light->coord.y, &light->coord.z, -0.7);
 	light->ambient = 0.6;
 }

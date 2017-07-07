@@ -93,6 +93,7 @@ typedef struct		s_sphere
 	double			hit_1;
 	double			hit_2;
 	double			dist;
+	unsigned int	place;
 }					t_sphere;
 
 typedef struct		s_plane
@@ -101,6 +102,7 @@ typedef struct		s_plane
 	t_coor			norm;
 	t_col			col;
 	double			dist;
+	unsigned int	place;
 }					t_plane;
 
 typedef struct		s_cyli
@@ -114,6 +116,7 @@ typedef struct		s_cyli
 	double			hit_1;
 	double			hit_2;
 	double			dist;
+	unsigned int	place;
 }					t_cyli;
 
 typedef struct		s_cone
@@ -128,6 +131,7 @@ typedef struct		s_cone
 	double			hit_2;
 	double			dist;
 	double			angle;
+	unsigned int	place;
 }					t_cone;
 
 typedef struct		s_img

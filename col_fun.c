@@ -19,7 +19,7 @@ int		mult_col(t_col *col1, t_col *col2) //absorbtion
 	return (new_col.i);
 }
 
-int		add_col(t_col *col1, t_col *col2) //mixing 2 colours
+int		add_col(t_col *col1, t_col *col2) //mixing 2 colours - useless
 {
 	t_col		new_col;
 
@@ -30,7 +30,7 @@ int		add_col(t_col *col1, t_col *col2) //mixing 2 colours
 	return (new_col.i);
 }
 
-int		gamma_cor(t_col *col, double expos, double gamma)
+int		gamma_cor(t_col *col, double expos, double gamma) //useless
 {
 	t_col		new_col;
 
@@ -64,7 +64,7 @@ unsigned int	put_col(t_light *light, t_inter *inter, t_col *shape)
 	return (inter->col.i);
 }
 
-double			cap_shadow(double col, double ambient, double cos)
+double			cap_shadow(double col, double ambient, double cos) //useless
 {
 	double		new_col;
 
