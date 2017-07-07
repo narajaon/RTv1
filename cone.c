@@ -5,14 +5,23 @@ void			fill_inter_cone(t_light *light, t_cone *cone,
 {
 	t_coor		norm_cone;
 	t_coor		norm_dir;
-	t_coor		actual_center;
+	t_coor		local_dir;
+	t_coor		local_hei;
+	t_coor		x_ray;
+	double		m_dist;
+
+	dot_sub(&view->origin, &cone->vertex, &x_ray);
+	m_dist = dot_prod(&view->direction, &cone->hei) * cone->dist +
+		dot_prod(&x_ray, &cone->hei);
 
 	point_on_ray(&view->origin, &view->direction,
 			&inter->ray.origin, cone->dist);
-	fill_coord(&actual_center, cone->center.x, inter->ray.origin.y,
-			cone->center.z);
+
+	dot_sub(&inter->ray.origin, &cone->vertex, &local_dir);
+	dot_mult(&cone->hei, &local_hei, (1 + pow(cone->angle, 2)) * m_dist);
+	dot_sub(&local_dir, &local_hei, &norm_cone);
+
 	dot_sub(&light->coord, &inter->ray.origin, &inter->ray.direction);
-	dot_sub(&inter->ray.origin, &actual_center, &norm_cone);
 	normalize(&norm_cone, &norm_cone);
 	normalize(&inter->ray.direction, &norm_dir);
 	inter->cos_alph = dot_prod(&norm_cone, &norm_dir);

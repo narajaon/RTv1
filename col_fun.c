@@ -83,9 +83,9 @@ unsigned int	shad_col(t_inter *inter, int shape, t_light *light)
 	u_shape.i = shape;
 //	printf("shape col %x\n", shape);
 	inter->cos_alph = (inter->cos_alph > 0) ? inter->cos_alph : 0;
-	b = (u_shape.tab[0] - u_shape.tab[0] * 0.8) * 255 * inter->cos_alph;
-	g = (u_shape.tab[1] - u_shape.tab[1] * 0.8) * 255 * inter->cos_alph;
-	r = (u_shape.tab[2] - u_shape.tab[2] * 0.8) * 255 * inter->cos_alph;
+	b = (u_shape.tab[0] - u_shape.tab[0] * light->ambient) * 255 * inter->cos_alph;
+	g = (u_shape.tab[1] - u_shape.tab[1] * light->ambient) * 255 * inter->cos_alph;
+	r = (u_shape.tab[2] - u_shape.tab[2] * light->ambient) * 255 * inter->cos_alph;
 	init_col(&inter->col, r, g, b);
 //	printf("b %f g %f r %f\n", b, g, r);
 //	printf("shape col 2 %x\n\n", inter->col.i);
