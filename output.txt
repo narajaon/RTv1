@@ -1,2 +1,4 @@
 Window closed, cya
+key 258
+key 269
 key 53

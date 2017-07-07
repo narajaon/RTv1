@@ -188,6 +188,7 @@ void				fill_coord(t_coor *coord, double x, double y, double z);
 double				dot_prod(t_coor *a, t_coor *b);
 double				vect_len(t_coor *a);
 double				vect_pow(t_coor *a);
+void				vect_project(t_coor *a, t_coor *b, t_coor *res);
 
 void				init_cone(t_cone *cone);
 void				init_sphere(t_sphere *sphere);

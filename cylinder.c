@@ -5,17 +5,21 @@ void			fill_inter_cyli(t_light *light, t_cyli *cyli,
 {
 	t_coor		norm_cyli;
 	t_coor		norm_dir;
-	t_coor		actual_center;
 	t_coor		local_dir;
+	t_coor		local_hei;
 	t_coor		local_light;
 
 	point_on_ray(&view->origin, &view->direction,
 			&inter->ray.origin, cyli->dist);
-	fill_coord(&actual_center, cyli->center.x,
-			inter->ray.origin.y, cyli->center.z);
-	dot_sub(&light->coord, &inter->ray.origin, &inter->ray.direction);
+	dot_sub(&inter->ray.origin, &cyli->center, &local_dir);
+	//normalize(&local_dir, &local_dir);
+	vect_project(&local_dir, &cyli->hei, &local_hei);
+	dot_sub(&local_dir, &local_hei, &norm_cyli);
+	//fill_coord(&actual_center, cyli->center.x,
+	//		inter->ray.origin.y, cyli->center.z);
 	//cyli->center.y = inter->ray.direction.y;
-	dot_sub(&inter->ray.origin, &actual_center, &norm_cyli);
+	//dot_sub(&inter->ray.origin, &actual_center, &norm_cyli);
+	dot_sub(&light->coord, &inter->ray.origin, &inter->ray.direction);
 	normalize(&norm_cyli, &norm_cyli);
 	normalize(&inter->ray.direction, &norm_dir);
 	inter->cos_alph = dot_prod(&norm_cyli, &norm_dir);

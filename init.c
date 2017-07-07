@@ -8,7 +8,7 @@ void	init_view(t_view *view)
 
 void	init_sphere(t_sphere *sphere)
 {
-	fill_coord(&sphere->coord, WIN_X / 2, WIN_Y / 2 - 50, 100);
+	fill_coord(&sphere->coord, WIN_X / 2 - 50, WIN_Y / 2 + 100, 100);
 	//rot_z(&sphere->coord.x, &sphere->coord.y, &sphere->coord.z, 0.1);
 	sphere->r = 100;
 	sphere->dist = 0;
@@ -61,7 +61,7 @@ void	init_cone(t_cone *cone)
 void	init_cyli(t_cyli *cyli)
 {
 	fill_coord(&cyli->center, WIN_X / 2 + 150, WIN_Y / 2, 0);
-	fill_coord(&cyli->cap_u, cyli->center.x,
+	fill_coord(&cyli->cap_u, cyli->center.x + 100,
 			cyli->center.y + 100, cyli->center.z);
 	cyli->r = 60;
 	dot_sub(&cyli->center, &cyli->cap_u, &cyli->hei);
@@ -73,7 +73,7 @@ void	init_cyli(t_cyli *cyli)
 void	init_light(t_light *light)
 {
 	init_col(&light->col, 0xFF, 0xFF, 0xFF);
-	fill_coord(&light->coord, WIN_X / 2 + 300, 0, -600);
+	fill_coord(&light->coord, WIN_X / 2 - 200, 0, -500);
 //	rot_z(&light->coord.x, &light->coord.y, &light->coord.z, -0.7);
 	light->ambient = 0.6;
 }

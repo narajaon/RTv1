@@ -37,6 +37,16 @@ void		cross_prod(t_coor *a, t_coor *b, t_coor *tmp)
 	tmp->z = a->x * b->y - a->y * b->x;
 }
 
+void		vect_project(t_coor *a, t_coor *b, t_coor *res)
+{
+	double		ab;
+	double		bb;
+
+	ab = dot_prod(a, b);
+	bb = dot_prod(b, b);
+	dot_mult(b, res, ab / bb);
+}
+
 void		dot_sub(t_coor *a, t_coor *b, t_coor *tmp)
 {
 	tmp->x = a->x - b->x;
