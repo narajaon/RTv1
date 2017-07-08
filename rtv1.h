@@ -172,6 +172,7 @@ typedef struct		s_env
 	t_cone			cone;
 	t_light			light;
 	t_inter			inter;
+	t_list			*shapes;
 	double			rot_y;
 	double			rot_z;
 }					t_env;
@@ -182,6 +183,7 @@ double				smallest_non_negativ(double a, double b);
 void				free_tab(char **tab);
 
 void				get_values(int fd, t_env *e);
+void				ft_lstback(t_list **alst, void const *content, size_t size);
 
 int					rot_view(int keycode, t_env *e);
 void				rot_x(double *x, double *y, double *z, double angle);

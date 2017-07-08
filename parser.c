@@ -53,7 +53,7 @@ void		parse_plane(t_plane *plane, char **buff)
 	free_tab(tab_line);
 }
 
-void		plane_values(int fd, t_plane *plane)
+void		plane_values(int fd, t_plane *plane, t_list **shapes)
 {
 	char	*buff;
 
@@ -109,7 +109,7 @@ void		parse_cyli(t_cyli *cyli, char **buff)
 	free_tab(tab_line);
 }
 
-void		cyli_values(int fd, t_cyli *cyli)
+void		cyli_values(int fd, t_cyli *cyli, t_list **shapes)
 {
 	char	*buff;
 
@@ -140,7 +140,7 @@ void		parse_cone(t_cone *cone, char **buff)
 	free_tab(tab_line);
 }
 
-void		cone_values(int fd, t_cone *cone)
+void		cone_values(int fd, t_cone *cone, t_list **shapes)
 {
 	char	*buff;
 
@@ -169,7 +169,7 @@ void		parse_sphere(t_sphere *sphere, char **buff)
 	free_tab(tab_line);
 }
 
-void		sphere_values(int fd, t_sphere *sphere)
+void		sphere_values(int fd, t_sphere *sphere, t_list **shapes)
 {
 	char	*buff;
 
@@ -201,7 +201,6 @@ void		light_values(int fd, t_light *light)
 	char	*buff;
 
 	get_next_line(fd, &buff);
-	//printf("light %s\n", buff);
 	while (!ft_strchr(buff, '}') && buff)
 	{
 		get_next_line(fd, &buff);
@@ -212,20 +211,43 @@ void		light_values(int fd, t_light *light)
 void		get_values(int fd, t_env *e)
 {
 	char	*buff;
+	t_list	*tmp;
 
+	if (!(e->shapes = ft_lstnew(0, sizeof(t_list))))
+		return ;
+	e->shapes->content = 0;
+	e->shapes->content_size = 0;
 	while (get_next_line(fd, &buff) > 0)
 	{
 		if (!ft_strcmp(buff, "view"))
 			view_values(fd, &e->view);
 		else if (!ft_strcmp(buff, "plane"))
-			plane_values(fd, &e->plane);
+		{
+			plane_values(fd, &e->plane, &e->shapes);
+			ft_lstback(&e->shapes, &e->plane, sizeof(e->plane));
+		}
 		else if (!ft_strcmp(buff, "cylinder"))
-			cyli_values(fd, &e->cyli);
+		{
+			cyli_values(fd, &e->cyli, &e->shapes);
+			ft_lstback(&e->shapes, &e->plane, sizeof(e->cyli));
+		}
 		else if (!ft_strcmp(buff, "cone"))
-			cone_values(fd, &e->cone);
+		{
+			cone_values(fd, &e->cone, &e->shapes);
+			ft_lstback(&e->shapes, &e->plane, sizeof(e->cone));
+		}
 		else if (!ft_strcmp(buff, "sphere"))
-			sphere_values(fd, &e->sphere);
+		{
+			sphere_values(fd, &e->sphere, &e->shapes);
+			ft_lstback(&e->shapes, &e->plane, sizeof(e->sphere));
+		}
 		else if (!ft_strcmp(buff, "light"))
 			light_values(fd, &e->light);
+		tmp = e->shapes;
+	}
+	while (tmp->next)
+	{
+		printf("dist %ld\n", sizeof(tmp->content));
+		tmp = tmp->next;
 	}
 }

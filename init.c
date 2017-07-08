@@ -2,11 +2,11 @@
 
 void	init_view(t_view *view)
 {
-	fill_coord(&view->coord, WIN_X / 2, WIN_Y / 2 + 50, -200);
+	fill_coord(&view->coord, WIN_X / 2, WIN_Y / 2 + 10, -200);
 	//rot_y(&view->coord.x, &view->coord.y, &view->coord.z, -0.2);
 }
 
-void	init_sphere(t_sphere *sphere)
+void	init_sphere(t_sphere *sphere) //useless
 {
 	fill_coord(&sphere->coord, WIN_X / 2 - 50, WIN_Y / 2, 0);
 	//rot_z(&sphere->coord.x, &sphere->coord.y, &sphere->coord.z, 0.1);
@@ -22,7 +22,7 @@ void	init_inter(t_inter *inter)
 	inter->dist_min = INFINITY;
 }
 
-void	init_plane(t_plane *plane)
+void	init_plane(t_plane *plane) //useless
 {
 	fill_coord(&plane->center, WIN_X / 2, WIN_Y / 2, 0);
 	//rot_y(&plane->center.x, &plane->center.y, &plane->center.z, 0.5);
