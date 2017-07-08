@@ -1,2 +1,6 @@
 Window closed, cya
+center 250 250 0
+colour WHITE
+direction 0 -10 0
+}
 key 53

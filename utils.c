@@ -53,6 +53,16 @@ int		rot_view(int keycode, t_env *e)
 	return (keycode);
 }
 
+void	free_tab(char **tab)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+}
+
 void	print_rt(t_env *e)
 {
 	e->pix.y = 0;

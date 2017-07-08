@@ -29,6 +29,11 @@
 # define CONE 3
 # define CYLI 4
 
+# define RED 0x00FF0000
+# define GREEN 0x0000FF00
+# define YELLOW 0x00FFFF00
+# define WHITE 0x00FFFFFF
+
 typedef struct		s_coor
 {
 	double			x;
@@ -174,6 +179,9 @@ typedef struct		s_env
 int					error_msg(int error);
 void				print_coord(t_coor *coord); //attention printf
 double				smallest_non_negativ(double a, double b);
+void				free_tab(char **tab);
+
+void				get_values(int fd, t_env *e);
 
 int					rot_view(int keycode, t_env *e);
 void				rot_x(double *x, double *y, double *z, double angle);
@@ -242,5 +250,5 @@ unsigned int		shad_col(t_inter *inter, int shape, t_light *light);
 
 int					check_collision(t_env *e);
 void				print_rt(t_env *e);
-void				do_rt(t_env *e);
+void				do_rt(t_env *e, int fd);
 #endif

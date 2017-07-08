@@ -10,12 +10,13 @@ int		key_hook(int key, t_env *e)
 	return (key);
 }
 
-void	do_rt(t_env *e)
+void	do_rt(t_env *e, int fd)
 {
-	init_view(&e->view);
-	init_sphere(&e->sphere);
-	init_plane(&e->plane);
+//	init_view(&e->view);
+	get_values(fd, e);
+	//init_plane(&e->plane);
 	init_cyli(&e->cyli);
+//	init_sphere(&e->sphere);
 	init_light(&e->light);
 	init_cone(&e->cone);
 	print_rt(e);
@@ -26,9 +27,12 @@ void	do_rt(t_env *e)
 int		main(int ac, char **av)
 {
 	t_env	e;
+	int		fd;
 
 	if (ac != 2)
-		exit(error_msg(1));
+		error_msg(1);
+	if ((fd = open(av[1], O_RDONLY)) <= 0)
+		error_msg(3);
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, WIN_X, WIN_Y, "RT scene");
 	e.img.img_ptr = mlx_new_image(e.mlx, WIN_X, WIN_Y);
@@ -36,6 +40,6 @@ int		main(int ac, char **av)
 			&e.img.bpp, &e.img.size_line, &e.img.endian);
 	e.view.rot_y = 0;
 	mlx_key_hook(e.win, &rot_view, &e);
-	do_rt(&e);
+	do_rt(&e, fd);
 	return (0);
 }
