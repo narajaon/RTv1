@@ -167,6 +167,10 @@ typedef struct		s_env
 	t_pix			pix;
 	t_plane			plane;
 	t_view			view;
+	t_list			*spheres;
+	t_list			*cylinders;
+	t_list			*cones;
+	t_list			*planes;
 	t_sphere		sphere;
 	t_cyli			cyli;
 	t_cone			cone;
@@ -222,6 +226,8 @@ int					is_cyli(t_ray *view, t_cyli *cyli,
 		t_light *light, t_inter *inter);
 int					is_cone(t_ray *view, t_cone *cone,
 		t_light *light, t_inter *inter);
+
+void				closest_sphere(t_list *spheres, t_env *e);
 
 double				shad_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light);

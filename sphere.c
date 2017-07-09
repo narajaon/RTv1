@@ -71,3 +71,17 @@ double			shad_sphere(t_ray *view, t_sphere *sphere,
 	//printf("sphere->dist %f\n", sphere->dist);
 	return (local_dist);
 }
+
+void		closest_sphere(t_list *spheres, t_env *e)
+{
+	t_list		*lst;
+	t_sphere	*actual;
+
+	lst = spheres;
+	while (lst->next)
+	{
+		actual = spheres->content;
+		is_sphere(&e->view.ray, actual, &e->light, &e->inter);
+		lst = lst->next;
+	}
+}

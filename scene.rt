@@ -16,6 +16,20 @@ colour GREEN
 width 100
 }
 
+sphere
+{
+center 150 350 0
+colour GREEN
+width 100
+}
+
+sphere
+{
+center 450 350 0
+colour GREEN
+width 100
+}
+
 plane
 {
 center 350 350 0

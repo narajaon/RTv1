@@ -53,7 +53,7 @@ void		parse_plane(t_plane *plane, char **buff)
 	free_tab(tab_line);
 }
 
-void		plane_values(int fd, t_plane *plane, t_list **shapes)
+void		plane_values(int fd, t_plane *plane, t_list **list)
 {
 	char	*buff;
 
@@ -64,6 +64,7 @@ void		plane_values(int fd, t_plane *plane, t_list **shapes)
 		get_next_line(fd, &buff);
 		parse_plane(plane, &buff);
 	}
+	ft_lstback(list, plane, sizeof(*plane));
 }
 
 void		parse_view(t_view *view, char **buff)
@@ -109,7 +110,7 @@ void		parse_cyli(t_cyli *cyli, char **buff)
 	free_tab(tab_line);
 }
 
-void		cyli_values(int fd, t_cyli *cyli, t_list **shapes)
+void		cyli_values(int fd, t_cyli *cyli, t_list **list)
 {
 	char	*buff;
 
@@ -120,66 +121,7 @@ void		cyli_values(int fd, t_cyli *cyli, t_list **shapes)
 		get_next_line(fd, &buff);
 		parse_cyli(cyli, &buff);
 	}
-}
-
-void		parse_cone(t_cone *cone, char **buff)
-{
-	char	**tab_line;
-
-	tab_line = ft_strsplit(*buff, ' ');
-	if (!ft_strcmp(tab_line[0], "center"))
-		get_coord(&cone->center, buff);
-	else if (!ft_strcmp(tab_line[0], "direction"))
-		get_coord(&cone->vertex, buff);
-	else if (!ft_strcmp(tab_line[0], "colour"))
-		get_shape_col(&cone->col, buff);
-	else if (!ft_strcmp(tab_line[0], "angle"))
-		cone->angle = tan(ft_atoi(tab_line[1]) * PI / 180);
-	else if (ft_strcmp(tab_line[0], "}"))
-		error_msg(3);
-	free_tab(tab_line);
-}
-
-void		cone_values(int fd, t_cone *cone, t_list **shapes)
-{
-	char	*buff;
-
-	get_next_line(fd, &buff);
-	//printf("cone %s\n", buff);
-	while (!ft_strchr(buff, '}') && buff)
-	{
-		get_next_line(fd, &buff);
-		parse_cone(cone, &buff);
-	}
-}
-
-void		parse_sphere(t_sphere *sphere, char **buff)
-{
-	char	**tab_line;
-
-	tab_line = ft_strsplit(*buff, ' ');
-	if (!ft_strcmp(tab_line[0], "center"))
-		get_coord(&sphere->coord, buff);
-	else if (!ft_strcmp(tab_line[0], "colour"))
-		get_shape_col(&sphere->col, buff);
-	else if (!ft_strcmp(tab_line[0], "width"))
-		sphere->r = ft_atoi(tab_line[1]);
-	else if (ft_strcmp(tab_line[0], "}"))
-		error_msg(3);
-	free_tab(tab_line);
-}
-
-void		sphere_values(int fd, t_sphere *sphere, t_list **shapes)
-{
-	char	*buff;
-
-	get_next_line(fd, &buff);
-	//printf("sphere %s\n", buff);
-	while (!ft_strchr(buff, '}') && buff)
-	{
-		get_next_line(fd, &buff);
-		parse_sphere(sphere, &buff);
-	}
+	ft_lstback(list, cyli, sizeof(*cyli));
 }
 
 void		parse_light(t_light *light, char **buff)
@@ -208,46 +150,89 @@ void		light_values(int fd, t_light *light)
 	}
 }
 
-void		get_values(int fd, t_env *e)
+void		parse_cone(t_cone *cone, char **buff)
+{
+	char	**tab_line;
+
+	tab_line = ft_strsplit(*buff, ' ');
+	if (!ft_strcmp(tab_line[0], "center"))
+		get_coord(&cone->center, buff);
+	else if (!ft_strcmp(tab_line[0], "direction"))
+		get_coord(&cone->vertex, buff);
+	else if (!ft_strcmp(tab_line[0], "colour"))
+		get_shape_col(&cone->col, buff);
+	else if (!ft_strcmp(tab_line[0], "angle"))
+		cone->angle = tan(ft_atoi(tab_line[1]) * PI / 180);
+	else if (ft_strcmp(tab_line[0], "}"))
+		error_msg(3);
+	free_tab(tab_line);
+}
+
+void		cone_values(int fd, t_cone *cone, t_list **list)
 {
 	char	*buff;
-	t_list	*tmp;
 
-	if (!(e->shapes = ft_lstnew(0, sizeof(t_list))))
-		return ;
-	e->shapes->content = 0;
-	e->shapes->content_size = 0;
+	get_next_line(fd, &buff);
+	//printf("cone %s\n", buff);
+	while (!ft_strchr(buff, '}') && buff)
+	{
+		get_next_line(fd, &buff);
+		parse_cone(cone, &buff);
+	}
+	ft_lstback(list, cone, sizeof(*cone));
+}
+
+void		parse_sphere(t_sphere *sphere, char **buff)
+{
+	char	**tab_line;
+
+	tab_line = ft_strsplit(*buff, ' ');
+	if (!ft_strcmp(tab_line[0], "center"))
+		get_coord(&sphere->coord, buff);
+	else if (!ft_strcmp(tab_line[0], "colour"))
+		get_shape_col(&sphere->col, buff);
+	else if (!ft_strcmp(tab_line[0], "width"))
+		sphere->r = ft_atoi(tab_line[1]);
+	else if (ft_strcmp(tab_line[0], "}"))
+		error_msg(3);
+	free_tab(tab_line);
+}
+
+void		sphere_values(int fd, t_sphere *sphere, t_list **list)
+{
+	char	*buff;
+
+	get_next_line(fd, &buff);
+	//printf("sphere %s\n", buff);
+	while (!ft_strchr(buff, '}') && buff)
+	{
+		get_next_line(fd, &buff);
+		parse_sphere(sphere, &buff);
+	}
+	ft_lstback(list, sphere, sizeof(*sphere));
+}
+
+void		get_values(int fd, t_env *e)
+{
+	char		*buff;
+
+	e->spheres = NULL;
+	e->cylinders = NULL;
+	e->cones = NULL;
+	e->planes = NULL;
 	while (get_next_line(fd, &buff) > 0)
 	{
 		if (!ft_strcmp(buff, "view"))
 			view_values(fd, &e->view);
 		else if (!ft_strcmp(buff, "plane"))
-		{
-			plane_values(fd, &e->plane, &e->shapes);
-			ft_lstback(&e->shapes, &e->plane, sizeof(e->plane));
-		}
+			plane_values(fd, &e->plane, &e->planes);
 		else if (!ft_strcmp(buff, "cylinder"))
-		{
-			cyli_values(fd, &e->cyli, &e->shapes);
-			ft_lstback(&e->shapes, &e->plane, sizeof(e->cyli));
-		}
+			cyli_values(fd, &e->cyli, &e->cylinders);
 		else if (!ft_strcmp(buff, "cone"))
-		{
-			cone_values(fd, &e->cone, &e->shapes);
-			ft_lstback(&e->shapes, &e->plane, sizeof(e->cone));
-		}
+			cone_values(fd, &e->cone, &e->cones);
 		else if (!ft_strcmp(buff, "sphere"))
-		{
-			sphere_values(fd, &e->sphere, &e->shapes);
-			ft_lstback(&e->shapes, &e->plane, sizeof(e->sphere));
-		}
+			sphere_values(fd, &e->sphere, &e->spheres);
 		else if (!ft_strcmp(buff, "light"))
 			light_values(fd, &e->light);
-		tmp = e->shapes;
-	}
-	while (tmp->next)
-	{
-		printf("dist %ld\n", sizeof(tmp->content));
-		tmp = tmp->next;
 	}
 }
