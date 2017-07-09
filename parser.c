@@ -115,12 +115,13 @@ void		cyli_values(int fd, t_cyli *cyli, t_list **list)
 	char	*buff;
 
 	get_next_line(fd, &buff);
-	//printf("cyli %s\n", buff);
 	while (!ft_strchr(buff, '}') && buff)
 	{
 		get_next_line(fd, &buff);
 		parse_cyli(cyli, &buff);
 	}
+	dot_sub(&cyli->center, &cyli->cap_u, &cyli->hei);
+	normalize(&cyli->hei, &cyli->hei);
 	ft_lstback(list, cyli, sizeof(*cyli));
 }
 
@@ -161,7 +162,7 @@ void		parse_cone(t_cone *cone, char **buff)
 		get_coord(&cone->vertex, buff);
 	else if (!ft_strcmp(tab_line[0], "colour"))
 		get_shape_col(&cone->col, buff);
-	else if (!ft_strcmp(tab_line[0], "angle"))
+	else if (!ft_strcmp(tab_line[0], "width"))
 		cone->angle = tan(ft_atoi(tab_line[1]) * PI / 180);
 	else if (ft_strcmp(tab_line[0], "}"))
 		error_msg(3);
@@ -173,12 +174,13 @@ void		cone_values(int fd, t_cone *cone, t_list **list)
 	char	*buff;
 
 	get_next_line(fd, &buff);
-	//printf("cone %s\n", buff);
 	while (!ft_strchr(buff, '}') && buff)
 	{
 		get_next_line(fd, &buff);
 		parse_cone(cone, &buff);
 	}
+	dot_sub(&cone->center, &cone->vertex, &cone->hei);
+	normalize(&cone->hei, &cone->hei);
 	ft_lstback(list, cone, sizeof(*cone));
 }
 
@@ -203,7 +205,6 @@ void		sphere_values(int fd, t_sphere *sphere, t_list **list)
 	char	*buff;
 
 	get_next_line(fd, &buff);
-	//printf("sphere %s\n", buff);
 	while (!ft_strchr(buff, '}') && buff)
 	{
 		get_next_line(fd, &buff);

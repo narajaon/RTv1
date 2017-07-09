@@ -14,8 +14,8 @@ void			fill_inter_sphere(t_light *light, t_sphere *sphere,
 	normalize(&norm_sphere, &norm_sphere);
 	normalize(&inter->ray.direction, &norm_dir);
 	inter->cos_alph = dot_prod(&norm_sphere, &norm_dir);
+	inter->shape = sphere->col.i;
 	inter->col.i = put_col(light, inter, &sphere->col);
-	inter->shape = SPHERE;
 	inter->dist_min = sphere->dist;
 }
 
@@ -78,10 +78,27 @@ void		closest_sphere(t_list *spheres, t_env *e)
 	t_sphere	*actual;
 
 	lst = spheres;
-	while (lst->next)
+	while (lst)
 	{
-		actual = spheres->content;
+		actual = lst->content;
 		is_sphere(&e->view.ray, actual, &e->light, &e->inter);
 		lst = lst->next;
 	}
+}
+
+double		check_shadow_sphere(t_list *spheres, t_env *e)
+{
+	t_list			*lst;
+	t_sphere		*actual;
+	int				col;
+
+	lst = spheres;
+	while (lst)
+	{
+		actual = lst->content;
+		if (shad_sphere(&e->inter.ray, actual, &e->light))
+			return (1);
+		lst = lst->next;
+	}
+	return (0);
 }

@@ -22,8 +22,8 @@ void			fill_inter_cone(t_light *light, t_cone *cone,
 	normalize(&norm_cone, &norm_cone);
 	normalize(&inter->ray.direction, &norm_dir);
 	inter->cos_alph = dot_prod(&norm_cone, &norm_dir);
+	inter->shape = cone->col.i;
 	inter->col.i = put_col(light, inter, &cone->col);
-	inter->shape = CONE;
 	inter->dist_min = cone->dist;
 }
 
@@ -85,15 +85,43 @@ double				shad_cone(t_ray *view, t_cone *cone,
 		dot_prod(&x_ray, &cone->hei));
 	c = dot_prod(&x_ray, &x_ray) - (1 + pow(cone->angle, 2)) *
 		pow(dot_prod(&x_ray, &cone->hei), 2);
-//	printf("a %f b %f c %f\n", a, b, c);
 	if ((delt = pow(b, 2) - 4 * a * c) < 0)
 		return (cone->dist = 0);
-	//printf("delt %f\n", delt);
 	cone->hit_1 = (-b - sqrt(delt)) / (2 * a);
 	cone->hit_2 = (-b + sqrt(delt)) / (2 * a);
 	local_dist = smallest_non_negativ(cone->hit_1, cone->hit_2);
-	//printf("dist %f\n", cone->dist);
 	if (local_dist < 0 || local_dist > 1)
 		return (cone->dist = 0);
 	return (local_dist);
+}
+
+void		closest_cone(t_list *cones, t_env *e)
+{
+	t_list		*lst;
+	t_cone		*actual;
+
+	lst = cones;
+	while (lst)
+	{
+		actual = lst->content;
+		is_cone(&e->view.ray, actual, &e->light, &e->inter);
+		lst = lst->next;
+	}
+}
+
+double		check_shadow_cone(t_list *cones, t_env *e)
+{
+	t_list			*lst;
+	t_cone			*actual;
+	int				col;
+
+	lst = cones;
+	while (lst)
+	{
+		actual = lst->content;
+		if (shad_cone(&e->inter.ray, actual, &e->light))
+			return (1);
+		lst = lst->next;
+	}
+	return (0);
 }

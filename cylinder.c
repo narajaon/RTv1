@@ -17,8 +17,8 @@ void			fill_inter_cyli(t_light *light, t_cyli *cyli,
 	normalize(&norm_cyli, &norm_cyli);
 	normalize(&inter->ray.direction, &norm_dir);
 	inter->cos_alph = dot_prod(&norm_cyli, &norm_dir);
+	inter->shape = cyli->col.i;
 	inter->col.i = put_col(light, inter, &cyli->col);
-	inter->shape = CYLI;
 	inter->dist_min = cyli->dist;
 }
 
@@ -84,4 +84,35 @@ double			shad_cyli(t_ray *view, t_cyli *cyli, t_light *light)
 	if (local_dist < 0)
 		return (local_dist = 0);
 	return (local_dist);
+}
+
+void		closest_cylinder(t_list *cylinders, t_env *e)
+{
+	t_list		*lst;
+	t_cyli		*actual;
+
+	lst = cylinders;
+	while (lst)
+	{
+		actual = lst->content;
+		is_cyli(&e->view.ray, actual, &e->light, &e->inter);
+		lst = lst->next;
+	}
+}
+
+double		check_shadow_cylinder(t_list *cylinders, t_env *e)
+{
+	t_list			*lst;
+	t_cyli			*actual;
+	int				col;
+
+	lst = cylinders;
+	while (lst)
+	{
+		actual = lst->content;
+		if (shad_cyli(&e->inter.ray, actual, &e->light))
+			return (1);
+		lst = lst->next;
+	}
+	return (0);
 }

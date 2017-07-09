@@ -185,6 +185,7 @@ int					error_msg(int error);
 void				print_coord(t_coor *coord); //attention printf
 double				smallest_non_negativ(double a, double b);
 void				free_tab(char **tab);
+void				free_list(t_list **shape);
 
 void				get_values(int fd, t_env *e);
 void				ft_lstback(t_list **alst, void const *content, size_t size);
@@ -228,6 +229,8 @@ int					is_cone(t_ray *view, t_cone *cone,
 		t_light *light, t_inter *inter);
 
 void				closest_sphere(t_list *spheres, t_env *e);
+void				closest_cylinder(t_list *cylinders, t_env *e);
+void				closest_cone(t_list *cones, t_env *e);
 
 double				shad_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light);
@@ -237,6 +240,9 @@ double				shad_cyli(t_ray *view, t_cyli *sphere,
 		t_light *light);
 double				shad_plane(t_ray *view, t_plane *sphere,
 		t_light *light);
+double				check_shadow_sphere(t_list *spheres, t_env *e);
+double				check_shadow_cylinder(t_list *cylinders, t_env *e);
+double				check_shadow_cone(t_list *cones, t_env *e);
 
 void				fill_inter_sphere(t_light *light, t_sphere *sphere,
 		t_inter *inter, t_ray *view);

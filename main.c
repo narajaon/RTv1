@@ -12,13 +12,8 @@ int		key_hook(int key, t_env *e)
 
 void	do_rt(t_env *e, int fd)
 {
-//	init_view(&e->view);
 	get_values(fd, e);
-	//init_plane(&e->plane);
-	init_cyli(&e->cyli);
-//	init_sphere(&e->sphere);
-	init_light(&e->light);
-	init_cone(&e->cone);
+	e->light.ambient = 0.6;
 	print_rt(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	mlx_loop(e->mlx);

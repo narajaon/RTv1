@@ -1,33 +1,51 @@
 view
 {
-center 350 400 -200
+center 350 400 -500
 }
 
 light
 {
-center 450 0 -300
+center 450 150 -500
 colour WHITE
 }
 
 sphere
 {
-center 350 350 0
-colour GREEN
+center 150 350 0
+colour YELLOW
 width 100
 }
 
-sphere
+cylinder
+{
+center 350 350 0
+colour RED
+width 75
+direction 350 360 0
+}
+
+cylinder
+{
+center 550 350 0
+colour GREEN
+width 75
+direction 560 360 0
+}
+
+cone
+{
+center 550 350 0
+colour WHITE
+width 10
+direction 550 360 0
+}
+
+cone
 {
 center 150 350 0
 colour GREEN
-width 100
-}
-
-sphere
-{
-center 450 350 0
-colour GREEN
-width 100
+width 20
+direction 350 360 0
 }
 
 plane
@@ -35,20 +53,4 @@ plane
 center 350 350 0
 colour WHITE
 direction 0 -1 0
-}
-
-cylinder
-{
-center 450 250 0
-colour RED
-direction 450 260 0
-width 50
-}
-
-cone
-{
-center 200 250 0
-colour YELLOW
-direction 200 350 0
-angle 30
 }
