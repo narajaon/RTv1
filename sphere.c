@@ -66,7 +66,7 @@ double			shad_sphere(t_ray *view, t_sphere *sphere,
 	sphere->hit_2 = (-b + sqrt(delt)) / (2 * a);
 	local_dist = smallest_non_negativ(sphere->hit_1, sphere->hit_2);
 	//printf("shad dist %f\n", sphere->dist);
-	if (local_dist < 0)
+	if (local_dist < 0 || local_dist > 1)
 		return (local_dist = 0);
 	//printf("sphere->dist %f\n", sphere->dist);
 	return (local_dist);

@@ -58,12 +58,14 @@ void		plane_values(int fd, t_plane *plane, t_list **list)
 	char	*buff;
 
 	get_next_line(fd, &buff);
-	//printf("plane %s\n", buff);
 	while (!ft_strchr(buff, '}'))
 	{
 		get_next_line(fd, &buff);
 		parse_plane(plane, &buff);
 	}
+	dot_sub(&plane->norm, &plane->center, &plane->norm);
+	normalize(&plane->norm, &plane->norm);
+	print_coord(&plane->norm); //print
 	ft_lstback(list, plane, sizeof(*plane));
 }
 
@@ -84,7 +86,6 @@ void		view_values(int fd, t_view *view)
 	char	*buff;
 
 	get_next_line(fd, &buff);
-	//printf("view  %s\n", buff);
 	while (!ft_strchr(buff, '}') && buff)
 	{
 		get_next_line(fd, &buff);

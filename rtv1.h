@@ -5,8 +5,8 @@
 # include "minilibx_macos/mlx.h"
 # include <stdio.h>
 
-# define WIN_X 700
-# define WIN_Y 700
+# define WIN_X 1200
+# define WIN_Y 1200
 # define EX_KEY 53
 # define UP_KEY 126
 # define DOWN_KEY 125
@@ -231,6 +231,7 @@ int					is_cone(t_ray *view, t_cone *cone,
 void				closest_sphere(t_list *spheres, t_env *e);
 void				closest_cylinder(t_list *cylinders, t_env *e);
 void				closest_cone(t_list *cones, t_env *e);
+void				closest_plane(t_list *planes, t_env *e);
 
 double				shad_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light);
@@ -243,6 +244,7 @@ double				shad_plane(t_ray *view, t_plane *sphere,
 double				check_shadow_sphere(t_list *spheres, t_env *e);
 double				check_shadow_cylinder(t_list *cylinders, t_env *e);
 double				check_shadow_cone(t_list *cones, t_env *e);
+double				check_shadow_plane(t_list *planes, t_env *e);
 
 void				fill_inter_sphere(t_light *light, t_sphere *sphere,
 		t_inter *inter, t_ray *view);

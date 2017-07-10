@@ -81,7 +81,7 @@ double			shad_cyli(t_ray *view, t_cyli *cyli, t_light *light)
 	cyli->hit_2 = (-b + sqrt(delt)) / (2 * a);
 	local_dist = smallest_non_negativ(cyli->hit_1, cyli->hit_2);
 	//printf("dist %f\n", cyli->dist);
-	if (local_dist < 0)
+	if (local_dist < 0 || local_dist > 1)
 		return (local_dist = 0);
 	return (local_dist);
 }

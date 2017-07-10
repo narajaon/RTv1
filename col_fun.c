@@ -90,7 +90,7 @@ unsigned int	shad_col(t_inter *inter, int shape, t_light *light)
 	r = (u_shape.tab[2] - u_shape.tab[2] *
 			light->ambient) * 255 * inter->cos_alph;
 	init_col(&inter->col, r, g, b);
-	printf("b %f g %f r %f\n", b, g, r);
+//	printf("b %f g %f r %f\n", b, g, r);
 //	printf("shape col 2 %x\n\n", inter->col.i);
 	inter->col.i = mult_col(&inter->col, &light->col);
 	return (inter->col.i);
