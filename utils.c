@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/11 18:30:21 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/11 20:25:27 by narajaon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 int		error_msg(int error)
@@ -29,23 +41,31 @@ double	smallest_non_negativ(double a, double b)
 
 int		rot_view(int keycode, t_env *e)
 {
-	printf("key %d\n", keycode);
 	if (keycode == EX_KEY)
-	{
-		mlx_destroy_image(e->mlx, e->img.img_ptr);
-		mlx_destroy_window(e->mlx, e->win);
-		exit(error_msg(0));
-	}
-	else if (keycode == UP_KEY)
-		e->rot_y += 0.2;
-	else if (keycode == DOWN_KEY)
-		e->rot_y -= 0.2;
-	else if (keycode == LEFT_KEY)
-		e->rot_z += 0.1;
+		exit_rt(e);
 	else if (keycode == RIGHT_KEY)
-		e->rot_z -= 0.1;
+		e->view.rot_y += 0.2;
+	else if (keycode == LEFT_KEY)
+		e->view.rot_y -= 0.2;
+	else if (keycode == UP_KEY)
+		e->view.rot_x += 0.2;
+	else if (keycode == DOWN_KEY)
+		e->view.rot_x -= 0.2;
+	else if (keycode == W_KEY)
+		e->view.z_value += 50;
+	else if (keycode == S_KEY)
+		e->view.z_value -= 50;
+	else if (keycode == A_KEY)
+		e->view.rot_z -= 0.2;
+	else if (keycode == D_KEY)
+		e->view.rot_z += 0.2;
 	else if (keycode == R_KEY)
-		e->rot_y = 0;
+	{
+		e->view.rot_x = 1.6;
+		e->view.rot_y = 0;
+		e->view.rot_z = 0;
+		e->view.z_value = 0;
+	}
 	print_rt(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	return (keycode);

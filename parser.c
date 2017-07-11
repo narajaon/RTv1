@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/11 18:31:09 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/11 18:31:10 by narajaon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 void		get_coord(t_coor *coord, char **buff)
@@ -10,6 +22,8 @@ void		get_coord(t_coor *coord, char **buff)
 		tmp++;
 	if (!(tab_coord = ft_strsplit(tmp, ' ')))
 		error_msg(2);
+	if (!tab_coord[0] || !tab_coord[1] || !tab_coord[2])
+		error_msg(3);
 	coord->x = ft_atoi(tab_coord[0]);
 	coord->y = ft_atoi(tab_coord[1]);
 	coord->z = ft_atoi(tab_coord[2]);
@@ -66,7 +80,6 @@ void		plane_values(int fd, t_plane *plane, t_list **list)
 	}
 	dot_sub(&plane->norm, &plane->center, &plane->norm);
 	normalize(&plane->norm, &plane->norm);
-	//print_coord(&plane->norm); //print
 	ft_lstback(list, plane, sizeof(*plane));
 }
 
@@ -98,7 +111,8 @@ void		parse_cyli(t_cyli *cyli, char **buff)
 {
 	char	**tab_line;
 
-	tab_line = ft_strsplit(*buff, ' ');
+	if (!(tab_line = ft_strsplit(*buff, ' ')))
+		error_msg(2);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&cyli->center, buff);
 	else if (!ft_strcmp(tab_line[0], "direction"))

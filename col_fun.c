@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   col_fun.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/11 18:30:27 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/11 18:30:28 by narajaon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
-void	init_col(t_col *col, char r, char g, char b)
+void			init_col(t_col *col, char r, char g, char b)
 {
 	col->tab[0] = b;
 	col->tab[1] = g;
@@ -8,7 +20,7 @@ void	init_col(t_col *col, char r, char g, char b)
 	col->tab[3] = 0x00;
 }
 
-int		mult_col(t_col *col1, t_col *col2) //absorbtion
+int				mult_col(t_col *col1, t_col *col2)
 {
 	t_col		new_col;
 
@@ -19,7 +31,7 @@ int		mult_col(t_col *col1, t_col *col2) //absorbtion
 	return (new_col.i);
 }
 
-int		add_col(t_col *col1, t_col *col2) //mixing 2 colours - useless
+int				add_col(t_col *col1, t_col *col2)
 {
 	t_col		new_col;
 
@@ -30,7 +42,7 @@ int		add_col(t_col *col1, t_col *col2) //mixing 2 colours - useless
 	return (new_col.i);
 }
 
-int		gamma_cor(t_col *col, double expos, double gamma) //useless
+int				gamma_cor(t_col *col, double expos, double gamma)
 {
 	t_col		new_col;
 
@@ -64,12 +76,11 @@ unsigned int	put_col(t_light *light, t_inter *inter, t_col *shape)
 	return (inter->col.i);
 }
 
-double			cap_shadow(double col, double ambient, double cos) //useless
+double			cap_shadow(double col, double ambient, double cos)
 {
 	double		new_col;
 
 	new_col = col * (ambient + (1 - ambient) * cos);
-//	return ((new_col > 0) ? new_col : 0);
 	return (0);
 }
 
@@ -81,7 +92,6 @@ unsigned int	shad_col(t_inter *inter, int shape, t_light *light)
 	t_col		u_shape;
 
 	u_shape.i = shape;
-//	printf("shape col %x\n", shape);
 	inter->cos_alph = (inter->cos_alph > 0) ? inter->cos_alph : 0;
 	b = (u_shape.tab[0] - u_shape.tab[0] *
 			light->ambient) * 255 * inter->cos_alph;
@@ -90,8 +100,6 @@ unsigned int	shad_col(t_inter *inter, int shape, t_light *light)
 	r = (u_shape.tab[2] - u_shape.tab[2] *
 			light->ambient) * 255 * inter->cos_alph;
 	init_col(&inter->col, r, g, b);
-//	printf("b %f g %f r %f\n", b, g, r);
-//	printf("shape col 2 %x\n\n", inter->col.i);
 	inter->col.i = mult_col(&inter->col, &light->col);
 	return (inter->col.i);
 }

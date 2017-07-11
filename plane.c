@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/11 18:31:14 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/11 18:31:15 by narajaon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 void			fill_inter_plane(t_light *light, t_plane *plane,
@@ -51,23 +63,24 @@ double			shad_plane(t_ray *view, t_plane *plane,
 	double		xv;
 	double		t;
 	t_coor		x_point;
+	double		local_dist;
 
 	dot_sub(&plane->center, &view->origin, &x_point);
 	dot_sub(&plane->norm, &plane->center, &plane->norm);
 	normalize(&plane->norm, &plane->norm);
 	dv = dot_prod(&view->direction, &plane->norm);
 	if (fabs(dv) < 0)
-		return (plane->dist = 0);
+		return (local_dist = 0);
 	xv = dot_prod(&x_point, &plane->norm);
 	xv = (xv < 0) ? -xv : xv;
 	t = -xv / dv;
-	plane->dist = t;
-	if (t <= RAY_MIN)
-		return (plane->dist = 0);
-	return (plane->dist);
+	local_dist = t;
+	if (local_dist <= RAY_MIN)
+		return (local_dist = 0);
+	return (local_dist);
 }
 
-void		closest_plane(t_list *planes, t_env *e)
+void			closest_plane(t_list *planes, t_env *e)
 {
 	t_list		*lst;
 	t_plane		*actual;
@@ -81,7 +94,7 @@ void		closest_plane(t_list *planes, t_env *e)
 	}
 }
 
-double		check_shadow_plane(t_list *planes, t_env *e)
+double			check_shadow_plane(t_list *planes, t_env *e)
 {
 	t_list			*lst;
 	t_plane			*actual;

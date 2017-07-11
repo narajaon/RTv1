@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rtv1.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/11 18:31:31 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/11 19:51:23 by narajaon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RTV1_H
 # define RTV1_H
 # include <math.h>
@@ -77,8 +89,11 @@ typedef struct		s_view
 	t_ray			ray;
 	t_coor			coord;
 	unsigned int	dist;
+	double			rot_x;
 	double			rot_y;
 	double			rot_z;
+	double			y_value;
+	double			z_value;
 }					t_view;
 
 typedef struct		s_light
@@ -99,6 +114,10 @@ typedef struct		s_sphere
 	double			hit_1;
 	double			hit_2;
 	double			dist;
+	double			a;
+	double			b;
+	double			c;
+	double			delt;
 	unsigned int	place;
 }					t_sphere;
 
@@ -122,6 +141,10 @@ typedef struct		s_cyli
 	double			hit_1;
 	double			hit_2;
 	double			dist;
+	double			a;
+	double			b;
+	double			c;
+	double			delt;
 	unsigned int	place;
 }					t_cyli;
 
@@ -137,6 +160,10 @@ typedef struct		s_cone
 	double			hit_2;
 	double			dist;
 	double			angle;
+	double			a;
+	double			b;
+	double			c;
+	double			delt;
 	unsigned int	place;
 }					t_cone;
 
@@ -177,9 +204,9 @@ typedef struct		s_env
 	t_cone			cone;
 	t_light			light;
 	t_inter			inter;
-	t_list			*shapes;
 	double			rot_y;
 	double			rot_z;
+	int				fd;
 }					t_env;
 
 int					error_msg(int error);
@@ -187,6 +214,7 @@ void				print_coord(t_coor *coord); //attention printf
 double				smallest_non_negativ(double a, double b);
 void				free_tab(char **tab);
 void				free_list(t_list **shape);
+void				exit_rt(t_env *e);
 
 void				get_values(int fd, t_env *e);
 void				ft_lstback(t_list **alst, void const *content, size_t size);
@@ -257,8 +285,8 @@ void				fill_inter_plane(t_light *light, t_plane *plane,
 		t_inter *inter, t_ray *view);
 
 void				init_col(t_col *col, char r, char g, char b);
-int					mult_col(t_col *col1, t_col *col2); //absorbtion
-int					add_col(t_col *col1, t_col *col2); //mixing 2 colours
+int					mult_col(t_col *col1, t_col *col2);
+int					add_col(t_col *col1, t_col *col2);
 int					div_col_int(t_col *col1, double cap);
 double				clamp_col(double col, double cos);
 unsigned int		put_col(t_light *light, t_inter *inter,

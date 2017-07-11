@@ -48,13 +48,6 @@ width 20
 direction 350 360 0
 }
 
-plane
-{
-center 350 350 0
-colour WHITE
-direction 0 -1 0
-}
-
 sphere
 {
 center 150 350 0

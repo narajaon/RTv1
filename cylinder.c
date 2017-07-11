@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/11 18:30:35 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/11 18:30:37 by narajaon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 void			fill_inter_cyli(t_light *light, t_cyli *cyli,
@@ -25,30 +37,24 @@ void			fill_inter_cyli(t_light *light, t_cyli *cyli,
 int				is_cyli(t_ray *view, t_cyli *cyli,
 		t_light *light, t_inter *inter)
 {
-	double		a;
-	double		b;
-	double		c;
-	double		delt;
 	t_ray		local;
 	t_coor		x_ray;
 
 	dot_sub(&view->origin, &cyli->center, &local.origin);
 	dot_sub(&view->origin, &cyli->cap_u, &x_ray);
-	a = dot_prod(&view->direction, &view->direction) -
+	cyli->a = dot_prod(&view->direction, &view->direction) -
 		pow(dot_prod(&view->direction, &cyli->hei), 2);
-	b = 2 * (dot_prod(&view->direction, &x_ray) -
+	cyli->b = 2 * (dot_prod(&view->direction, &x_ray) -
 		dot_prod(&view->direction, &cyli->hei) *
 		dot_prod(&x_ray, &cyli->hei));
-	c = dot_prod(&x_ray, &x_ray) -
+	cyli->c = dot_prod(&x_ray, &x_ray) -
 		pow(dot_prod(&x_ray, &cyli->hei), 2) - pow(cyli->r, 2);
-//	printf("a %f b %f c %f\n", a, b, c);
-	if ((delt = pow(b, 2) - 4 * a * c) < 0)
+	if ((cyli->delt = pow(cyli->b, 2) - 4 * cyli->a * cyli->c) < 0)
 		return (cyli->dist = 0);
-	cyli->hit_1 = (-b - sqrt(delt)) / (2 * a);
-	cyli->hit_2 = (-b + sqrt(delt)) / (2 * a);
+	cyli->hit_1 = (-cyli->b - sqrt(cyli->delt)) / (2 * cyli->a);
+	cyli->hit_2 = (-cyli->b + sqrt(cyli->delt)) / (2 * cyli->a);
 	cyli->dist = smallest_non_negativ(cyli->hit_1, cyli->hit_2);
-//	printf("dist %f\n", cyli->dist);
-	if (cyli->dist < 0)
+	if (cyli->dist <= 0)
 		return (cyli->dist = 0);
 	if (cyli->dist < inter->dist_min)
 		fill_inter_cyli(light, cyli, inter, view);
@@ -57,36 +63,30 @@ int				is_cyli(t_ray *view, t_cyli *cyli,
 
 double			shad_cyli(t_ray *view, t_cyli *cyli, t_light *light)
 {
-	double		a;
-	double		b;
-	double		c;
-	double		delt;
 	t_ray		local;
 	t_coor		x_ray;
 	double		local_dist;
 
 	dot_sub(&view->origin, &cyli->center, &local.origin);
 	dot_sub(&view->origin, &cyli->cap_u, &x_ray);
-	a = dot_prod(&view->direction, &view->direction) -
+	cyli->a = dot_prod(&view->direction, &view->direction) -
 		pow(dot_prod(&view->direction, &cyli->hei), 2);
-	b = 2 * (dot_prod(&view->direction, &x_ray) -
+	cyli->b = 2 * (dot_prod(&view->direction, &x_ray) -
 		dot_prod(&view->direction, &cyli->hei) *
 		dot_prod(&x_ray, &cyli->hei));
-	c = dot_prod(&x_ray, &x_ray) -
+	cyli->c = dot_prod(&x_ray, &x_ray) -
 		pow(dot_prod(&x_ray, &cyli->hei), 2) - pow(cyli->r, 2);
-	//printf("a %f b %f c %f\n", a, b, c);
-	if ((delt = pow(b, 2) - 4 * a * c) < 0)
+	if ((cyli->delt = pow(cyli->b, 2) - 4 * cyli->a * cyli->c) < 0)
 		return (cyli->dist = 0);
-	cyli->hit_1 = (-b - sqrt(delt)) / (2 * a);
-	cyli->hit_2 = (-b + sqrt(delt)) / (2 * a);
+	cyli->hit_1 = (-cyli->b - sqrt(cyli->delt)) / (2 * cyli->a);
+	cyli->hit_2 = (-cyli->b + sqrt(cyli->delt)) / (2 * cyli->a);
 	local_dist = smallest_non_negativ(cyli->hit_1, cyli->hit_2);
-	//printf("dist %f\n", cyli->dist);
 	if (local_dist < 0 || local_dist > 1)
 		return (local_dist = 0);
 	return (local_dist);
 }
 
-void		closest_cylinder(t_list *cylinders, t_env *e)
+void			closest_cylinder(t_list *cylinders, t_env *e)
 {
 	t_list		*lst;
 	t_cyli		*actual;
@@ -100,7 +100,7 @@ void		closest_cylinder(t_list *cylinders, t_env *e)
 	}
 }
 
-double		check_shadow_cylinder(t_list *cylinders, t_env *e)
+double			check_shadow_cylinder(t_list *cylinders, t_env *e)
 {
 	t_list			*lst;
 	t_cyli			*actual;

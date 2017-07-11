@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/11 18:31:40 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/11 18:40:16 by narajaon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 void			fill_inter_sphere(t_light *light, t_sphere *sphere,
@@ -22,23 +34,19 @@ void			fill_inter_sphere(t_light *light, t_sphere *sphere,
 int				is_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light, t_inter *inter)
 {
-	double		a;
-	double		b;
-	double		c;
-	double		delt;
 	t_ray		local;
 	t_coor		norm_dir;
 
 	dot_sub(&view->origin, &sphere->coord, &local.origin);
-	a = vect_pow(&view->direction);
-	b = 2 * (dot_prod(&view->direction, &local.origin));
-	c = vect_pow(&local.origin) - pow(sphere->r, 2);
-	if ((delt = pow(b, 2) - 4 * a * c) < 0)
+	sphere->a = vect_pow(&view->direction);
+	sphere->b = 2 * (dot_prod(&view->direction, &local.origin));
+	sphere->c = vect_pow(&local.origin) - pow(sphere->r, 2);
+	if ((sphere->delt = pow(sphere->b, 2) - 4 * sphere->a * sphere->c) < 0)
 		return (sphere->dist = 0);
-	sphere->hit_1 = (-b - sqrt(delt)) / (2 * a);
-	sphere->hit_2 = (-b + sqrt(delt)) / (2 * a);
+	sphere->hit_1 = (-sphere->b - sqrt(sphere->delt)) / (2 * sphere->a);
+	sphere->hit_2 = (-sphere->b + sqrt(sphere->delt)) / (2 * sphere->a);
 	sphere->dist = smallest_non_negativ(sphere->hit_1, sphere->hit_2);
-	if (sphere->dist < 0)
+	if (sphere->dist <= 0)
 		return (sphere->dist = 0);
 	if (sphere->dist < inter->dist_min)
 		fill_inter_sphere(light, sphere, inter, view);
@@ -48,31 +56,25 @@ int				is_sphere(t_ray *view, t_sphere *sphere,
 double			shad_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light)
 {
-	double		a;
-	double		b;
-	double		c;
-	double		delt;
 	double		local_dist;
 	t_ray		local;
 	t_coor		norm_dir;
 
 	dot_sub(&view->origin, &sphere->coord, &local.origin);
-	a = vect_pow(&view->direction);
-	b = 2 * (dot_prod(&view->direction, &local.origin));
-	c = vect_pow(&local.origin) - pow(sphere->r, 2);
-	if ((delt = pow(b, 2) - 4 * a * c) < 0)
+	sphere->a = vect_pow(&view->direction);
+	sphere->b = 2 * (dot_prod(&view->direction, &local.origin));
+	sphere->c = vect_pow(&local.origin) - pow(sphere->r, 2);
+	if ((sphere->delt = pow(sphere->b, 2) - 4 * sphere->a * sphere->c) < 0)
 		return (sphere->dist = 0);
-	sphere->hit_1 = (-b - sqrt(delt)) / (2 * a);
-	sphere->hit_2 = (-b + sqrt(delt)) / (2 * a);
+	sphere->hit_1 = (-sphere->b - sqrt(sphere->delt)) / (2 * sphere->a);
+	sphere->hit_2 = (-sphere->b + sqrt(sphere->delt)) / (2 * sphere->a);
 	local_dist = smallest_non_negativ(sphere->hit_1, sphere->hit_2);
-	//printf("shad dist %f\n", sphere->dist);
 	if (local_dist < 0 || local_dist > 1)
 		return (local_dist = 0);
-	//printf("sphere->dist %f\n", sphere->dist);
 	return (local_dist);
 }
 
-void		closest_sphere(t_list *spheres, t_env *e)
+void			closest_sphere(t_list *spheres, t_env *e)
 {
 	t_list		*lst;
 	t_sphere	*actual;
@@ -86,7 +88,7 @@ void		closest_sphere(t_list *spheres, t_env *e)
 	}
 }
 
-double		check_shadow_sphere(t_list *spheres, t_env *e)
+double			check_shadow_sphere(t_list *spheres, t_env *e)
 {
 	t_list			*lst;
 	t_sphere		*actual;

@@ -1,0 +1,80 @@
+view
+{
+center 350 350 -700
+}
+
+light
+{
+center 250 250 -500
+colour WHITE
+}
+
+sphere
+{
+center 350 400 -200
+colour YELLOW
+width 50
+}
+
+sphere
+{
+center 300 350 -200
+colour GREEN
+width 50
+}
+
+sphere
+{
+center 400 350 -200
+colour WHITE
+width 50
+}
+
+sphere
+{
+center 350 300 -200
+colour RED
+width 50
+}
+
+plane
+{
+center 0 350 0
+colour GREEN
+direction 10 350 0
+}
+
+plane
+{
+center 700 350 0
+colour RED
+direction 690 350 0
+}
+
+plane
+{
+center 350 700 0
+colour YELLOW
+direction 350 690 0
+}
+
+plane
+{
+center 350 0 0
+colour WHITE
+direction 350 10 0
+}
+
+plane
+{
+center 350 350 800
+colour WHITE
+direction 350 350 790
+}
+
+plane
+{
+center 350 350 0
+colour WHITE
+direction 350 350 0
+}

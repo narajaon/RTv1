@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   forms.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/11 18:30:50 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/11 19:01:07 by narajaon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 int		check_shadow(t_env *e)
@@ -8,8 +20,6 @@ int		check_shadow(t_env *e)
 		return (1);
 	if (check_shadow_cone(e->cones, e))
 		return (1);
-//	if (check_shadow_plane(e->planes, e))
-//		return (1);
 	return (0);
 }
 
@@ -23,7 +33,9 @@ int		check_collision(t_env *e)
 	closest_cylinder(e->cylinders, e);
 	closest_cone(e->cones, e);
 	if (check_shadow(e))
+	{
 		return (e->img.img[e->pix.y * WIN_Y + e->pix.x] =
-				shad_col(&e->inter, e->inter.shape, &e->light));
-	return (e->img.img[e->pix.y * WIN_Y + e->pix.x]  = e->inter.col.i);
+					shad_col(&e->inter, e->inter.shape, &e->light));
+	}
+	return (e->img.img[e->pix.y * WIN_Y + e->pix.x] = e->inter.col.i);
 }
