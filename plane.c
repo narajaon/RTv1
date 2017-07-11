@@ -30,25 +30,15 @@ int				is_plane(t_ray *view, t_plane *plane,
 	t_coor		x_point;
 
 	dot_sub(&plane->center, &view->origin, &x_point);
-	//print_coord(&plane->center); //print
-//	dot_sub(&plane->norm, &plane->center, &plane->norm);
-//	normalize(&plane->norm, &plane->norm);
 	dv = dot_prod(&view->direction, &plane->norm);
 	if (fabs(dv) < 0)
 		return (plane->dist = 0);
 	xv = dot_prod(&x_point, &plane->norm);
-//	printf("xv %f\n", xv);
-//	print_coord(&plane->norm);
-//	printf("dv %f\n", dv);
+	xv = (xv < 0) ? -xv : xv;
 	t = -xv / dv;
-//	printf("dn %f\n", dn);
-	//printf("t %f\n", t);
-	//if ((dv > 0 && xv < 0) || (dv < 0 && xv > 0))
-	//	t *= -1;
 	plane->dist = t;
 	if (t <= RAY_MIN)
 		return (plane->dist = 0);
-//	printf("plane->dist %f dist_min %f\n", plane->dist, inter->dist_min);
 	if (plane->dist < inter->dist_min)
 		fill_inter_plane(light, plane, inter, view);
 	return (plane->dist);
@@ -69,18 +59,11 @@ double			shad_plane(t_ray *view, t_plane *plane,
 	if (fabs(dv) < 0)
 		return (plane->dist = 0);
 	xv = dot_prod(&x_point, &plane->norm);
-//	printf("xv %f\n", xv);
-//	print_coord(&plane->norm);
-//	printf("dv %f\n", dv);
+	xv = (xv < 0) ? -xv : xv;
 	t = -xv / dv;
-//	printf("dn %f\n", dn);
-	//printf("t %f\n", t);
-	//if ((dv > 0 && xv < 0) || (dv < 0 && xv > 0))
-	//	t *= -1;
 	plane->dist = t;
 	if (t <= RAY_MIN)
 		return (plane->dist = 0);
-//	printf("plane->dist %f dist_min %f\n", plane->dist, inter->dist_min);
 	return (plane->dist);
 }
 

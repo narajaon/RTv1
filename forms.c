@@ -8,8 +8,8 @@ int		check_shadow(t_env *e)
 		return (1);
 	if (check_shadow_cone(e->cones, e))
 		return (1);
-	//if (check_shadow_plane(e->planes, e))
-	//	return (1);
+//	if (check_shadow_plane(e->planes, e))
+//		return (1);
 	return (0);
 }
 

@@ -11,30 +11,30 @@ colour WHITE
 
 sphere
 {
-center 350 400 -200
+center 350 360 -150
 colour YELLOW
-width 50
+width 150
 }
 
 sphere
 {
-center 300 350 -200
+center 300 350 -100
 colour GREEN
-width 50
+width 150
 }
 
 sphere
 {
-center 400 350 -200
+center 400 350 -100
 colour WHITE
-width 50
+width 150
 }
 
 sphere
 {
-center 350 300 -200
+center 350 300 -100
 colour RED
-width 50
+width 150
 }
 
 plane
@@ -65,9 +65,10 @@ colour WHITE
 direction 350 10 0
 }
 
-plane
+cone
 {
-center 350 350 800
-colour WHITE
-direction 350 350 790
+center 350 730 -100
+colour RED
+width 30
+direction 350 680 -100
 }

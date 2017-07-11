@@ -13,8 +13,11 @@ int		key_hook(int key, t_env *e)
 void	do_rt(t_env *e, int fd)
 {
 	get_values(fd, e);
-	e->light.ambient = 0.6;
+	e->light.ambient = AMBIENT;
 	print_rt(e);
+	free_list(&e->spheres);
+	free_list(&e->cones);
+	free_list(&e->cylinders);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.img_ptr, 0, 0);
 	mlx_loop(e->mlx);
 }

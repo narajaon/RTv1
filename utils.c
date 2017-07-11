@@ -3,16 +3,14 @@
 int		error_msg(int error)
 {
 	if (error == 1)
-		ft_putstr_fd("Usage : ./rtv1 <value>\n1- sphere\
-				\n2- cylender\n3- cones\
-				\n4- mix\n", 2);
+		ft_putstr_fd("Usage : ./rtv1 <scene>\n", 2);
 	else if (error == 2)
 		ft_putstr_fd("Couldn't allocate memory :(\n", 2);
 	else if (error == 3)
 		ft_putstr_fd("Invalid scene :(\n", 2);
 	else
 		ft_putstr_fd("Window closed, cya\n", 1);
-	return (error);
+	exit(error);
 }
 
 void	print_coord(t_coor *coord)

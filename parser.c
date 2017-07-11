@@ -8,7 +8,8 @@ void		get_coord(t_coor *coord, char **buff)
 	tmp = *buff;
 	while (*tmp != ' ' && *tmp)
 		tmp++;
-	tab_coord = ft_strsplit(tmp, ' ');
+	if (!(tab_coord = ft_strsplit(tmp, ' ')))
+		error_msg(2);
 	coord->x = ft_atoi(tab_coord[0]);
 	coord->y = ft_atoi(tab_coord[1]);
 	coord->z = ft_atoi(tab_coord[2]);
@@ -23,25 +24,25 @@ void		get_shape_col(t_col *col, char **buff)
 	tmp = *buff;
 	while (*tmp != ' ' && *tmp)
 		tmp++;
-	tab_col = ft_strsplit(tmp, ' ');
-	if (!ft_strcmp(tab_col[0], "RED"))
+	tmp++;
+	if (!ft_strcmp(tmp, "RED"))
 		col->i = RED;
-	else if (!ft_strcmp(tab_col[0], "GREEN"))
+	else if (!ft_strcmp(tmp, "GREEN"))
 		col->i = GREEN;
-	else if (!ft_strcmp(tab_col[0], "YELLOW"))
+	else if (!ft_strcmp(tmp, "YELLOW"))
 		col->i = YELLOW;
-	else if (!ft_strcmp(tab_col[0], "WHITE"))
+	else if (!ft_strcmp(tmp, "WHITE"))
 		col->i = WHITE;
 	else
 		error_msg(3);
-	free_tab(tab_col);
 }
 
 void		parse_plane(t_plane *plane, char **buff)
 {
 	char	**tab_line;
 
-	tab_line = ft_strsplit(*buff, ' ');
+	if (!(tab_line = ft_strsplit(*buff, ' ')))
+		error_msg(2);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&plane->center, buff);
 	else if (!ft_strcmp(tab_line[0], "colour"))
@@ -65,7 +66,7 @@ void		plane_values(int fd, t_plane *plane, t_list **list)
 	}
 	dot_sub(&plane->norm, &plane->center, &plane->norm);
 	normalize(&plane->norm, &plane->norm);
-	print_coord(&plane->norm); //print
+	//print_coord(&plane->norm); //print
 	ft_lstback(list, plane, sizeof(*plane));
 }
 
@@ -217,12 +218,13 @@ void		sphere_values(int fd, t_sphere *sphere, t_list **list)
 void		get_values(int fd, t_env *e)
 {
 	char		*buff;
+	int			ret;
 
 	e->spheres = NULL;
 	e->cylinders = NULL;
 	e->cones = NULL;
 	e->planes = NULL;
-	while (get_next_line(fd, &buff) > 0)
+	while ((ret = get_next_line(fd, &buff)) > 0)
 	{
 		if (!ft_strcmp(buff, "view"))
 			view_values(fd, &e->view);
@@ -237,4 +239,5 @@ void		get_values(int fd, t_env *e)
 		else if (!ft_strcmp(buff, "light"))
 			light_values(fd, &e->light);
 	}
+	(ret < 0) ? error_msg(3) : 1;
 }

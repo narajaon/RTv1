@@ -5,8 +5,8 @@
 # include "minilibx_macos/mlx.h"
 # include <stdio.h>
 
-# define WIN_X 1200
-# define WIN_Y 1200
+# define WIN_X 700
+# define WIN_Y 700
 # define EX_KEY 53
 # define UP_KEY 126
 # define DOWN_KEY 125
@@ -28,6 +28,7 @@
 # define SPHERE 2
 # define CONE 3
 # define CYLI 4
+# define AMBIENT 0.5
 
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
