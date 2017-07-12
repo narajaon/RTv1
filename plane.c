@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:14 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 18:31:15 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/12 18:52:07 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void			fill_inter_plane(t_light *light, t_plane *plane,
 			&inter->ray.origin, plane->dist);
 	dot_sub(&light->coord, &inter->ray.origin, &inter->ray.direction);
 	normalize(&plane->norm, &norm_plane);
-	if ((dv = dot_prod(&view->direction, &norm_plane)) > 0)
-		dot_mult(&norm_plane, &norm_plane, -1);
+	dv = dot_prod(&view->direction, &norm_plane);
 	normalize(&inter->ray.direction, &norm_dir);
 	inter->cos_alph = dot_prod(&norm_plane, &norm_dir);
+	//printf("cos %f\n", inter->cos_alph);
 	inter->shape = plane->col.i;
 	inter->col.i = put_col(light, inter, &plane->col);
 	inter->dist_min = plane->dist;
@@ -43,39 +43,48 @@ int				is_plane(t_ray *view, t_plane *plane,
 
 	dot_sub(&plane->center, &view->origin, &x_point);
 	dv = dot_prod(&view->direction, &plane->norm);
+	if (dv > 0)
+		dot_mult(&plane->norm, &plane->norm, -1);
+	//dv = dot_prod(&view->direction, &plane->norm);
 	if (fabs(dv) < 0)
 		return (plane->dist = 0);
+	//if (xv > 0)
+	//	printf("dv %f\n", dv);
+	//printf("dist %f\n", t);
 	xv = dot_prod(&x_point, &plane->norm);
-	xv = (xv < 0) ? -xv : xv;
-	t = -xv / dv;
+	//xv = (xv < 0) ? -xv : xv;
+	t = xv / dv;
+	//plane->dist = ((dv > 0 && xv < 0) || (dv < 0 && xv > 0)) ? t : -t;
 	plane->dist = t;
-	if (t <= RAY_MIN)
+	if (t <= RAY_MIN || t > RAY_MAX)
 		return (plane->dist = 0);
 	if (plane->dist < inter->dist_min)
 		fill_inter_plane(light, plane, inter, view);
 	return (plane->dist);
 }
 
-double			shad_plane(t_ray *view, t_plane *plane,
-		t_light *light)
+double			shad_plane(t_ray *view, t_plane *plane, t_light *light)
 {
 	double		dv;
 	double		xv;
 	double		t;
 	t_coor		x_point;
+	t_coor		local_norm;
 	double		local_dist;
 
 	dot_sub(&plane->center, &view->origin, &x_point);
-	dot_sub(&plane->norm, &plane->center, &plane->norm);
-	normalize(&plane->norm, &plane->norm);
-	dv = dot_prod(&view->direction, &plane->norm);
+	dot_sub(&plane->norm, &plane->center, &local_norm);
+	normalize(&plane->norm, &local_norm);
+	if (dv > 0)
+		dot_mult(&plane->norm, &local_norm, -1);
+	dv = dot_prod(&view->direction, &local_norm);
 	if (fabs(dv) < 0)
 		return (local_dist = 0);
-	xv = dot_prod(&x_point, &plane->norm);
-	xv = (xv < 0) ? -xv : xv;
-	t = -xv / dv;
+	xv = dot_prod(&x_point, &local_norm);
+	//xv = (xv < 0) ? -xv : xv;
+	t = xv / dv;
 	local_dist = t;
-	if (local_dist <= RAY_MIN)
+	if (local_dist <= RAY_MIN || local_dist > RAY_MAX)
 		return (local_dist = 0);
 	return (local_dist);
 }

@@ -5,7 +5,7 @@ center 350 350 -700
 
 light
 {
-center 350 350 -500
+center 350 350 -700
 colour WHITE
 }
 
@@ -29,7 +29,7 @@ cylinder
 {
 center 400 350 -200
 colour WHITE
-direction 400 350 -200
+direction 380 350 -200
 width 50
 }
 

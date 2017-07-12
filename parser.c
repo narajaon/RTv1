@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:09 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 18:31:10 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/12 18:41:40 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ void		parse_view(t_view *view, char **buff)
 {
 	char	**tab_line;
 
-	tab_line = ft_strsplit(*buff, ' ');
+	if (!(tab_line = ft_strsplit(*buff, ' ')))
+		error_msg(2);
+	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&view->coord, buff);
 	else if (ft_strcmp(tab_line[0], "}"))
@@ -113,6 +116,8 @@ void		parse_cyli(t_cyli *cyli, char **buff)
 
 	if (!(tab_line = ft_strsplit(*buff, ' ')))
 		error_msg(2);
+	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&cyli->center, buff);
 	else if (!ft_strcmp(tab_line[0], "direction"))
@@ -145,7 +150,10 @@ void		parse_light(t_light *light, char **buff)
 {
 	char	**tab_line;
 
-	tab_line = ft_strsplit(*buff, ' ');
+	if (!(tab_line = ft_strsplit(*buff, ' ')))
+		error_msg(2);
+	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&light->coord, buff);
 	else if (!ft_strcmp(tab_line[0], "colour"))
@@ -171,7 +179,10 @@ void		parse_cone(t_cone *cone, char **buff)
 {
 	char	**tab_line;
 
-	tab_line = ft_strsplit(*buff, ' ');
+	if (!(tab_line = ft_strsplit(*buff, ' ')))
+		error_msg(2);
+	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&cone->center, buff);
 	else if (!ft_strcmp(tab_line[0], "direction"))
@@ -204,7 +215,10 @@ void		parse_sphere(t_sphere *sphere, char **buff)
 {
 	char	**tab_line;
 
-	tab_line = ft_strsplit(*buff, ' ');
+	if (!(tab_line = ft_strsplit(*buff, ' ')))
+		error_msg(2);
+	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&sphere->coord, buff);
 	else if (!ft_strcmp(tab_line[0], "colour"))

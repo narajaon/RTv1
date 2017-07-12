@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:31 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 19:51:23 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/12 19:32:33 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@
 # define R_KEY 15
 # define Q_KEY 12
 # define E_KEY 14
+# define PAG_UP_KEY 116
+# define PAG_DOWN_KEY 121
 # define RAY_MIN 0.0001f
-# define RAY_MAX INFINITY
+# define RAY_MAX 5000
 # define PI 3.141592
 
 # define NONE 0
@@ -92,6 +94,7 @@ typedef struct		s_view
 	double			rot_x;
 	double			rot_y;
 	double			rot_z;
+	double			x_value;
 	double			y_value;
 	double			z_value;
 }					t_view;
@@ -204,8 +207,6 @@ typedef struct		s_env
 	t_cone			cone;
 	t_light			light;
 	t_inter			inter;
-	double			rot_y;
-	double			rot_z;
 	int				fd;
 }					t_env;
 

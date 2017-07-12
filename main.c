@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:00 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 20:17:25 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/12 10:46:17 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		main(int ac, char **av)
 	e.view.rot_x = 1.6;
 	e.view.rot_y = 0;
 	e.view.rot_z = 0;
+	e.view.x_value = 0;
 	e.view.y_value = 0;
 	e.view.z_value = 0;
 	do_rt(&e, e.fd);

@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:30:27 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 18:30:28 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/12 16:20:53 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ int				gamma_cor(t_col *col, double expos, double gamma)
 
 double			clamp_col(double col, double cos)
 {
-	if (cos < 0)
-		return (0x00);
+	cos = (cos < 0.1) ? 0.1 : cos;
+//	if (cos < 0)
+//		return (col - col * 0.1);
 	if (col * cos * 255 > 255)
 		return (col * cos / 255);
+//	printf("cos %f\n", cos);
 	return (col * cos);
 }
 
@@ -92,7 +94,7 @@ unsigned int	shad_col(t_inter *inter, int shape, t_light *light)
 	t_col		u_shape;
 
 	u_shape.i = shape;
-	inter->cos_alph = (inter->cos_alph > 0) ? inter->cos_alph : 0;
+	inter->cos_alph = (inter->cos_alph > 0.2) ? inter->cos_alph : 0.2;
 	b = (u_shape.tab[0] - u_shape.tab[0] *
 			light->ambient) * 255 * inter->cos_alph;
 	g = (u_shape.tab[1] - u_shape.tab[1] *

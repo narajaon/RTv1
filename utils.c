@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:30:21 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 20:25:27 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/12 19:22:45 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,25 @@ double	smallest_non_negativ(double a, double b)
 	return (0);
 }
 
-int		rot_view(int keycode, t_env *e)
+void	move_cam(int keycode, t_env *e)
 {
-	if (keycode == EX_KEY)
-		exit_rt(e);
-	else if (keycode == RIGHT_KEY)
+	if (keycode == W_KEY)
+		e->view.z_value += 50;
+	else if (keycode == S_KEY)
+		e->view.z_value -= 50;
+	else if (keycode == D_KEY)
+		e->view.x_value += 50;
+	else if (keycode == A_KEY)
+		e->view.x_value -= 50;
+	else if (keycode == PAG_UP_KEY)
+		e->view.y_value -= 50;
+	else if (keycode == PAG_DOWN_KEY)
+		e->view.y_value += 50;
+}
+
+void	rot_cam(int keycode, t_env *e)
+{
+	if (keycode == RIGHT_KEY)
 		e->view.rot_y += 0.2;
 	else if (keycode == LEFT_KEY)
 		e->view.rot_y -= 0.2;
@@ -51,19 +65,25 @@ int		rot_view(int keycode, t_env *e)
 		e->view.rot_x += 0.2;
 	else if (keycode == DOWN_KEY)
 		e->view.rot_x -= 0.2;
-	else if (keycode == W_KEY)
-		e->view.z_value += 50;
-	else if (keycode == S_KEY)
-		e->view.z_value -= 50;
-	else if (keycode == A_KEY)
+	else if (keycode == E_KEY)
 		e->view.rot_z -= 0.2;
-	else if (keycode == D_KEY)
+	else if (keycode == Q_KEY)
 		e->view.rot_z += 0.2;
+}
+
+int		rot_view(int keycode, t_env *e)
+{
+	rot_cam(keycode, e);
+	move_cam(keycode, e);
+	if (keycode == EX_KEY)
+		exit_rt(e);
 	else if (keycode == R_KEY)
 	{
 		e->view.rot_x = 1.6;
 		e->view.rot_y = 0;
 		e->view.rot_z = 0;
+		e->view.x_value = 0;
+		e->view.y_value = 0;
 		e->view.z_value = 0;
 	}
 	print_rt(e);
