@@ -44,6 +44,41 @@ colour WHITE
 width 50
 }
 
+sphere
+{
+center 100 200 200
+colour WHITE
+width 50
+}
+
+sphere
+{
+center 600 200 200
+colour WHITE
+width 50
+}
+
+sphere
+{
+center 100 500 200
+colour WHITE
+width 50
+}
+
+sphere
+{
+center 600 500 200
+colour WHITE
+width 50
+}
+
+sphere
+{
+center 350 350 0
+colour RED
+width 50
+}
+
 plane
 {
 center 350 500 0
@@ -63,6 +98,20 @@ plane
 center 350 350 350
 colour WHITE
 direction 350 350 330
+}
+
+plane
+{
+center 0 350 0
+colour WHITE
+direction 10 350 0
+}
+
+plane
+{
+center 700 350 0
+colour WHITE
+direction 680 350 0
 }
 
 cylinder

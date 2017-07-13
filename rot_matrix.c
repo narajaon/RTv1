@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:21 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 20:08:48 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/13 16:41:42 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	rot_x(double *x, double *y, double *z, double angle)
 
 	tmpx = *x;
 	tmpy = cos(angle) * *y - sin(angle) * *z;
-	tmpy = sin(angle) * *y + cos(angle) * *z;
+	tmpz = sin(angle) * *y + cos(angle) * *z;
 	*x = tmpx;
 	*y = tmpy;
 	*z = tmpz;
