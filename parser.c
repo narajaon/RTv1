@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:09 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/12 18:41:40 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/13 14:49:22 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void		parse_plane(t_plane *plane, char **buff)
 
 	if (!(tab_line = ft_strsplit(*buff, ' ')))
 		error_msg(2);
+	if (!tab_line[0] || (!tab_line[1] && ft_strcmp(tab_line[0], "}")))
+		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&plane->center, buff);
 	else if (!ft_strcmp(tab_line[0], "colour"))
@@ -89,7 +91,7 @@ void		parse_view(t_view *view, char **buff)
 
 	if (!(tab_line = ft_strsplit(*buff, ' ')))
 		error_msg(2);
-	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+	if (!tab_line[0] || (!tab_line[1] && ft_strcmp(tab_line[0], "}")))
 		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&view->coord, buff);
@@ -116,7 +118,7 @@ void		parse_cyli(t_cyli *cyli, char **buff)
 
 	if (!(tab_line = ft_strsplit(*buff, ' ')))
 		error_msg(2);
-	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+	if (!tab_line[0] || (!tab_line[1] && ft_strcmp(tab_line[0], "}")))
 		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&cyli->center, buff);
@@ -152,7 +154,7 @@ void		parse_light(t_light *light, char **buff)
 
 	if (!(tab_line = ft_strsplit(*buff, ' ')))
 		error_msg(2);
-	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+	if (!tab_line[0] || (!tab_line[1] && ft_strcmp(tab_line[0], "}")))
 		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&light->coord, buff);
@@ -181,7 +183,7 @@ void		parse_cone(t_cone *cone, char **buff)
 
 	if (!(tab_line = ft_strsplit(*buff, ' ')))
 		error_msg(2);
-	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+	if (!tab_line[0] || (!tab_line[1] && ft_strcmp(tab_line[0], "}")))
 		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&cone->center, buff);
@@ -217,7 +219,7 @@ void		parse_sphere(t_sphere *sphere, char **buff)
 
 	if (!(tab_line = ft_strsplit(*buff, ' ')))
 		error_msg(2);
-	if (!tab_line[1] && ft_strcmp(tab_line[0], "}"))
+	if (!tab_line[0] || (!tab_line[1] && ft_strcmp(tab_line[0], "}")))
 		error_msg(3);
 	if (!ft_strcmp(tab_line[0], "center"))
 		get_coord(&sphere->coord, buff);

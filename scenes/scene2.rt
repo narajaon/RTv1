@@ -5,7 +5,7 @@ center 350 360 -700
 
 light
 {
-center 450 350 -500
+center 350 350 -1000
 colour WHITE
 }
 

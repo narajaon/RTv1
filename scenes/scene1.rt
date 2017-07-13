@@ -34,14 +34,6 @@ direction 560 360 0
 
 cone
 {
-center 550 350 0
-colour WHITE
-width 10
-direction 550 360 0
-}
-
-cone
-{
 center 150 350 0
 colour GREEN
 width 20

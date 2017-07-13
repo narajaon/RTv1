@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:30:50 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/12 18:59:51 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/13 11:08:11 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int		check_shadow(t_env *e)
 		return (1);
 	if (check_shadow_cone(e->cones, e))
 		return (1);
-	//if (check_shadow_plane(e->planes, e))
-	//	return (1);
+	if (check_shadow_plane(e->planes, e))
+		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:30:27 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/12 16:20:53 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/13 13:52:02 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ int				gamma_cor(t_col *col, double expos, double gamma)
 double			clamp_col(double col, double cos)
 {
 	cos = (cos < 0.1) ? 0.1 : cos;
-//	if (cos < 0)
-//		return (col - col * 0.1);
 	if (col * cos * 255 > 255)
 		return (col * cos / 255);
-//	printf("cos %f\n", cos);
 	return (col * cos);
 }
 

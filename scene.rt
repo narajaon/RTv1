@@ -23,17 +23,18 @@ colour WHITE
 direction 350 510 0
 }
 
-plane
-{
-center 350 500 500
-colour WHITE
-direction 350 500 480
-}
-
 cone
 {
 center 405 350 0
 colour YELLOW
 direction 410 360 0
+width 30
+}
+
+cylinder
+{
+center 205 350 0
+colour YELLOW
+direction 210 360 0
 width 30
 }
