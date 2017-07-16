@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:40 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 18:40:16 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/15 13:22:20 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void			fill_inter_sphere(t_light *light, t_sphere *sphere,
 {
 	t_coor		norm_sphere;
 	t_coor		norm_dir;
-	t_coor		view_norm;
 
 	point_on_ray(&view->origin, &view->direction,
 			&inter->ray.origin, sphere->dist);
@@ -35,7 +34,6 @@ int				is_sphere(t_ray *view, t_sphere *sphere,
 		t_light *light, t_inter *inter)
 {
 	t_ray		local;
-	t_coor		norm_dir;
 
 	dot_sub(&view->origin, &sphere->coord, &local.origin);
 	sphere->a = vect_pow(&view->direction);
@@ -53,12 +51,10 @@ int				is_sphere(t_ray *view, t_sphere *sphere,
 	return (sphere->dist);
 }
 
-double			shad_sphere(t_ray *view, t_sphere *sphere,
-		t_light *light)
+double			shad_sphere(t_ray *view, t_sphere *sphere)
 {
 	double		local_dist;
 	t_ray		local;
-	t_coor		norm_dir;
 
 	dot_sub(&view->origin, &sphere->coord, &local.origin);
 	sphere->a = vect_pow(&view->direction);
@@ -92,13 +88,12 @@ double			check_shadow_sphere(t_list *spheres, t_env *e)
 {
 	t_list			*lst;
 	t_sphere		*actual;
-	int				col;
 
 	lst = spheres;
 	while (lst)
 	{
 		actual = lst->content;
-		if (shad_sphere(&e->inter.ray, actual, &e->light))
+		if (shad_sphere(&e->inter.ray, actual))
 			return (1);
 		lst = lst->next;
 	}

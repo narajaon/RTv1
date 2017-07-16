@@ -6,7 +6,7 @@
 #    By: narajaon <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/10 13:20:13 by narajaon          #+#    #+#              #
-#    Updated: 2017/07/08 20:16:25 by narajaon         ###   ########.fr        #
+#    Updated: 2017/07/15 13:35:31 by narajaon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,27 @@ NAME = rtv1
 HEAD = rtv1.h
 LIB = libft.a
 LIBDIR = libft
-SRC = *.c
-FLAG = -g -O2 -framework OpenGL -framework AppKit
+SRC =\
+	cam_manip.c\
+	col_fun.c\
+	cone.c\
+	cylinder.c\
+	dot_op.c\
+	dot_op2.c\
+	dot_op3.c\
+	forms.c\
+	init.c\
+	main.c\
+	parser.c\
+	parser2.c\
+	parser3.c\
+	parser4.c\
+	plane.c\
+	push_shapes.c\
+	rot_matrix.c\
+	sphere.c\
+	utils.c
+FLAG = -Wall -Werror -Wextra -O2 -framework OpenGL -framework AppKit
 OBJ = $(SRC:.c=.o)
 MLX = minilibx_macos/libmlx.a
 

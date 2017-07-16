@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:31 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/12 19:35:45 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/15 13:44:31 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # include <math.h>
 # include "libft/libft.h"
 # include "minilibx_macos/mlx.h"
-# include <stdio.h>
 
 # define WIN_X 700
 # define WIN_Y 700
@@ -31,8 +30,10 @@
 # define R_KEY 15
 # define Q_KEY 12
 # define E_KEY 14
+# define SP_KEY 49
 # define PAG_UP_KEY 116
 # define PAG_DOWN_KEY 121
+
 # define RAY_MIN 0.0001f
 # define RAY_MAX 5000
 # define PI 3.141592
@@ -43,9 +44,11 @@
 # define CONE 3
 # define CYLI 4
 # define AMBIENT 0.5
+# define SPEED 1
 
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
+# define BLUE 0x000000FF
 # define YELLOW 0x00FFFF00
 # define WHITE 0x00FFFFFF
 
@@ -62,16 +65,12 @@ typedef union		u_col
 	char			tab[4];
 }					t_col;
 
-/*ray origin, direction coordinates && length*/
-
 typedef struct		s_ray
 {
 	t_coor			origin;
 	t_coor			direction;
 	double			len;
 }					t_ray;
-
-/*intersection point infos*/
 
 typedef struct		s_inter
 {
@@ -82,8 +81,6 @@ typedef struct		s_inter
 	double			cos_alph;
 	double			dist_min;
 }					t_inter;
-
-/*view coordinates*/
 
 typedef struct		s_view
 {
@@ -105,8 +102,6 @@ typedef struct		s_light
 	t_col			col;
 	double			ambient;
 }					t_light;
-
-/*sphere coordinates*/
 
 typedef struct		s_sphere
 {
@@ -179,13 +174,12 @@ typedef struct		s_img
 	int				endian;
 }					t_img;
 
-/*pixel coordinates*/
-
 typedef struct		s_pix
 {
 	unsigned int	x;
 	unsigned int	y;
 	unsigned int	col;
+	unsigned int	decal;
 }					t_pix;
 
 typedef struct		s_env
@@ -211,7 +205,7 @@ typedef struct		s_env
 }					t_env;
 
 int					error_msg(int error);
-void				print_coord(t_coor *coord); //attention printf
+void				print_coord(t_coor *coord);
 double				smallest_non_negativ(double a, double b);
 void				free_tab(char **tab);
 void				free_list(t_list **shape);
@@ -263,14 +257,10 @@ void				closest_cylinder(t_list *cylinders, t_env *e);
 void				closest_cone(t_list *cones, t_env *e);
 void				closest_plane(t_list *planes, t_env *e);
 
-double				shad_sphere(t_ray *view, t_sphere *sphere,
-		t_light *light);
-double				shad_cone(t_ray *view, t_cone *sphere,
-		t_light *light);
-double				shad_cyli(t_ray *view, t_cyli *sphere,
-		t_light *light);
-double				shad_plane(t_ray *view, t_plane *sphere,
-		t_light *light);
+double				shad_sphere(t_ray *view, t_sphere *sphere);
+double				shad_cone(t_ray *view, t_cone *cone);
+double				shad_cyli(t_ray *view, t_cyli *cyli);
+double				shad_plane(t_ray *view, t_plane *plane);
 double				check_shadow_sphere(t_list *spheres, t_env *e);
 double				check_shadow_cylinder(t_list *cylinders, t_env *e);
 double				check_shadow_cone(t_list *cones, t_env *e);
@@ -285,13 +275,21 @@ void				fill_inter_cyli(t_light *light, t_cyli *cyli,
 void				fill_inter_plane(t_light *light, t_plane *plane,
 		t_inter *inter, t_ray *view);
 
+void				sphere_values(int fd, t_sphere *sphere, t_list **list);
+void				plane_values(int fd, t_plane *plane, t_list **list);
+void				cone_values(int fd, t_cone *cone, t_list **list);
+void				cyli_values(int fd, t_cyli *cyli, t_list **list);
+void				view_values(int fd, t_view *view);
+void				light_values(int fd, t_light *light);
+void				get_coord(t_coor *coord, char **buff);
+void				get_shape_col(t_col *col, char **buff);
+
 void				init_col(t_col *col, char r, char g, char b);
 int					mult_col(t_col *col1, t_col *col2);
 int					add_col(t_col *col1, t_col *col2);
 int					div_col_int(t_col *col1, double cap);
 double				clamp_col(double col, double cos);
-unsigned int		put_col(t_light *light, t_inter *inter,
-		t_col *plane);
+unsigned int		put_col(t_light *light, t_inter *inter, t_col *plane);
 unsigned int		shad_col(t_inter *inter, int shape, t_light *light);
 
 int					check_collision(t_env *e);

@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:30:27 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/13 13:52:02 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/15 12:21:30 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,6 @@ int				mult_col(t_col *col1, t_col *col2)
 	return (new_col.i);
 }
 
-int				add_col(t_col *col1, t_col *col2)
-{
-	t_col		new_col;
-
-	new_col.tab[0] = col1->tab[0] + col2->tab[0];
-	new_col.tab[1] = col1->tab[1] + col2->tab[1];
-	new_col.tab[2] = col1->tab[2] + col2->tab[2];
-	new_col.tab[3] = 0x00;
-	return (new_col.i);
-}
-
-int				gamma_cor(t_col *col, double expos, double gamma)
-{
-	t_col		new_col;
-
-	new_col.tab[0] = pow(col->tab[0] * expos, gamma);
-	new_col.tab[1] = pow(col->tab[1] * expos, gamma);
-	new_col.tab[2] = pow(col->tab[2] * expos, gamma);
-	new_col.tab[3] = 0x00;
-	return (new_col.i);
-}
-
 double			clamp_col(double col, double cos)
 {
 	cos = (cos < 0.1) ? 0.1 : cos;
@@ -73,14 +51,6 @@ unsigned int	put_col(t_light *light, t_inter *inter, t_col *shape)
 	init_col(&inter->col, r, g, b);
 	inter->col.i = mult_col(&inter->col, &light->col);
 	return (inter->col.i);
-}
-
-double			cap_shadow(double col, double ambient, double cos)
-{
-	double		new_col;
-
-	new_col = col * (ambient + (1 - ambient) * cos);
-	return (0);
 }
 
 unsigned int	shad_col(t_inter *inter, int shape, t_light *light)

@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:30:15 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/11 19:39:42 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/15 12:54:34 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ int					is_cone(t_ray *view, t_cone *cone,
 	return (cone->dist);
 }
 
-double				shad_cone(t_ray *view, t_cone *cone,
-		t_light *light)
+double				shad_cone(t_ray *view, t_cone *cone)
 {
 	t_ray		local;
 	t_coor		x_ray;
@@ -113,13 +112,12 @@ double				check_shadow_cone(t_list *cones, t_env *e)
 {
 	t_list			*lst;
 	t_cone			*actual;
-	int				col;
 
 	lst = cones;
 	while (lst)
 	{
 		actual = lst->content;
-		if (shad_cone(&e->inter.ray, actual, &e->light))
+		if (shad_cone(&e->inter.ray, actual))
 			return (1);
 		lst = lst->next;
 	}

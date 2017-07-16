@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/13 13:48:11 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/13 15:23:31 by narajaon         ###   ########.fr       */
+/*   Created: 2017/07/15 12:18:49 by narajaon          #+#    #+#             */
+/*   Updated: 2017/07/15 12:56:59 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void			fill_inter_plane(t_light *light, t_plane *plane,
 {
 	t_coor		norm_plane;
 	t_coor		norm_dir;
-	t_coor		view_norm;
 	double		dv;
 
 	point_on_ray(&view->origin, &view->direction,
@@ -56,7 +55,7 @@ int				is_plane(t_ray *view, t_plane *plane,
 	return (plane->dist);
 }
 
-double			shad_plane(t_ray *view, t_plane *plane, t_light *light)
+double			shad_plane(t_ray *view, t_plane *plane)
 {
 	double		dv;
 	double		xv;
@@ -99,7 +98,7 @@ double			check_shadow_plane(t_list *planes, t_env *e)
 	while (lst)
 	{
 		actual = lst->content;
-		if (shad_plane(&e->inter.ray, actual, &e->light))
+		if (shad_plane(&e->inter.ray, actual))
 			return (1);
 		lst = lst->next;
 	}

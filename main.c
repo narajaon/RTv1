@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 18:31:00 by narajaon          #+#    #+#             */
-/*   Updated: 2017/07/13 16:29:02 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/07/13 18:07:11 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		main(int ac, char **av)
 	e.view.x_value = 0;
 	e.view.y_value = 0;
 	e.view.z_value = 0;
+	e.pix.decal = 1;
 	do_rt(&e, e.fd);
 	return (0);
 }
