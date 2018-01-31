@@ -1,66 +1,77 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: narajaon <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/05/10 13:20:13 by narajaon          #+#    #+#              #
-#    Updated: 2017/08/15 13:32:22 by narajaon         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME := rtv1
+HEAD = inc/rtv1.h
 
-NAME = rtv1
-HEAD = rtv1.h
-LIB = libft.a
-LIBDIR = libft
-SRC =\
-	cam_manip.c\
-	col_fun.c\
-	cone.c\
-	cylinder.c\
-	dot_op.c\
-	dot_op2.c\
-	dot_op3.c\
-	forms.c\
-	init.c\
-	main.c\
-	parser.c\
-	parser2.c\
-	parser3.c\
-	parser4.c\
-	plane.c\
-	push_shapes.c\
-	rot_matrix.c\
-	sphere.c\
-	utils.c
-FLAG = -Wall -Werror -Wextra -O2 -framework OpenGL -framework AppKit
-OBJ = $(SRC:.c=.o)
-MLX = minilibx_macos/libmlx.a
+CC := gcc
+CFLAGS = -Wall -Werror -Wextra -O2
+INC_D:=inc
+SCR_D:=src
+LIB_D:=lib
+OBJ_D:=obj
+
+INCLUDES = \
+		-I inc \
+		-I lib/libft/inc \
+		-I lib/minilibx_macos
+
+LIBRARIES = \
+		-L lib/libft -lft \
+		-L lib/minilibx_macos -lmlx
+
+ITEM = \
+	cam_manip.o\
+	col_fun.o\
+	cone.o\
+	cylinder.o\
+	dot_op.o\
+	dot_op2.o\
+	dot_op3.o\
+	forms.o\
+	init.o\
+	main.o\
+	parser.o\
+	parser2.o\
+	parser3.o\
+	parser4.o\
+	plane.o\
+	push_shapes.o\
+	rot_matrix.o\
+	sphere.o\
+	utils.o
+
+OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
+
+vpath %.c src
+
+vpath %.h inc lib/libft/inc lib/minilibx_macos/
 
 all: $(NAME)
 
-$(NAME): $(SRC) $(HEAD)
-	@echo "Compiling \033[92m$(LIB)\033[0m..."
-	@make -C $(LIBDIR)/
-	@make -C minilibx_macos/
-	@echo "Compiling \033[92m$(NAME)\033[0m..."
-	@gcc $(SRC) $(FLAG) $(MLX) $(LIBDIR)/$(LIB) -o $(NAME)
-	@echo "$(NAME) compilation:\033[92m OK\033[0m"
+$(NAME): $(OBJ) $(HEAD) Makefile
+	@$(MAKE) -C lib/libft
+	@$(MAKE) -C lib/minilibx_macos
+	@$(CC) $(CFLAGS) -o $(NAME) $(INCLUDES) $(LIBRARIES) $(OBJ) \
+		-framework OpenGL -framework AppKit
+
+./${OBJ_D}/%.o: %.c
+	@mkdir -p $(OBJ_D)
+	@$(CC) $(CFLAGS) -c -o $@ $<  $(INCLUDES)
 
 clean:
-	@echo "Deleting:\033[33m $(LIB) and *.o\033[0m"
-	@rm -f $(OBJ)
-	@make -C $(LIBDIR)/ clean
-	@make -C minilibx_macos/ clean
+	@$(MAKE) -C lib/libft clean
+	@$(MAKE) -C lib/minilibx_macos clean
+	@$(RM) -r $(OBJ_D)
 
 fclean: clean
-	@echo "Deleting:\033[33m $(NAME)\033[0m"
-	@echo "Deleting:\033[33m $(LIB)\033[0m"
-	@rm -f $(MLX)
-	@rm -f $(NAME)
-	@rm -f $(LIBDIR)/$(LIB)
+	@$(MAKE) -C lib/libft fclean
+	@$(RM) $(NAME)
 
 re: fclean all
+
+git :
+	@git add .
+	@git commit -m "${MSG}"
+
+gitp : fclean git
+	git push
 
 .PHONY: clean fclean re
