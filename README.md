@@ -22,4 +22,4 @@ You can then move in the scene in real time
 X axis :		`A` or `D` <br>
 Y axis :		`W` or `S` <br>
 Z axis :		`page up` or `page down` <br>
-Close window :	 esc`
+Close window :	`esc`
