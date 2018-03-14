@@ -11,8 +11,15 @@ Then you need to launch the program (replace `scene_file.rt` with an appropriate
 
 Some template scenes are included in ‘scenes’ directory
 
-### Usage
+## Usage
 
 After launching the program, you will see a window showcasing the scene you selected
 
-![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/simple_scene.png)Paragraph of project description goes here
+![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/simple_scene.png)
+
+You can then move in the scene in real time
+
+X axis :		`A` or `D`
+Y axis :		`W` or `S`
+Z axis :		`page up` or `page down`
+Close window :	 esc`
