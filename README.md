@@ -19,7 +19,7 @@ After launching the program, you will see a window showcasing the scene you sele
 
 You can then move in the scene in real time
 
-X axis :		`A` or `D`
-Y axis :		`W` or `S`
-Z axis :		`page up` or `page down`
+X axis :		`A` or `D` <br>
+Y axis :		`W` or `S` <br>
+Z axis :		`page up` or `page down` <br>
 Close window :	 esc`
