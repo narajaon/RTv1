@@ -24,4 +24,4 @@ Y axis :		`W` or `S` <br>
 Z axis :		`page up` or `page down` <br>
 Close window :	`esc`
 
-![alt text](https://giphy.com/gifs/y814SyJUsIlHb5c0OD/html5)
+![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/rotation.gif)
