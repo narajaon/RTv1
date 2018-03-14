@@ -1,11 +1,12 @@
+## Description
+
 Rtv1 is RayTracer written in C. It uses a custom library called minilibx wich, you can guess by it’s name, is a minimalist version of the libx.
 
 ## Getting Started
 
-Start by compiling the project using the command Make
-`Make`
+Start by compiling the project using the command `Make`
 
-Then you need to launch the program (replace `scene_file.rt` with an appropriate file)
+Then you need to launch the program (replace `scene_file.rt` with an appropriate file)<br>
 `./rtv1 scene_file.rt`
 
 Some template scenes are included in ‘scenes’ directory
