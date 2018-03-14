@@ -22,7 +22,9 @@ You can then move in the scene in real time
 X axis :		`A` or `D` <br>
 Y axis :		`W` or `S` <br>
 Z axis :		`page up` or `page down` <br>
+Reset scene :	`R`
 Close window :	`esc`
 
 ![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/rotation.gif)
 ![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/z_axis.gif)
+![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/y_axis.gif)
