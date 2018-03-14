@@ -28,3 +28,5 @@ Close window :	`esc`
 ![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/rotation.gif)
 ![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/z_axis.gif)
 ![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/y_axis.gif)
+
+And of course, you can also rotate your POV to look around with the `arrow keys`
