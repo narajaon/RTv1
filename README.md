@@ -25,3 +25,4 @@ Z axis :		`page up` or `page down` <br>
 Close window :	`esc`
 
 ![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/rotation.gif)
+![alt text](https://github.com/narajaon/RTv1/blob/master/readme_pics/z_axis.gif)
