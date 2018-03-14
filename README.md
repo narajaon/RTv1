@@ -1,6 +1,6 @@
 ## Description
 
-Rtv1 is RayTracer written in C. It uses a custom library called minilibx wich, you can guess by it’s name, is a minimalist version of the libx.
+Rtv1 is RayTracer written in C. It uses a custom library called minilibx wich, you can guess by it’s name, is a minimalist version of the Xlib. Basic shapes are supported, including the sphere, the cone, the cylinder and the plane
 
 ## Getting Started
 
